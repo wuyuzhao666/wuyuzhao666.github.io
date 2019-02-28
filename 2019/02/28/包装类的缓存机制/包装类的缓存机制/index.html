@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="##包装类的缓存机制与valueOf() ###引言Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由valueOf()静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用valueOf()来创建呢。  首先，我们来看一个例子: public class Test { public static void main(String[">
+<meta name="description" content="包装类的缓存机制与valueOf()引言Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由valueOf()静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用valueOf()来创建呢。  首先，我们来看一个例子: public class Test {  public static void main(String[] arg">
 <meta name="keywords" content="Java基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="包装类的缓存机制与valueOf()">
-<meta property="og:url" content="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/包装类的缓存机制与valueOf/index.html">
+<meta property="og:title" content="包装类的缓存机制">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/index.html">
 <meta property="og:site_name" content="巴斯光甜的博客">
-<meta property="og:description" content="##包装类的缓存机制与valueOf() ###引言Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由valueOf()静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用valueOf()来创建呢。  首先，我们来看一个例子: public class Test { public static void main(String[">
+<meta property="og:description" content="包装类的缓存机制与valueOf()引言Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由valueOf()静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用valueOf()来创建呢。  首先，我们来看一个例子: public class Test {  public static void main(String[] arg">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/包装类的缓存机制与valueOf/2.png">
-<meta property="og:updated_time" content="2019-02-28T13:40:06.765Z">
+<meta property="og:image" content="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/2.png">
+<meta property="og:updated_time" content="2019-02-28T13:53:04.669Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="包装类的缓存机制与valueOf()">
-<meta name="twitter:description" content="##包装类的缓存机制与valueOf() ###引言Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由valueOf()静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用valueOf()来创建呢。  首先，我们来看一个例子: public class Test { public static void main(String[">
-<meta name="twitter:image" content="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/包装类的缓存机制与valueOf/2.png">
+<meta name="twitter:title" content="包装类的缓存机制">
+<meta name="twitter:description" content="包装类的缓存机制与valueOf()引言Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由valueOf()静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用valueOf()来创建呢。  首先，我们来看一个例子: public class Test {  public static void main(String[] arg">
+<meta name="twitter:image" content="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/2.png">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/包装类的缓存机制与valueOf/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/">
 
 
 
 
 
-  <title>包装类的缓存机制与valueOf() | 巴斯光甜的博客</title>
+  <title>包装类的缓存机制 | 巴斯光甜的博客</title>
   
 
 
@@ -299,7 +299,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/包装类的缓存机制与valueOf/">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wu yuzhao">
@@ -316,7 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">包装类的缓存机制与valueOf()</h1>
+          <h1 class="post-title" itemprop="name headline">包装类的缓存机制</h1>
         
 
         <div class="post-meta">
@@ -328,7 +328,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-28T21:13:32+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-28T21:50:12+08:00">
                 2019-02-28
               </time>
             
@@ -390,37 +390,61 @@
       
 
       
-        <p>##包装类的缓存机制与valueOf()</p>
-<p>###引言<br>Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由<code>valueOf()</code>静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用<code>valueOf()</code>来创建呢。</p>
+        <h2 id="包装类的缓存机制与valueOf"><a href="#包装类的缓存机制与valueOf" class="headerlink" title="包装类的缓存机制与valueOf()"></a>包装类的缓存机制与valueOf()</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由<code>valueOf()</code>静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用<code>valueOf()</code>来创建呢。</p>
 <hr>
 <p>首先，我们来看一个例子:</p>
 <pre><code>public class Test {
+
 public static void main(String[] args) {
 
+
+
     Integer a = 1;
+
     Integer b = 1;
+
     Integer c = 128;
+
     Integer d = 128;
+
     if(a == b){
+
         System.out.println(&quot;a与b相同&quot;);
+
     }
+
+
 
     if(c == d){
+
         System.out.println(&quot;c与d相同&quot;);
+
     }
 
+
+
 }
+
 }
-</code></pre><p><em>运行结果</em><br>​<br><code>a与b相同                                                                                                      c与d不相同</code><br>​<br><em>分析</em></p>
+</code></pre><p><em>运行结果</em>   </p>
+<p>​                                                                                                             </p>
+<p><code>a与b相同                                                                                                      c与d不相同</code></p>
+<p>​                                                                                                         </p>
+<p><em>分析</em></p>
 <blockquote>
 <p> 这段代码创建了4个<code>Integer</code>类型的对象实例a、b、c、d，照常理来说，4个对象，其引用地址不同，此例子的输出应该都为不相同，但结果确是a与b相同，c与d不同，这是为什么？</p>
 </blockquote>
 <p>此处我们是采用自动装箱的方式来创建的<code>Integer</code>对象，而这相当于调用了<code>valueOf()</code>的方法，所以就得从<code>valueOf()</code>这个静态方法说起。</p>
-<p>###valueof的分析<br>首先，看看<code>Integer</code>的<code>valueOf()</code>方法的源码</p>
+<p>###valueof的分析</p>
+<p>首先，看看<code>Integer</code>的<code>valueOf()</code>方法的源码</p>
 <pre><code>public static Integer valueOf(int i) {
+
             if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)
+
                 return IntegerCache.cache[i + (-IntegerCache.low)];
+
             return new Integer(i);
+
         }
 </code></pre><p><em>分析</em></p>
 <blockquote>
@@ -428,55 +452,106 @@ public static void main(String[] args) {
 </blockquote>
 <p>再来看看IntegerCache类，IntegCache类是Integer类的一个内部静态类，其源码如下。</p>
 <pre><code>  /**
+
  * Cache to support the object identity semantics of autoboxing for values between
+
  * -128 and 127 (inclusive) as required by JLS.
+
  *
+
  * The cache is initialized on first usage.  The size of the cache
+
  * may be controlled by the {@code -XX:AutoBoxCacheMax=&lt;size&gt;} option.
+
  * During VM initialization, java.lang.Integer.IntegerCache.high property
+
  * may be set and saved in the private system properties in the
+
  * sun.misc.VM class.
+
  */ 
+
 private static class IntegerCache {
+
                 static final int low = -128;
+
                 static final int high;
+
                 static final Integer cache[];
 
+
+
             static {
+
                 // high value may be configured by property
+
                 int h = 127;
+
                 String integerCacheHighPropValue =
+
                     sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);
+
                 if (integerCacheHighPropValue != null) {
+
                     try {
+
                         int i = parseInt(integerCacheHighPropValue);
+
                         i = Math.max(i, 127);
+
                         // Maximum array size is Integer.MAX_VALUE
+
                         h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+
                     } catch( NumberFormatException nfe) {
+
                         // If the property cannot be parsed into an int, ignore it.
+
                     }
+
                 }
+
                 high = h;
 
+
+
                 cache = new Integer[(high - low) + 1];
+
                 int j = low;
+
                 for(int k = 0; k &lt; cache.length; k++)
+
                     cache[k] = new Integer(j++);
 
+
+
                 // range [-128, 127] must be interned (JLS7 5.1.7)
+
                 assert IntegerCache.high &gt;= 127;
+
             }
 
+
+
             private IntegerCache() {}
+
         }
 </code></pre><p><em>分析</em></p>
 <blockquote>
-<p>首先，从Javadoc中看出这个类是用来实现缓存的。它定义了三个静态参数，缓存数组<code>cache</code>,数组最小值<code>low</code>，赋值为-128以及数组最大值<code>high</code>，最大值映射到了<code>“java.lang.Integer.IntegerCache.high”</code>上。<br>，并支持 -128 到 127 之间的自动装箱过程。最大值 127 可以通过 JVM 的启动参数 -XX:AutoBoxCacheMax=size 修改。<br>修改jvm参数后<br>  <img src="2.png">                                                                                                                                      </p>
+<p>首先，从Javadoc中看出这个类是用来实现缓存的。它定义了三个静态参数，缓存数组<code>cache</code>,数组最小值<code>low</code>，赋值为-128以及数组最大值<code>high</code>，最大值映射到了<code>“java.lang.Integer.IntegerCache.high”</code>上。</p>
 </blockquote>
-<p><em>运行结果</em><br>​<br><code>a与b相同                                                                                                      c与d不相同</code></p>
-<p>###结论                   </p>
-<p><code>IntegerCache</code>这个<code>Integer</code>私有静态类代表<code>Integer</code>缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个 <code>for</code> 循环创建出一个值为-128~127的一个缓存数组<code>cache</code>，以后，如果创建的值在<code>low</code>和<code>high</code>之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例(在自动装箱的情况下)。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个 -128 到 127 这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用 <code>Integer</code> 的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。</p>
+<blockquote>
+<p>，并支持 -128 到 127 之间的自动装箱过程。最大值 127 可以通过 JVM 的启动参数 -XX:AutoBoxCacheMax=size 修改。                                                                                                              </p>
+</blockquote>
+<blockquote>
+<p>修改jvm参数后                                                                                                                                                                            </p>
+</blockquote>
+<p>  <img src="/2019/02/28/包装类的缓存机制/包装类的缓存机制/2.png">                                                                                                                                      </p>
+<p>​      </p>
+<p><em>运行结果</em></p>
+<p>​                                                                                                       </p>
+<p><code>a与b相同                                                                                                      c与d不相同</code></p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p><code>IntegerCache</code>这个<code>Integer</code>私有静态类代表<code>Integer</code>缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个 <code>for</code> 循环创建出一个值为-128~127的一个缓存数组<code>cache</code>，以后，如果创建的值在<code>low</code>和<code>high</code>之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例(在自动装箱的情况下)。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个 -128 到 127 这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用 <code>Integer</code> 的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。</p>
 
       
     </div>
@@ -530,7 +605,7 @@ private static class IntegerCache {
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/包装类的缓存机制与valueOf/" title="包装类的缓存机制与valueOf()">http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/包装类的缓存机制与valueOf/</a>
+    <a href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/" title="包装类的缓存机制">http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -602,8 +677,17 @@ private static class IntegerCache {
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -682,6 +766,22 @@ private static class IntegerCache {
       </section>
       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1293886117&auto=1&height=66"></iframe>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#包装类的缓存机制与valueOf"><span class="nav-number">1.</span> <span class="nav-text">包装类的缓存机制与valueOf()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.2.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
