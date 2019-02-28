@@ -293,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/02/24/Wu测试文章/">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制与valueOf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wu yuzhao">
@@ -312,7 +312,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/24/Wu测试文章/" itemprop="url">Wu测试文章</a></h1>
+                <a class="post-title-link" href="/2019/02/28/包装类的缓存机制与valueOf/" itemprop="url">包装类的缓存机制与valueOf()</a></h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-24T10:29:46+08:00">
-                2019-02-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-28T21:13:32+08:00">
+                2019-02-28
               </time>
             
 
@@ -383,157 +383,96 @@
       
         
           
-            
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-    
+            <p>##包装类的缓存机制与valueOf()</p>
+<p>###引言<br>Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由<code>valueOf()</code>静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用<code>valueOf()</code>来创建呢。</p>
+<hr>
+<p>首先，我们来看一个例子:</p>
+<pre><code>public class Test {
+public static void main(String[] args) {
 
-    
+    Integer a = 1;
+    Integer b = 1;
+    Integer c = 128;
+    Integer d = 128;
+    if(a == b){
+        System.out.println(&quot;a与b相同&quot;);
+    }
 
-    
+    if(c == d){
+        System.out.println(&quot;c与d相同&quot;);
+    }
 
-    <footer class="post-footer">
-      
+}
+}
+</code></pre><p><em>运行结果</em>   </p>
+<p><code>a与b相同                                                                                                      c与d不相同</code></p>
+<p><em>分析</em></p>
+<blockquote>
+<p> 这段代码创建了4个<code>Integer</code>类型的对象实例a、b、c、d，照常理来说，4个对象，其引用地址不同，此例子的输出应该都为不相同，但结果确是a与b相同，c与d不同，这是为什么？</p>
+</blockquote>
+<p>此处我们是采用自动装箱的方式来创建的<code>Integer</code>对象，而这相当于调用了<code>valueOf()</code>的方法，所以就得从<code>valueOf()</code>这个静态方法说起。</p>
+<p>###valueof的分析<br>首先，看看<code>Integer</code>的<code>valueOf()</code>方法的源码</p>
+<pre><code>public static Integer valueOf(int i) {
+            if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)
+                return IntegerCache.cache[i + (-IntegerCache.low)];
+            return new Integer(i);
+        }
+</code></pre><p><em>分析</em></p>
+<blockquote>
+<p>此段代码中如果不满足<code>i&gt;=IntegerCache.low &amp;&amp; i&lt;= IntegerCache.high</code>这个表达式，就通过new来得到对象，如果满足呢？</p>
+</blockquote>
+<p>再来看看IntegerCache类，IntegCache类是Integer类的一个内部静态类，其源码如下。</p>
+<pre><code>  /**
+ * Cache to support the object identity semantics of autoboxing for values between
+ * -128 and 127 (inclusive) as required by JLS.
+ *
+ * The cache is initialized on first usage.  The size of the cache
+ * may be controlled by the {@code -XX:AutoBoxCacheMax=&lt;size&gt;} option.
+ * During VM initialization, java.lang.Integer.IntegerCache.high property
+ * may be set and saved in the private system properties in the
+ * sun.misc.VM class.
+ */ 
+private static class IntegerCache {
+                static final int low = -128;
+                static final int high;
+                static final Integer cache[];
 
-      
+            static {
+                // high value may be configured by property
+                int h = 127;
+                String integerCacheHighPropValue =
+                    sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);
+                if (integerCacheHighPropValue != null) {
+                    try {
+                        int i = parseInt(integerCacheHighPropValue);
+                        i = Math.max(i, 127);
+                        // Maximum array size is Integer.MAX_VALUE
+                        h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+                    } catch( NumberFormatException nfe) {
+                        // If the property cannot be parsed into an int, ignore it.
+                    }
+                }
+                high = h;
 
-      
+                cache = new Integer[(high - low) + 1];
+                int j = low;
+                for(int k = 0; k &lt; cache.length; k++)
+                    cache[k] = new Integer(j++);
 
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+                // range [-128, 127] must be interned (JLS7 5.1.7)
+                assert IntegerCache.high &gt;= 127;
+            }
 
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/02/24/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wu yuzhao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="巴斯光甜的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/24/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-24T10:06:41+08:00">
-                2019-02-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+            private IntegerCache() {}
+        }
+</code></pre><p><em>分析</em></p>
+<blockquote>
+<p>首先，从Javadoc中看出这个类是用来实现缓存的。它定义了三个静态参数，缓存数组<code>cache</code>,数组最小值<code>low</code>，赋值为-128以及数组最大值<code>high</code>，最大值映射到了<code>“java.lang.Integer.IntegerCache.high”</code>上。<br>，并支持 -128 到 127 之间的自动装箱过程。最大值 127 可以通过 JVM 的启动参数 -XX:AutoBoxCacheMax=size 修改。<br>修改jvm参数后<br>  <img src="2.png">                                                                                                                                      </p>
+</blockquote>
+<p><em>运行结果</em></p>
+<p><code>a与b相同                                                                                                      c与d不相同</code></p>
+<p>###结论                   </p>
+<h2 id="IntegerCache这个Integer私有静态类代表Integer缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个-for-循环创建出一个值为-128-127的一个缓存数组cache，以后，如果创建的值在low和high之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例-在自动装箱的情况下-。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个-128-到-127-这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用-Integer-的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。"><a href="#IntegerCache这个Integer私有静态类代表Integer缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个-for-循环创建出一个值为-128-127的一个缓存数组cache，以后，如果创建的值在low和high之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例-在自动装箱的情况下-。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个-128-到-127-这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用-Integer-的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。" class="headerlink" title="IntegerCache这个Integer私有静态类代表Integer缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个 for 循环创建出一个值为-128~127的一个缓存数组cache，以后，如果创建的值在low和high之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例(在自动装箱的情况下)。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个 -128 到 127 这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用 Integer 的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。"></a><code>IntegerCache</code>这个<code>Integer</code>私有静态类代表<code>Integer</code>缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个 <code>for</code> 循环创建出一个值为-128~127的一个缓存数组<code>cache</code>，以后，如果创建的值在<code>low</code>和<code>high</code>之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例(在自动装箱的情况下)。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个 -128 到 127 这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用 <code>Integer</code> 的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。</h2>
           
         
       
@@ -621,7 +560,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -629,6 +568,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
             
 
           </nav>
