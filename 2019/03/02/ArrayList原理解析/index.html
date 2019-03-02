@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Java基础,">
 
 
 
@@ -81,13 +81,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="巴斯光甜的博客">
-<meta property="og:url" content="http://wuyuzhao666.github.io/index.html">
+<meta name="description" content="ArrayList的基本原理 ArrayList是我们平时编码经常用到的动态数组容器类，要想分析它的原理，我们先来看看一个简易的DynamicArray类（摘自Java编程的逻辑）  一个简易的动态数组类1234567public static class DynamicArray&amp;lt;E&amp;gt;&amp;#123;    private static final int DEFAULT_CAPACIT">
+<meta name="keywords" content="Java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArrayList原理解析">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/03/02/ArrayList原理解析/index.html">
 <meta property="og:site_name" content="巴斯光甜的博客">
+<meta property="og:description" content="ArrayList的基本原理 ArrayList是我们平时编码经常用到的动态数组容器类，要想分析它的原理，我们先来看看一个简易的DynamicArray类（摘自Java编程的逻辑）  一个简易的动态数组类1234567public static class DynamicArray&amp;lt;E&amp;gt;&amp;#123;    private static final int DEFAULT_CAPACIT">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-02T00:42:34.690Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="巴斯光甜的博客">
+<meta name="twitter:title" content="ArrayList原理解析">
+<meta name="twitter:description" content="ArrayList的基本原理 ArrayList是我们平时编码经常用到的动态数组容器类，要想分析它的原理，我们先来看看一个简易的DynamicArray类（摘自Java编程的逻辑）  一个简易的动态数组类1234567public static class DynamicArray&amp;lt;E&amp;gt;&amp;#123;    private static final int DEFAULT_CAPACIT">
 
 
 
@@ -117,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/03/02/ArrayList原理解析/">
 
 
 
 
 
-  <title>巴斯光甜的博客</title>
+  <title>ArrayList原理解析 | 巴斯光甜的博客</title>
   
 
 
@@ -142,8 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,271 +282,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/02/ArrayList原理解析/ArrayList原理解析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wu yuzhao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="巴斯光甜的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/02/ArrayList原理解析/ArrayList原理解析/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-02T08:37:40+08:00">
-                2019-03-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="ArrayList的基本原理"><a href="#ArrayList的基本原理" class="headerlink" title="ArrayList的基本原理"></a>ArrayList的基本原理</h2><blockquote>
-<p><code>ArrayList</code>是我们平时编码经常用到的动态数组容器类，要想分析它的原理，我们先来看看一个简易的DynamicArray类（摘自Java编程的逻辑）</p>
-</blockquote>
-<h3 id="一个简易的动态数组类"><a href="#一个简易的动态数组类" class="headerlink" title="一个简易的动态数组类"></a>一个简易的动态数组类</h3><pre><code>public static class DynamicArray&lt;E&gt;{
-    private static final int DEFAULT_CAPACITY = 10;
-    private int size;
-    private Object[] elementData;
-
-   public Dynamicarray() {
-       this.elementData = new Object[DEFAULT_CAPACITY];
-   }
-   public void ensureCapacity(int minCapacity){
-       int oldCapacity = elementData.length;
-       if(oldCapacity &gt;= minCapacity){
-           return;
-       }
-       int newCapacity = oldCapacity * 2;
-       if(newCapacity &lt; minCapacity){
-           newCapacity = minCapacity;
-       }
-       elementData = Arrays.copyOf(elementData,newCapacity);
-   }
-   public void add(E e){
-
-       ensureCapacity(size + 1);
-       elementData[size++] = e;
-   }
-   public E get(int index){
-       return (E) elementData[index];
-   }
-   public E set(int index,E e){
-       E e1 = get(index);
-       elementData[index] = e;
-       return e1;
-   }
-}
-</code></pre><blockquote>
-<p>在这个类中，定义了一个内部数组elementData，数组元素个数size，一个静态常量DEFAULT_CAPACITY,它表示数组的默认空间大小。这个动态数组类的操作基本都是基于内部数组element和size。<code>ensureCapacity</code>方法,在每次做add操作时，都会被调用，它是检查当前数组容量，并增大容量，然后根据新的容量，复制原来数组的。</p>
-</blockquote>
-<h3 id="ArrayList源码解析："><a href="#ArrayList源码解析：" class="headerlink" title="ArrayList源码解析："></a>ArrayList源码解析：</h3><blockquote>
-<p>ArrayList的基本原理与上文中的动态数组类是差不多的，它同样有静态常量默认空间，实例变量内部数组、元素个数。同样，内部方法基本都是操作elementData这个数组，size实时记录着这个数组的大小，首先我们从<code>add</code>方法说起（各源码内注释已说明白，就不再叙述）。</p>
-</blockquote>
-<p>添加方法add(E e)：</p>
-<pre><code>public boolean add(E e) {
-    //首先，调用ensureCapacityInternal方法，确保数组容量够。将当前元素个数加一，即最小容量minCapacity传入方法。
-    ensureCapacityInternal(size + 1);  // Increments modCount!!
-    elementData[size++] = e;
-    return true;
-}
-</code></pre><p>检查数组容量方法ensureCapacityInternal(int minCapacity)：</p>
-<pre><code>private void ensureCapacityInternal(int minCapacity) {
-    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));
-}
-private static int calculateCapacity(Object[] elementData, int minCapacity) {
-//如果数组为空，则返回默认值与minCapacity之间的最大值
-    if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
-        return Math.max(DEFAULT_CAPACITY, minCapacity);
-    }
-    return minCapacity;
-}
-private void ensureExplicitCapacity(int minCapacity) {
-    modCount++;
-
-    //如果minCapacity大于当前数组的长度，就调用grow方法增大容量,
-    if (minCapacity - elementData.length &gt; 0)
-        grow(minCapacity);
-}
-</code></pre><blockquote>
-<p>modCount++表示内部的修改次数，而这个参数与arrayList的迭代有关,下篇博客再讲解。</p>
-</blockquote>
-<p>增大数组容量grow方法(int minCapacity)：</p>
-<pre><code>  private void grow(int minCapacity) {
-    // overflow-conscious code
-    int oldCapacity = elementData.length;
-    //定义一个新的容量newCapacity，它的值为当前容量右移一位，即除以2，再加上当前数组容量，即当前数组容量的1.5倍
-    int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);
-    //如果还小于当前元素个数加一，新的容量就等于minCapacity
-    if (newCapacity - minCapacity &lt; 0)
-        newCapacity = minCapacity;
-    //如果newCapacity大于一个静态常量MAX_ARRAY_SIZE，就调用hugeCapacity方法，
-    将newCapacity设定为Integer包装类的最大值0x7fffffff,其中MAX_ARRAY_SIZE为Integer.MAX_VALUE-8，
-    减8是因为在一些vm中，在数组中会保留一些头信息，尝试分配更大的数组可能导致OutOfMemoryError:
-    请求的数组大小超过VM限制
-    if (newCapacity - MAX_ARRAY_SIZE &gt; 0)
-        newCapacity = hugeCapacity(minCapacity);
-    // minCapacity is usually close to size, so this is a win:
-    //以newCapacity为数组size，创建了一个新的数组，复制原内容，赋值给elementData
-    elementData = Arrays.copyOf(elementData, newCapacity);
-}
-
-private static int hugeCapacity(int minCapacity) {
-    if (minCapacity &lt; 0) // overflow
-        throw new OutOfMemoryError();
-    //如果minCapacity还大于MAX_ARRAY_SIZE，就返回Integer的最大值0x7fffffff
-    return (minCapacity &gt; MAX_ARRAY_SIZE) ?
-        Integer.MAX_VALUE :
-        MAX_ARRAY_SIZE;
-}
-</code></pre><p>再来看看remove(int index)方法:</p>
-<pre><code> public E remove(int index) {
-    rangeCheck(index);
-
-    modCount++;
-    E oldValue = elementData(index);
-    //计算出需要移动多少位
-    int numMoved = size - index - 1;
-    if (numMoved &gt; 0)
-    //移动数组
-        System.arraycopy(elementData, index+1, elementData, index,
-                         numMoved);
-    //将size减1，GC会回收未经使用的对象
-    elementData[--size] = null; // clear to let GC do its work
-
-    return oldValue;
-}
-</code></pre><blockquote>
-<p>这里modCount依旧加一。</p>
-</blockquote>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><blockquote>
-<p>上面，我们介绍了<code>ArrayList</code>的<code>add</code>和<code>remove</code>方法，其他方法也都是对内部数组elementData<br>和元素个数size的操作，就不再探究了。总之，<code>ArrayList</code>就是一个动态数组，实现动态的原理，就是对内部的elementData、size和默认空间<code>DEFAULT_CAPACITY</code>进行操作。创建<code>ArrayList</code>时，会默认初始化一个<code>DEFAULT_CAPACITY</code>大小的数组。每次要做增加操作，就进行数组容量检查，若不够，就增加容量，做删除操作，size就减一，保持size实时记录当前元素个数。</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -572,9 +314,7 @@ private static int hugeCapacity(int minCapacity) {
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/02/ArrayList原理解析/" itemprop="url">ArrayList原理解析</a></h1>
+          <h1 class="post-title" itemprop="name headline">ArrayList原理解析</h1>
         
 
         <div class="post-meta">
@@ -606,6 +346,11 @@ private static int hugeCapacity(int minCapacity) {
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -643,9 +388,7 @@ private static int hugeCapacity(int minCapacity) {
       
 
       
-        
-          
-            <h2 id="ArrayList的基本原理"><a href="#ArrayList的基本原理" class="headerlink" title="ArrayList的基本原理"></a>ArrayList的基本原理</h2><blockquote>
+        <h2 id="ArrayList的基本原理"><a href="#ArrayList的基本原理" class="headerlink" title="ArrayList的基本原理"></a>ArrayList的基本原理</h2><blockquote>
 <p><code>ArrayList</code>是我们平时编码经常用到的动态数组容器类，要想分析它的原理，我们先来看看一个简易的DynamicArray类（摘自Java编程的逻辑）</p>
 </blockquote>
 <h3 id="一个简易的动态数组类"><a href="#一个简易的动态数组类" class="headerlink" title="一个简易的动态数组类"></a>一个简易的动态数组类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicArray</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object[] elementData;</span><br></pre></td></tr></table></figure>
@@ -701,8 +444,6 @@ private static int hugeCapacity(int minCapacity) {
 <p>上面，我们介绍了<code>ArrayList</code>的<code>add</code>和<code>remove</code>方法，其他方法也都是对内部数组elementData和元素个数size的操作，就不再探究了。总之，<code>ArrayList</code>就是一个动态数组，实现动态的原理，就是对内部的elementData、size和默认空间<code>DEFAULT_CAPACITY</code>进行操作。创建<code>ArrayList</code>时，会默认初始化一个<code>DEFAULT_CAPACITY</code>大小的数组。每次要做增加操作，就进行数组容量检查，若不够，就增加容量，做删除操作，size就减一，保持size实时记录当前元素个数。</p>
 </blockquote>
 
-          
-        
       
     </div>
     
@@ -710,327 +451,98 @@ private static int hugeCapacity(int minCapacity) {
     
     <div>
       
+      <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+      
     </div>
     
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
 
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Wu yuzhao WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Wu yuzhao
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://wuyuzhao666.github.io/2019/03/02/ArrayList原理解析/" title="ArrayList原理解析">http://wuyuzhao666.github.io/2019/03/02/ArrayList原理解析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
     
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wu yuzhao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="巴斯光甜的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/28/包装类的缓存机制/包装类的缓存机制/" itemprop="url">包装类的缓存机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-28T21:50:12+08:00">
-                2019-02-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Java基础/" rel="tag"><i class="fa fa-tag"></i>Java基础</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="包装类的缓存机制与valueOf"><a href="#包装类的缓存机制与valueOf" class="headerlink" title="包装类的缓存机制与valueOf()"></a>包装类的缓存机制与valueOf()</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由<code>valueOf()</code>静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用<code>valueOf()</code>来创建呢。</p>
-<hr>
-<p>首先，我们来看一个例子:</p>
-<pre><code>public class Test {
-
-public static void main(String[] args) {
-
-
-
-    Integer a = 1;
-
-    Integer b = 1;
-
-    Integer c = 128;
-
-    Integer d = 128;
-
-    if(a == b){
-
-        System.out.println(&quot;a与b相同&quot;);
-
-    }
-
-
-
-    if(c == d){
-
-        System.out.println(&quot;c与d相同&quot;);
-
-    }
-
-
-
-}
-
-}
-</code></pre><p><em>运行结果</em>   </p>
-<p>​                                                                                                             </p>
-<p><code>a与b相同                                                                                                      c与d不相同</code></p>
-<p>​                                                                                                         </p>
-<p><em>分析</em></p>
-<blockquote>
-<p> 这段代码创建了4个<code>Integer</code>类型的对象实例a、b、c、d，照常理来说，4个对象，其引用地址不同，此例子的输出应该都为不相同，但结果确是a与b相同，c与d不同，这是为什么？</p>
-</blockquote>
-<p>此处我们是采用自动装箱的方式来创建的<code>Integer</code>对象，而这相当于调用了<code>valueOf()</code>的方法，所以就得从<code>valueOf()</code>这个静态方法说起。</p>
-<p>###valueof的分析</p>
-<p>首先，看看<code>Integer</code>的<code>valueOf()</code>方法的源码</p>
-<pre><code>public static Integer valueOf(int i) {
-
-            if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)
-
-                return IntegerCache.cache[i + (-IntegerCache.low)];
-
-            return new Integer(i);
-
-        }
-</code></pre><p><em>分析</em></p>
-<blockquote>
-<p>此段代码中如果不满足<code>i&gt;=IntegerCache.low &amp;&amp; i&lt;= IntegerCache.high</code>这个表达式，就通过new来得到对象，如果满足呢？</p>
-</blockquote>
-<p>再来看看IntegerCache类，IntegCache类是Integer类的一个内部静态类，其源码如下。</p>
-<pre><code>  /**
-
- * Cache to support the object identity semantics of autoboxing for values between
-
- * -128 and 127 (inclusive) as required by JLS.
-
- *
-
- * The cache is initialized on first usage.  The size of the cache
-
- * may be controlled by the {@code -XX:AutoBoxCacheMax=&lt;size&gt;} option.
-
- * During VM initialization, java.lang.Integer.IntegerCache.high property
-
- * may be set and saved in the private system properties in the
-
- * sun.misc.VM class.
-
- */ 
-
-private static class IntegerCache {
-
-                static final int low = -128;
-
-                static final int high;
-
-                static final Integer cache[];
-
-
-
-            static {
-
-                // high value may be configured by property
-
-                int h = 127;
-
-                String integerCacheHighPropValue =
-
-                    sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);
-
-                if (integerCacheHighPropValue != null) {
-
-                    try {
-
-                        int i = parseInt(integerCacheHighPropValue);
-
-                        i = Math.max(i, 127);
-
-                        // Maximum array size is Integer.MAX_VALUE
-
-                        h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
-
-                    } catch( NumberFormatException nfe) {
-
-                        // If the property cannot be parsed into an int, ignore it.
-
-                    }
-
-                }
-
-                high = h;
-
-
-
-                cache = new Integer[(high - low) + 1];
-
-                int j = low;
-
-                for(int k = 0; k &lt; cache.length; k++)
-
-                    cache[k] = new Integer(j++);
-
-
-
-                // range [-128, 127] must be interned (JLS7 5.1.7)
-
-                assert IntegerCache.high &gt;= 127;
-
-            }
-
-
-
-            private IntegerCache() {}
-
-        }
-</code></pre><p><em>分析</em></p>
-<blockquote>
-<p>首先，从Javadoc中看出这个类是用来实现缓存的。它定义了三个静态参数，缓存数组<code>cache</code>,数组最小值<code>low</code>，赋值为-128以及数组最大值<code>high</code>，最大值映射到了<code>“java.lang.Integer.IntegerCache.high”</code>上。</p>
-</blockquote>
-<blockquote>
-<p>，并支持 -128 到 127 之间的自动装箱过程。最大值 127 可以通过 JVM 的启动参数 -XX:AutoBoxCacheMax=size 修改。                                                                                                              </p>
-</blockquote>
-<blockquote>
-<p>修改jvm参数后                                                                                                                                                                            </p>
-</blockquote>
-<p>  <img src="/2019/02/28/包装类的缓存机制/包装类的缓存机制/2.png" alt="添加jvm参数">                                                                                                                                 </p>
-<p>​      </p>
-<p><em>运行结果</em></p>
-<p>​                                                                                                       </p>
-<p><code>a与b相同                                                                                                      c与d不相同</code></p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p><code>IntegerCache</code>这个<code>Integer</code>私有静态类代表<code>Integer</code>缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个 <code>for</code> 循环创建出一个值为-128~127的一个缓存数组<code>cache</code>，以后，如果创建的值在<code>low</code>和<code>high</code>之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例(在自动装箱的情况下)。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个 -128 到 127 这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用 <code>Integer</code> 的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/28/包装类的缓存机制/包装类的缓存机制/" rel="next" title="包装类的缓存机制">
+                <i class="fa fa-chevron-left"></i> 包装类的缓存机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/02/ArrayList原理解析/ArrayList原理解析/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -1040,10 +552,11 @@ private static class IntegerCache {
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1051,6 +564,10 @@ private static class IntegerCache {
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1071,8 +588,17 @@ private static class IntegerCache {
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1151,6 +677,22 @@ private static class IntegerCache {
       </section>
       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1293886117&auto=1&height=66"></iframe>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList的基本原理"><span class="nav-number">1.</span> <span class="nav-text">ArrayList的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简易的动态数组类"><span class="nav-number">1.1.</span> <span class="nav-text">一个简易的动态数组类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList源码解析："><span class="nav-number">1.2.</span> <span class="nav-text">ArrayList源码解析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.3.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1332,6 +874,10 @@ show_date_time();
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
