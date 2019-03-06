@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="巴斯光甜的博客" type="application/atom+xml">
 
@@ -89,7 +91,7 @@
 <meta property="og:site_name" content="巴斯光甜的博客">
 <meta property="og:description" content="ArrayList的基本原理 ArrayList是我们平时编码经常用到的动态数组容器类，要想分析它的原理，我们先来看看一个简易的DynamicArray类（摘自Java编程的逻辑）  一个简易的动态数组类1234567public static class DynamicArray&amp;lt;E&amp;gt;&amp;#123;    private static final int DEFAULT_CAPACIT">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-02T00:46:55.216Z">
+<meta property="og:updated_time" content="2019-03-02T13:26:34.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList原理解析">
 <meta name="twitter:description" content="ArrayList的基本原理 ArrayList是我们平时编码经常用到的动态数组容器类，要想分析它的原理，我们先来看看一个简易的DynamicArray类（摘自Java编程的逻辑）  一个简易的动态数组类1234567public static class DynamicArray&amp;lt;E&amp;gt;&amp;#123;    private static final int DEFAULT_CAPACIT">
@@ -393,30 +395,8 @@
 </blockquote>
 <h3 id="一个简易的动态数组类"><a href="#一个简易的动态数组类" class="headerlink" title="一个简易的动态数组类"></a>一个简易的动态数组类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicArray</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object[] elementData;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Dynamicarray</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[DEFAULT_CAPACITY];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ensureCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(oldCapacity &gt;= minCapacity)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> newCapacity = oldCapacity * <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(newCapacity &lt; minCapacity)&#123;</span><br><span class="line"></span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    elementData = Arrays.copyOf(elementData,newCapacity);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span></span>&#123;</span><br></pre></td></tr></table></figure>
-<pre><code>        ensureCapacity(size + 1);
-
-       elementData[size++] = e;
-
-   }
-
-   public E get(int index){
-
-       return (E) elementData[index];
-
-   }
-
-   public E set(int index,E e){
-
-       E e1 = get(index);
-
-       elementData[index] = e;
-
-       return e1;
-
-   }
-
-}
-</code></pre><blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">		ensureCapacity(size + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">       elementData[size++] = e;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> (E) elementData[index];</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index,E e)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       E e1 = get(index);</span><br><span class="line"></span><br><span class="line">       elementData[index] = e;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> e1;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>在这个类中，定义了一个内部数组elementData，数组元素个数size，一个静态常量DEFAULT_CAPACITY,它表示数组的默认空间大小。这个动态数组类的操作基本都是基于内部数组element和size。<code>ensureCapacity</code>方法,在每次做add操作时，都会被调用，它是检查当前数组容量，并增大容量，然后根据新的容量，复制原来数组的。</p>
 </blockquote>
 <h3 id="ArrayList源码解析："><a href="#ArrayList源码解析：" class="headerlink" title="ArrayList源码解析："></a>ArrayList源码解析：</h3><blockquote>
@@ -534,6 +514,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/03/04/LinkedList原理解析/LinkedList原理解析/" rel="prev" title="LinkedList原理解析">
+                LinkedList原理解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -613,7 +597,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
