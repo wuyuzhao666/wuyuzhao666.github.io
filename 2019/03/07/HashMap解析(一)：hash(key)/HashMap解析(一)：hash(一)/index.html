@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="容器类,HashMap,">
 
 
 
@@ -81,14 +81,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://wuyuzhao666.github.io/tags/index.html">
+<meta name="description" content="HashMap解析(一)：hash(key)引言  HashMap是Map接口的一个实现类，它的实现方式利用了hash，使用了数组链表的形式来存储数据，HashMap内部维护了一个Node&amp;lt;k,v&amp;gt;类型的数组table（哈希表），每个元素table[i]指向一个单向链表，根据键存取值，通过相应的运算得到数组中的索引位置,然后再操作table[i]指向的单向链表。这个数组在初次使用的时候">
+<meta name="keywords" content="容器类,HashMap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap解析(一)：hash(key)">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/03/07/HashMap解析(一)：hash(key)/HashMap解析(一)：hash(一)/index.html">
 <meta property="og:site_name" content="0xCAFEBABE的博客">
+<meta property="og:description" content="HashMap解析(一)：hash(key)引言  HashMap是Map接口的一个实现类，它的实现方式利用了hash，使用了数组链表的形式来存储数据，HashMap内部维护了一个Node&amp;lt;k,v&amp;gt;类型的数组table（哈希表），每个元素table[i]指向一个单向链表，根据键存取值，通过相应的运算得到数组中的索引位置,然后再操作table[i]指向的单向链表。这个数组在初次使用的时候">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-07T14:03:38.871Z">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/image/upload/hash_count.png">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/image/upload/hash_yu.png">
+<meta property="og:updated_time" content="2019-03-08T01:35:23.070Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="HashMap解析(一)：hash(key)">
+<meta name="twitter:description" content="HashMap解析(一)：hash(key)引言  HashMap是Map接口的一个实现类，它的实现方式利用了hash，使用了数组链表的形式来存储数据，HashMap内部维护了一个Node&amp;lt;k,v&amp;gt;类型的数组table（哈希表），每个元素table[i]指向一个单向链表，根据键存取值，通过相应的运算得到数组中的索引位置,然后再操作table[i]指向的单向链表。这个数组在初次使用的时候">
+<meta name="twitter:image" content="http://res.cloudinary.com/cafebabe/image/upload/hash_count.png">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/tags/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/03/07/HashMap解析(一)：hash(key)/HashMap解析(一)：hash(一)/">
 
 
 
 
 
-  <title>tags | 0xCAFEBABE的博客</title>
+  <title>HashMap解析(一)：hash(key) | 0xCAFEBABE的博客</title>
   
 
 
@@ -281,40 +288,304 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/07/HashMap解析(一)：hash(key)/HashMap解析(一)：hash(一)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu yuzhao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0xCAFEBABE的博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">tags</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                5 tags in total
+          <h1 class="post-title" itemprop="name headline">HashMap解析(一)：hash(key)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T19:44:54+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
             </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/ArrayList/" style="font-size: 12px; color: #ccc">ArrayList</a> <a href="/tags/HashMap/" style="font-size: 12px; color: #ccc">HashMap</a> <a href="/tags/LinkedList/" style="font-size: 12px; color: #ccc">LinkedList</a> <a href="/tags/容器类/" style="font-size: 30px; color: #111">容器类</a> <a href="/tags/缓存机制/" style="font-size: 12px; color: #ccc">缓存机制</a>
-            </div>
-          </div>
-        
-      </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="HashMap解析-一-：hash-key"><a href="#HashMap解析-一-：hash-key" class="headerlink" title="HashMap解析(一)：hash(key)"></a>HashMap解析(一)：hash(key)</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>  <code>HashMap</code>是<code>Map</code>接口的一个实现类，它的实现方式利用了<code>hash</code>，使用了数组链表的形式来存储数据，<code>HashMap</code>内部维护了一个<code>Node&lt;k,v&gt;</code>类型的数组<code>table</code>（哈希表），每个元素<code>table[i]</code>指向一个单向链表，根据键存取值，通过相应的运算得到数组中的索引位置,然后再操作<code>table[i]</code>指向的单向链表。这个数组在初次使用的时候会被初始化，并且，数组长度为2的次方数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br></pre></td></tr></table></figure>
+<p>在<code>HashMap</code>中，它是一种数组链表的形式，每个存入的元素被包装成一个<code>Node</code>,<code>Node</code>是一个内部类，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> hash;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> K key;</span><br><span class="line"></span><br><span class="line">    V value;</span><br><span class="line"></span><br><span class="line">    Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">    Node(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.hash = hash;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> K <span class="title">getKey</span><span class="params">()</span>        </span>&#123; <span class="keyword">return</span> key; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">getValue</span><span class="params">()</span>      </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> key + <span class="string">"="</span> + value; &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Objects.hashCode(key) ^ Objects.hashCode(value);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">setValue</span><span class="params">(V newValue)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        V oldValue = value;</span><br><span class="line"></span><br><span class="line">        value = newValue;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> oldValue;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">this</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span> Map.Entry) &#123;</span><br><span class="line"></span><br><span class="line">            Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (Objects.equals(key, e.getKey()) &amp;&amp;</span><br><span class="line"></span><br><span class="line">                Objects.equals(value, e.getValue()))</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在<code>Node</code>中，维护了节点元素、元素的key、key的hash值，以及下一个节点next，这种方式就构成了一个单向链表的形式。</p>
+</blockquote>
+<h3 id="hash（key）"><a href="#hash（key）" class="headerlink" title="hash（key）"></a>hash（key）</h3><p>先来看看put方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算出key的hash值，一起传入</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> putVal(hash(key), key, value, <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>方便讲解，直接给出结论。</em></p>
+<p>向<code>HashMap</code>中put、get、remove元素时，是根据节点的<code>key</code>的<code>hash</code>值来对哈希表进行操作的，那是如何通过<code>hash</code>值来进行索引的呢，先看看<code>hash(key)</code>的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//由节点的key值计算</span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//若key为null，则hash值为0，所以在HashCode中key值可以为空；</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// 否则，将key的hashcode值与hashcode的右移16位进行异或</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">------------------------------------------</span><br><span class="line"></span><br><span class="line"><span class="comment">//根据hash值取得对应的节点</span></span><br><span class="line"></span><br><span class="line">tab[i = (n - <span class="number">1</span>) &amp; hash]</span><br></pre></td></tr></table></figure>
+<p>计算过程如下：</p>
+<p><img src="http://res.cloudinary.com/cafebabe/image/upload/hash_count.png"></p>
+<blockquote>
+<p>了解了hash值的计算过程以及如何存取节点到数组中后，应该要知道为什么需要这样来建立索引？</p>
+</blockquote>
+<blockquote>
+<p>因为数组索引是由hash值确定的，所以最重要的就是避免hash冲突，即以上的这些对hashCode的操作都是为了避免hash冲突，使节点在数组中分布均匀。</p>
+</blockquote>
+<p>针对这个计算过程，提出三个问题（<a href="https://juejin.im/post/5aa5d8d26fb9a028d2079264" title="Title" target="_blank" rel="noopener">此处参考原PO</a>）</p>
+<p>1.为什么不直接采用经过hashCode（）处理的哈希码作为存储数组table的下标位置？</p>
+<p>2.为什么采用哈希码与运算(&amp;)（数组长度-1）计算数组下标？</p>
+<p>3.为什么在计算数组下标前，需对哈希码进行二次处理：扰动处理？</p>
+<p>第一个问题</p>
+<blockquote>
+<p>因为直接算出来的hashCode值是2进制的32位数，要是直接使用这个数的话，就可能会出现hashCode的值远远大于数组实际元素个数，这样节点分布就会极不均匀，并且也浪费了大量的空间，所以，采用哈希码与运算(&amp;)（数组长度-1）计算数组下标。</p>
+</blockquote>
+<p>第二个问题</p>
+<blockquote>
+<p>1.数组长度-1</p>
+</blockquote>
+<blockquote>
+<p>数组长度=2的幂=（二进制表示）100…00的形式=首位为1、后面均为0。要是直接去&amp;哈希码，会有如下几个后果。</p>
+</blockquote>
+<blockquote>
+<p>（1）算出的下标值就会集中于某几位，这样增大了hash冲突的可能性。</p>
+</blockquote>
+<blockquote>
+<p>（2）数组长度为偶数，最后一位0，&amp;出结果肯定为偶数，这样浪费了一半空间，而且也增大了hash冲突的可能性。</p>
+</blockquote>
+<blockquote>
+<p>(数组长度-1)=（二进制表示）011…11的形式=首位为0、后面均为1。</p>
+</blockquote>
+<blockquote>
+<p>（1）这样&amp;出的结果，就会由hash码的低位来决定，并且最后一位为1，&amp;出的结果是奇数还是偶数，由hash码的最后以为决定。</p>
+</blockquote>
+<blockquote>
+<p>2.&amp;运算</p>
+</blockquote>
+<blockquote>
+<p>hash码与运算数组长度 实际上=将hash值对数组长度取模，减小索引的值。为了提高效率，采用位运算&amp;，只有但数组长度=2的幂次方时，h&amp;(n-1)才等价与h%n。</p>
+</blockquote>
+<p><img src="http://res.cloudinary.com/cafebabe/image/upload/hash_yu.png"></p>
+<blockquote>
+<p>这样做的结果，都是为了让&amp;出的结果，由hash码来控制，能让结果更加的均匀。</p>
+</blockquote>
+<p>第三个问题</p>
+<blockquote>
+<p>因为一般数组长度只会对应hash码的后几位，这样求出的结果也会易造成hash冲突，经过移位运算，得到的hash码更加均匀，提高了数组索引的随机性和均匀性。</p>
+</blockquote>
+
       
     </div>
     
     
     
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+      
+    </div>
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Wu yuzhao WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Wu yuzhao
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://wuyuzhao666.github.io/2019/03/07/HashMap解析(一)：hash(key)/HashMap解析(一)：hash(一)/" title="HashMap解析(一)：hash(key)">http://wuyuzhao666.github.io/2019/03/07/HashMap解析(一)：hash(key)/HashMap解析(一)：hash(一)/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/容器类/" rel="tag"><i class="fa fa-tag"></i>容器类</a>
+          
+            <a href="/tags/HashMap/" rel="tag"><i class="fa fa-tag"></i>HashMap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/04/LinkedList原理解析/LinkedList原理解析/" rel="next" title="LinkedList原理解析">
+                <i class="fa fa-chevron-left"></i> LinkedList原理解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -347,8 +618,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -436,6 +716,22 @@
       </section>
       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1293886117&auto=1&height=66"></iframe>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap解析-一-：hash-key"><span class="nav-number">1.</span> <span class="nav-text">HashMap解析(一)：hash(key)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash（key）"><span class="nav-number">1.2.</span> <span class="nav-text">hash（key）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
