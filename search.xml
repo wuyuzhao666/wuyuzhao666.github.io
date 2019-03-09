@@ -5,8 +5,8 @@
     <url>%2F2019%2F03%2F09%2FHashSet%E8%A7%A3%E6%9E%90%2FHashSet%E8%A7%A3%E6%9E%90%2F</url>
     <content type="text"><![CDATA[HashSet解析基本用法 HashSet实现了Set接口，Set表示无重复元素、且不保证访问顺序的容器接口。与HashMap类似，它有如下的构造方法。 123456789public HashSet() &#123; map = new HashMap&lt;&gt;();&#125;public HashSet(Collection&lt;? extends E&gt; c) &#123;map = new HashMap&lt;&gt;(Math.max((int) (c.size()/.75f) + 1, 16)); addAll(c);&#125;public HashSet(int initialCapacity, float loadFactor) &#123;map = new HashMap&lt;&gt;(initialCapacity, loadFactor);&#125;public HashSet(int initialCapacity) &#123;map = new HashMap&lt;&gt;(initialCapacity);&#125; initialCapacity（初始容量，默认16），loadFactor（负载因子，默认0.75）与HashMap中的含义是一样的。 HashSet的用法也很简单。 1234567891011121314151617List a= new ArrayList(); a.add(1); a.add(1); //直接传入个容器类进去 Set c = new HashSet&lt;&gt;(a); Iterator iterator = c.iterator(); while (iterator.hasNext()) &#123; System.out.println(iterator.next()); &#125; 因为HashSet中是无重复元素的，所以结果为1。这个特性可以将其用于去重。 基本原理HashSet其实就是HashMap实现的，在HashSet内部有个HashMap实例变量。 1private transient HashMap&lt;E,Object&gt; map; 还有个常量。在Map中有key，有value，而在HashSet中相当于只有key，所有的value都是这个常量。 1private static final Object PRESENT = new Object(); 再来看看add(E e)方法 12345 public boolean add(E e) &#123; return map.put(e, PRESENT)==null;&#125; 直接调用HashMap的put方法，将元素作为key，常量PRESENT作为value存入，null值也可以存入，若集合中已有元素，则保持集合不变返回false。 检查也是HashMap的方法： 12345public boolean contains(Object o) &#123; return map.containsKey(o);&#125; 检查map中是否有对应的key。 删除也是HashMap的方法： 12345public boolean remove(Object o) &#123; return map.remove(o)==PRESENT;&#125; 删除对应key的节点。 结论HashSet原理较为简单，实现了Set接口，内部维护了一个HashMap，特点是无重复元素，元素无顺序，可以用于去重，集合运算，若想了解更深层次的，可以看看HashMap的实现。]]></content>
       <tags>
-        <tag>HashSet</tag>
         <tag>容器类</tag>
+        <tag>HashSet</tag>
       </tags>
   </entry>
   <entry>
