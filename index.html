@@ -293,6 +293,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/09/HashSet解析/HashSet解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu yuzhao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0xCAFEBABE的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/09/HashSet解析/HashSet解析/" itemprop="url">HashSet解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-09T08:11:42+08:00">
+                2019-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="HashSet解析"><a href="#HashSet解析" class="headerlink" title="HashSet解析"></a>HashSet解析</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p> <code>HashSet</code>实现了<code>Set</code>接口，<code>Set</code>表示无重复元素、且不保证访问顺序的容器接口。与<code>HashMap</code>类似，它有如下的构造方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">()</span> </span>&#123; map = <span class="keyword">new</span> HashMap&lt;&gt;();&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;map = <span class="keyword">new</span> HashMap&lt;&gt;(Math.max((<span class="keyword">int</span>) (c.size()/.<span class="number">75f</span>) + <span class="number">1</span>, <span class="number">16</span>));</span><br><span class="line"></span><br><span class="line">  addAll(c);&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;map = <span class="keyword">new</span> HashMap&lt;&gt;(initialCapacity, loadFactor);&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;map = <span class="keyword">new</span> HashMap&lt;&gt;(initialCapacity);&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>initialCapacity</code>（初始容量，默认16），<code>loadFactor</code>（负载因子，默认0.75）与<code>HashMap</code>中的含义是一样的。</p>
+</blockquote>
+<p><code>HashSet</code>的用法也很简单。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">List a= <span class="keyword">new</span> ArrayList();</span><br><span class="line"></span><br><span class="line">   a.add(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">   a.add(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//直接传入个容器类进去</span></span><br><span class="line"></span><br><span class="line">   Set c = <span class="keyword">new</span> HashSet&lt;&gt;(a);</span><br><span class="line"></span><br><span class="line">   Iterator iterator = c.iterator();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line"></span><br><span class="line">       System.out.println(iterator.next());</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>因为<code>HashSet</code>中是无重复元素的，所以结果为1。这个特性可以将其用于去重。</p>
+</blockquote>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p><code>HashSet</code>其实就是<code>HashMap</code>实现的，在<code>HashSet</code>内部有个<code>HashMap</code>实例变量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> HashMap&lt;E,Object&gt; map;</span><br></pre></td></tr></table></figure>
+<p>还有个常量。在Map中有key，有value，而在HashSet中相当于只有key，所有的value都是这个常量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object PRESENT = <span class="keyword">new</span> Object();</span><br></pre></td></tr></table></figure>
+<p>再来看看add(E e)方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>直接调用<code>HashMap</code>的<code>put</code>方法，将元素作为<code>key</code>，常量<code>PRESENT</code>作为<code>value</code>存入，<code>null</code>值也可以存入，若集合中已有元素，则保持集合不变返回<code>false</code>。</p>
+</blockquote>
+<p>检查也是<code>HashMap</code>的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> map.containsKey(o);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>检查<code>map</code>中是否有对应的key。</p>
+</blockquote>
+<p>删除也是<code>HashMap</code>的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> map.remove(o)==PRESENT;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>删除对应key的节点。</p>
+</blockquote>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p><code>HashSet</code>原理较为简单，实现了<code>Set</code>接口，内部维护了一个<code>HashMap</code>，特点是无重复元素，元素无顺序，可以用于去重，集合运算，若想了解更深层次的，可以看看<code>HashMap</code>的实现。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/07/HashMap解析之hash(key)/HashMap解析之hash(key)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1301,7 +1472,7 @@ private static class IntegerCache {
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1323,7 +1494,7 @@ private static class IntegerCache {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
