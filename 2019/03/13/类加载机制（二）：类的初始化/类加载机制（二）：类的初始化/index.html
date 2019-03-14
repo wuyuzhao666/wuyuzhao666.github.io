@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="0xCAFEBABE的博客" type="application/atom+xml">
 
@@ -92,7 +94,7 @@
 <meta property="og:image" content="http://res.cloudinary.com/cafebabe/mytest1.png">
 <meta property="og:image" content="http://res.cloudinary.com/cafebabe/mytest1-2.png">
 <meta property="og:image" content="http://res.cloudinary.com/cafebabe/mytest4.png">
-<meta property="og:updated_time" content="2019-03-14T00:55:01.329Z">
+<meta property="og:updated_time" content="2019-03-14T12:30:15.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="类加载机制（二）：类的初始化">
 <meta name="twitter:description" content="类的初始化引言一般Java程序的class文件经过加载、连接后，就进入初始化阶段，顺序执行static语句，为静态变量赋予正确的值，执行static代码块，初始化类。 类的使用方式Java程序对类的使用分为两种： —-主动使用 —-被动使用 所有的Java虚拟机实现必须在每个类或接口被Java程序首次主动使用时才会初始化它们。 主动使用方式主动使用分为七种： —-创建类的实例 —-访问某个类或接口">
@@ -528,6 +530,13 @@
 <p>输出结果显示：<code>Parent8</code>被初始化了。</p>
 </blockquote>
 <p>调用类的静态方法时，会导致类的初始化。</p>
+<h5 id="NO-7"><a href="#NO-7" class="headerlink" title="NO.7"></a>NO.7</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest9</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">        <span class="comment">//获取一个系统加载器</span></span><br><span class="line">        ClassLoader classLoader = ClassLoader.getSystemClassLoader();</span><br><span class="line">        <span class="comment">//使用这个加载器去加载ClassLoad类，得到一个class对象</span></span><br><span class="line">        Class&lt;?&gt; aClass = classLoader.loadClass(<span class="string">"classLoader.ClassLoad"</span>);</span><br><span class="line">        System.out.println(aClass);</span><br><span class="line">        System.out.println(<span class="string">"-----------"</span>);</span><br><span class="line">        <span class="comment">//使用反射获取class对象</span></span><br><span class="line">        Class&lt;?&gt; aClass1 = Class.forName(<span class="string">"classLoader.ClassLoad"</span>);</span><br><span class="line">        System.out.println(aClass1);</span><br><span class="line">        System.out.println(aClass == aClass1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassLoad</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"CL invoked"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">classLoader</span>.<span class="title">ClassLoad</span></span></span><br><span class="line"><span class="class">-----------</span></span><br><span class="line"><span class="class"><span class="title">CL</span> <span class="title">invoked</span></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">classLoader</span>.<span class="title">ClassLoad</span></span></span><br><span class="line"><span class="class"><span class="title">true</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关于类加载器（<a href="/2019/03/14/类加载机制（三）：类的加载与类加载器">类加载机制（三）：类的加载与类加载器</a>）</p>
+</blockquote>
+<p>可以看出调用ClassLoader类的loadClass方法加载一个类，并不是对类的主动使用，不会导致类的初始化。而使用反射则是对类的主动使用，会触发初始化，并且两个<code>class</code>对象是同一个，这也印证了前文所说的<code>class</code>对象在内存中只会存在一个的说法。</p>
 <h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>​        类的初始化是类加载过程的最后阶段，在前面的类加载过程中，都是有虚拟机来进行主导和控制（除了用户可以自定义类加载外，请看我后续博客），到了初始化阶段，才真正开始执行<code>Java</code>程序中的字节码。</p>
 <p>​        在连接中的准备阶段，静态变量被赋予了默认值，到了初始化阶段，这些变量才被赋予真正的值。在对类进行初始化时，<code>Java</code>虚拟机会按照初始化语句在类文件中的先后顺序来一次执行它们。</p>
 <p>​        一个类只有在被<em>首次主动使用</em>才会触发初始化阶段，也只有上文提到的七种方式才算主动使用，其他都是被动使用。</p>
@@ -624,6 +633,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/03/14/类加载机制（三）：类的加载与类加载器/类加载机制（三）：类的加载与类加载器/" rel="prev" title="类加载机制（三）：类的加载与类加载器">
+                类加载机制（三）：类的加载与类加载器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -703,7 +716,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -725,7 +738,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -782,7 +795,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类的初始化"><span class="nav-number">1.</span> <span class="nav-text">类的初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.0.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的使用方式"><span class="nav-number">1.0.2.</span> <span class="nav-text">类的使用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#主动使用方式"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">主动使用方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类的初始化步骤"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">类的初始化步骤</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例"><span class="nav-number">1.0.3.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-1"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">NO.1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-2"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">NO.2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-3"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">NO.3</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-4"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">NO.4</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-5"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">NO.5</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-6"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">NO.6</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结论"><span class="nav-number">1.0.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类的初始化"><span class="nav-number">1.</span> <span class="nav-text">类的初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.0.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的使用方式"><span class="nav-number">1.0.2.</span> <span class="nav-text">类的使用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#主动使用方式"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">主动使用方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类的初始化步骤"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">类的初始化步骤</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例"><span class="nav-number">1.0.3.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-1"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">NO.1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-2"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">NO.2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-3"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">NO.3</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-4"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">NO.4</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-5"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">NO.5</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-6"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">NO.6</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-7"><span class="nav-number">1.0.3.7.</span> <span class="nav-text">NO.7</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结论"><span class="nav-number">1.0.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
             
 
           </div>
