@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://res.cloudinary.com/cafebabe/image/upload/v1552565156/sqwt-1.png">
 <meta property="og:image" content="https://res.cloudinary.com/cafebabe/image/upload/v1552568214/swqt-2.png">
-<meta property="og:updated_time" content="2019-03-14T13:13:40.378Z">
+<meta property="og:updated_time" content="2019-03-15T00:12:28.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="类加载机制（三）：类的加载与类加载器">
 <meta name="twitter:description" content="类的加载引言类的加载属于Java虚拟机类加载机制的第一个阶段，它的作用就是将二进制形式的Java类型加载到内存中去，最终形成的就是内存中的Class对象，这个对象封装了类的数据结构。而这个加载过程，就是由一个叫类加载器的程序所完成的，也就是说，一个Java类是由类加载器所加载到内存中的。 类的预先加载在类的加载中，类加载器并不需要等到某个类被首次主动使用时再加载它。JVM规范允许类加载器在预料到某">
@@ -430,10 +430,14 @@
 <p>—-用户可以定制类的加载方式</p>
 </blockquote>
 <h5 id="虚拟机自带加载器"><a href="#虚拟机自带加载器" class="headerlink" title="虚拟机自带加载器"></a>虚拟机自带加载器</h5><ul>
-<li>根（Bootstrp）类加载器（启动类加载器）：负责加载的虚拟机的核心类库，比如 <code>java.lang.*</code>等。根类加载器是从系统属性<code>sun.boot.class.path</code>所指定的目录中加载类库。根类加载器本身的实现依赖于底层操作系统，属于虚拟机实现的一部分，它并没有实现<code>java.lang.classLoader</code>类。</li>
-<li>扩展类加载器（Extension）：负责加载JDK的安装目录的<code>jre\lib\ext</code>子目录下的类库，从系统属性<code>java.ext.dirs</code>所指定的目录中加载类库。扩展类加载器是纯<code>Java</code>类，它继承于<code>java.lang.classLoader</code>类。</li>
-<li>系统（System）类加载器（应用类加载器）：从环境变量<code>classPath</code>或者从系统属性<code>java.class.path</code>所指定的目录下加载类，它是用户自定义类加载器的默认父加载器。系统类加载器是纯<code>Java</code>类，它继承于<code>java.lang.classLoader</code>类。</li>
+<li><p>根（Bootstrp）类加载器（启动类加载器）：负责加载的虚拟机的核心类库，比如 <code>java.lang.*</code>等。根类加载器是从系统属性<code>sun.boot.class.path</code>所指定的目录中加载类库。根类加载器本身的实现依赖于底层操作系统，属于虚拟机实现的一部分，它并没有实现<code>java.lang.classLoader</code>类。</p>
+</li>
+<li><p>扩展类加载器（Extension）：负责加载JDK的安装目录的<code>jre\lib\ext</code>子目录下的类库，从系统属性<code>java.ext.dirs</code>所指定的目录中加载类库。扩展类加载器是纯<code>Java</code>类，它继承于<code>java.lang.classLoader</code>类。</p>
+</li>
+<li><p>系统（System）类加载器（应用类加载器）：从环境变量<code>classPath</code>或者从系统属性<code>java.class.path</code>所指定的目录下加载类，它是用户自定义类加载器的默认父加载器。系统类加载器是纯<code>Java</code>类，它继承于<code>java.lang.classLoader</code>类。</p>
+</li>
 </ul>
+<h5 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h5><p>有时想对字节码文件进行加密处理，使用<code>Java</code>虚拟机自带的加载器就无法加载已经加了密的字节码文件，这时就可以使用自定义加载器对加密的字节码文件进行解密，就可以将其还原为正确的字节码文件 。</p>
 <h4 id="双亲委托机制"><a href="#双亲委托机制" class="headerlink" title="双亲委托机制"></a>双亲委托机制</h4><p>在<code>Java</code>虚拟机的类加载阶段，<code>Java</code>程序一般是由上述的类加载器一起配合着加载的。而这些类加载器它们之间配合着加载类采用的是一种叫<em>双亲委托机制</em>的加载机制。除了根类加载器以外，每一个类加载器都有一个父类加载器。</p>
 <p>双亲委托机制的基本流程是这样：当一个类接收到类的加载请求时，它首先不会对其进行加载，而是交给它的父加载器<code>Parent</code>来进行尝试加载，如果这个父加载器不能对这个类进行加载，就继续往上传递，一直到根类加载器为止，如果最后根类加载器也无法加载，又会一级级的传递下来，让适合的类加载器来进行加载。</p>
 <center><img src="https://res.cloudinary.com/cafebabe/image/upload/v1552565156/sqwt-1.png"></center>
@@ -558,6 +562,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/03/15/类加载机制（四）：解析ClassLoader/类加载机制（四）：解析ClassLoader/" rel="prev" title="类加载机制（四）：解析ClassLoader">
+                类加载机制（四）：解析ClassLoader <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -637,7 +645,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -659,7 +667,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -716,7 +724,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类的加载"><span class="nav-number">1.</span> <span class="nav-text">类的加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.0.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的预先加载"><span class="nav-number">1.0.2.</span> <span class="nav-text">类的预先加载</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载器与双亲委托机制"><span class="nav-number">2.</span> <span class="nav-text">类加载器与双亲委托机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类加载器"><span class="nav-number">2.0.1.</span> <span class="nav-text">类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#虚拟机自带加载器"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">虚拟机自带加载器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双亲委托机制"><span class="nav-number">2.0.2.</span> <span class="nav-text">双亲委托机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码测试"><span class="nav-number">2.0.3.</span> <span class="nav-text">代码测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-1"><span class="nav-number">2.0.3.1.</span> <span class="nav-text">NO.1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-2"><span class="nav-number">2.0.3.2.</span> <span class="nav-text">NO.2</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双亲委托机制的好处"><span class="nav-number">2.0.4.</span> <span class="nav-text">双亲委托机制的好处</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类的加载"><span class="nav-number">1.</span> <span class="nav-text">类的加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.0.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的预先加载"><span class="nav-number">1.0.2.</span> <span class="nav-text">类的预先加载</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载器与双亲委托机制"><span class="nav-number">2.</span> <span class="nav-text">类加载器与双亲委托机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类加载器"><span class="nav-number">2.0.1.</span> <span class="nav-text">类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#虚拟机自带加载器"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">虚拟机自带加载器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义类加载器"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">自定义类加载器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双亲委托机制"><span class="nav-number">2.0.2.</span> <span class="nav-text">双亲委托机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码测试"><span class="nav-number">2.0.3.</span> <span class="nav-text">代码测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-1"><span class="nav-number">2.0.3.1.</span> <span class="nav-text">NO.1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NO-2"><span class="nav-number">2.0.3.2.</span> <span class="nav-text">NO.2</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双亲委托机制的好处"><span class="nav-number">2.0.4.</span> <span class="nav-text">双亲委托机制的好处</span></a></li></ol></li></div>
             
 
           </div>
