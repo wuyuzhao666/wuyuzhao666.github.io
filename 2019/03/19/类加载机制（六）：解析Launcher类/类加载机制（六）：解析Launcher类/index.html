@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="类加载机制,">
+  <meta name="keywords" content="类加载机制,Launcher类,getSystemClassLoader,">
 
 
 
@@ -96,22 +96,18 @@
 
 
 
-<meta name="description" content="类加载机制（一）：简述类加载过程引言Java源文件经过编译之后，生成了一连串的16进制的字节码，即以.class结尾的文件，而这些描述了Java程序各种信息的字节码，还必须要加载到Java虚拟机之后，才能被运行及使用，而加载class文件的过程就是jvm的类加载机制。  类加载过程与大多数语言一样，Java类型也需要加载、连接与初始化，而不同的是，在Java代码中，类型的这些过程都是在程序运行期所">
-<meta name="keywords" content="类加载机制">
+<meta name="description" content="getSystemClassLoader在前文类加载机制（四）：解析ClassLoader，我们分析了ClassLoader类的基本源码，了解了一个class文件是如何被加载到内存中的，也知道了Java应用默认是由系统类加载器加载的，那系统类加载器是由谁加载的、是如何加载的？我们通过贯穿ClassLoader类的一个静态方法getSystemClassLoader来对这些过程进行分析。 内部维护的">
+<meta name="keywords" content="类加载机制,Launcher类,getSystemClassLoader">
 <meta property="og:type" content="article">
-<meta property="og:title" content="类加载机制（一）：简述类加载过程">
-<meta property="og:url" content="http://wuyuzhao666.github.io/2019/03/13/类加载机制（一）：简述类加载过程/类加载机制（一）：简述类加载过程/index.html">
+<meta property="og:title" content="类加载机制（六）：getSystemClassLoader与Launcher">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/03/19/类加载机制（六）：解析Launcher类/类加载机制（六）：解析Launcher类/index.html">
 <meta property="og:site_name" content="0xCAFEBABE的博客">
-<meta property="og:description" content="类加载机制（一）：简述类加载过程引言Java源文件经过编译之后，生成了一连串的16进制的字节码，即以.class结尾的文件，而这些描述了Java程序各种信息的字节码，还必须要加载到Java虚拟机之后，才能被运行及使用，而加载class文件的过程就是jvm的类加载机制。  类加载过程与大多数语言一样，Java类型也需要加载、连接与初始化，而不同的是，在Java代码中，类型的这些过程都是在程序运行期所">
+<meta property="og:description" content="getSystemClassLoader在前文类加载机制（四）：解析ClassLoader，我们分析了ClassLoader类的基本源码，了解了一个class文件是如何被加载到内存中的，也知道了Java应用默认是由系统类加载器加载的，那系统类加载器是由谁加载的、是如何加载的？我们通过贯穿ClassLoader类的一个静态方法getSystemClassLoader来对这些过程进行分析。 内部维护的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/classCode.png">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/classLoader2.png">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/classLoader3.png">
-<meta property="og:updated_time" content="2019-03-20T01:14:34.655Z">
+<meta property="og:updated_time" content="2019-03-20T01:13:49.206Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="类加载机制（一）：简述类加载过程">
-<meta name="twitter:description" content="类加载机制（一）：简述类加载过程引言Java源文件经过编译之后，生成了一连串的16进制的字节码，即以.class结尾的文件，而这些描述了Java程序各种信息的字节码，还必须要加载到Java虚拟机之后，才能被运行及使用，而加载class文件的过程就是jvm的类加载机制。  类加载过程与大多数语言一样，Java类型也需要加载、连接与初始化，而不同的是，在Java代码中，类型的这些过程都是在程序运行期所">
-<meta name="twitter:image" content="http://res.cloudinary.com/cafebabe/classCode.png">
+<meta name="twitter:title" content="类加载机制（六）：getSystemClassLoader与Launcher">
+<meta name="twitter:description" content="getSystemClassLoader在前文类加载机制（四）：解析ClassLoader，我们分析了ClassLoader类的基本源码，了解了一个class文件是如何被加载到内存中的，也知道了Java应用默认是由系统类加载器加载的，那系统类加载器是由谁加载的、是如何加载的？我们通过贯穿ClassLoader类的一个静态方法getSystemClassLoader来对这些过程进行分析。 内部维护的">
 
 
 
@@ -141,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/03/13/类加载机制（一）：简述类加载过程/类加载机制（一）：简述类加载过程/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/03/19/类加载机制（六）：解析Launcher类/类加载机制（六）：解析Launcher类/">
 
 
 
 
 
-  <title>类加载机制（一）：简述类加载过程 | 0xCAFEBABE的博客</title>
+  <title>类加载机制（六）：getSystemClassLoader与Launcher | 0xCAFEBABE的博客</title>
   
 
 
@@ -315,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/13/类加载机制（一）：简述类加载过程/类加载机制（一）：简述类加载过程/">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/19/类加载机制（六）：解析Launcher类/类加载机制（六）：解析Launcher类/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wu yuzhao">
@@ -332,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">类加载机制（一）：简述类加载过程</h1>
+          <h1 class="post-title" itemprop="name headline">类加载机制（六）：getSystemClassLoader与Launcher</h1>
         
 
         <div class="post-meta">
@@ -344,8 +340,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T10:06:10+08:00">
-                2019-03-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-19T16:09:38+08:00">
+                2019-03-19
               </time>
             
 
@@ -403,7 +399,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.4k
+                  2.3k
                 </span>
               
 
@@ -419,7 +415,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  4
+                  10
                 </span>
               
             </div>
@@ -440,61 +436,58 @@
       
 
       
-        <h2 id="类加载机制（一）：简述类加载过程"><a href="#类加载机制（一）：简述类加载过程" class="headerlink" title="类加载机制（一）：简述类加载过程"></a>类加载机制（一）：简述类加载过程</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>Java源文件经过编译之后，生成了一连串的16进制的字节码，即以<code>.class</code>结尾的文件，而这些描述了Java程序各种信息的字节码，还必须要加载到Java虚拟机之后，才能被运行及使用，而加载<code>class</code>文件的过程就是jvm的类加载机制。</p>
-<p><img src="http://res.cloudinary.com/cafebabe/classCode.png"></p>
-<h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><p>与大多数语言一样，Java类型也需要加载、连接与初始化，而不同的是，在Java代码中，类型的这些过程都是在程序运行期所完成的。这个加载过程分为加载、连接（验证、准备、解析）、初始化,整个过程简单来说：</p>
-<p>加载：查找并加载类的二进制数据，即加载<code>class</code>文件</p>
-<p>连接：    </p>
-<p>—-验证：确保被加载的类的正确性</p>
-<p>—-准备：为类的静态变量分配内存，并将其设置为默认值</p>
-<p>—-解析：将类中的符号引用转换为直接引用</p>
-<p>初始化：顺序执行静态代码，即为类的静态变量赋予正确的初始值以及执行静态代码块</p>
-<center><img src="http://res.cloudinary.com/cafebabe/classLoader2.png"></center>
-
-<h4 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h4><p>类的加载指的是将类的<code>class</code>文件中的二进制数据从硬盘读取到内存中，将其放置在运行时数据区的方法区（虚拟机规范并未要求，但<code>hotspot</code>虚拟机将其放置在虚拟机中）内，然后在内存中创建唯一一个类的class对象，用以封装类在方法区中的数据结构，无论<code>new</code>出多少个对象，最终对应的<code>class</code>对象只有一个。</p>
-<h5 id="类的加载方式"><a href="#类的加载方式" class="headerlink" title="类的加载方式"></a>类的加载方式</h5><p>加载<code>.class</code>文件的方式</p>
-<p>—-从本地文件系统中加载</p>
-<p>—-通过网络下载<code>.class</code>文件</p>
-<p>—-从jar，war等归档文件中加载<code>.class</code>文件</p>
-<p>—-从专有数据库中提取<code>.class</code>文件</p>
-<p>—-将Java源文件动态编译为<code>.class</code>文件</p>
+        <h2 id="getSystemClassLoader"><a href="#getSystemClassLoader" class="headerlink" title="getSystemClassLoader"></a>getSystemClassLoader</h2><p>在前文<a href="/2019/03/15/类加载机制（四）：解析ClassLoader/类加载机制（四）：解析ClassLoader/">类加载机制（四）：解析ClassLoader</a>，我们分析了<code>ClassLoader</code>类的基本源码，了解了一个<code>class</code>文件是如何被加载到内存中的，也知道了<code>Java</code>应用默认是由系统类加载器加载的，那系统类加载器是由谁加载的、是如何加载的？我们通过贯穿<code>ClassLoader</code>类的一个静态方法<code>getSystemClassLoader</code>来对这些过程进行分析。</p>
+<h4 id="内部维护的字段"><a href="#内部维护的字段" class="headerlink" title="内部维护的字段"></a>内部维护的字段</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The class loader for the system</span></span><br><span class="line"><span class="comment">// @GuardedBy("ClassLoader.class")</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ClassLoader scl;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Set to true once the system class loader has been set</span></span><br><span class="line"><span class="comment">// @GuardedBy("ClassLoader.class")</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> sclSet;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>编写一个MyCat类，添加虚拟机参数-XX:+TraceClassLoading参数，运行代码，可以看出，MyCat类被虚拟机从本地文件系统加载到内存中。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; jvm虚拟机参数：都以-XX:开始</span><br><span class="line">&gt; 	-XX:+&lt;option&gt; 表示开启option选项 ,</span><br><span class="line">&gt; 	-XX:-&lt;option&gt; 表示关闭option选项，</span><br><span class="line">&gt; 	-XX:&lt;option&gt;=&lt;value&gt;,表示将option值设置为value</span><br><span class="line">&gt; </span><br><span class="line">&gt; 	-XX:+TraceClassLoading</span><br><span class="line">&gt; 		有时候我们需要监控系统中哪些类被加载进来，什么样的类加载的比较频繁，什么样的类加载的比较少，可以使用这个参数来配置打印出程序执行过程中类的加载信息。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>在<code>ClassLoader</code>内部维护了两个与加载系统类加载器相关的静态变量，从注释中我们可以看出<code>scl</code>就是用来接收系统类加载器的，而<code>sclSet</code>则是一个布尔值，用来判断<code>scl</code>是否为空的，关于系统类加载器基本都是操作这两个值的。</p>
 </blockquote>
+<h4 id="getSystemClassLoader-1"><a href="#getSystemClassLoader-1" class="headerlink" title="getSystemClassLoader"></a>getSystemClassLoader</h4><p>先来看看源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ClassLoader <span class="title">getSystemClassLoader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    initSystemClassLoader();</span><br><span class="line">    <span class="keyword">if</span> (scl == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    SecurityManager sm = System.getSecurityManager();</span><br><span class="line">    <span class="keyword">if</span> (sm != <span class="keyword">null</span>) &#123;</span><br><span class="line">        checkClassLoaderPermission(scl, Reflection.getCallerClass());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> scl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<center><img src="http://res.cloudinary.com/cafebabe/classLoader3.png"></center>
+<p>调用<code>initSystemClassLoader()</code>，并且做了一些安全检查，直接返回系统类加载器<code>scl</code>。</p>
 </blockquote>
-<h5 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h5><p>类的加载是通过类加载器来加载的，虚拟机中有两种类型的加载器。</p>
-<p><code>Java</code>虚拟机自带的加载器</p>
-<p>—-根类加载器（<code>Bootstrap</code>）</p>
-<p>—-扩展类加载器（<code>Extension</code>）</p>
-<p>—-系统（应用）加载器（<code>System</code>）</p>
-<p>用户自定义的类加载器</p>
-<p>—-<code>java.lang.classLoader</code>的子类</p>
-<p>—-用户可以定制类的加载方式</p>
-<p>后续请看我的关于类加载器的文章</p>
-<p><a href="/2019/03/14/类加载机制（三）：类的加载与类加载器/类加载机制（三）：类的加载与类加载器/">类加载机制（三）：类的加载与类加载器</a></p>
-<p><a href="/2019/03/15/类加载机制（四）：解析ClassLoader/类加载机制（四）：解析ClassLoader/">类加载机制（四）：解析ClassLoader</a></p>
-<p><a href="/2019/03/17/类加载机制（五）：自定义类加载器与深入双亲委托机制/类加载机制（五）：自定义类加载器与深入双亲委托机制/">类加载机制（五）：自定义类加载器与深入双亲委托机制</a></p>
-<p><a href="/2019/03/19/类加载机制（六）：getSystemClassLoader与Launcher/类加载机制（六）：getSystemClassLoader与Launcher/">类加载机制（六）：getSystemClassLoader与Launcher</a></p>
-<h4 id="类的连接"><a href="#类的连接" class="headerlink" title="类的连接"></a>类的连接</h4><p>类被加载后，就进入连接阶段。连接就是将已经加载到内存中的类的二进制数据合并到虚拟机的运行时环境中。</p>
-<h5 id="类的验证"><a href="#类的验证" class="headerlink" title="类的验证"></a>类的验证</h5><p>类的验证的内容</p>
-<p>—-类文件的结构检查</p>
-<p>—-语义检查</p>
-<p>—-字节码验证</p>
-<p>—-二进制兼容性的验证</p>
-<h5 id="类的准备"><a href="#类的准备" class="headerlink" title="类的准备"></a>类的准备</h5><p>将静态变量设置为默认值，而实例变量将会在对象实例化时随着对象一起分配到Java堆中去。</p>
-<h5 id="类的解析"><a href="#类的解析" class="headerlink" title="类的解析"></a>类的解析</h5><p>将类中的符号引用转换为直接引用，（摘自深入理解JAVA虚拟机）。</p>
+<h4 id="initSystemClassLoader"><a href="#initSystemClassLoader" class="headerlink" title="initSystemClassLoader"></a>initSystemClassLoader</h4><p>通过这个方法来初始化系统类加载器，只贴了主要代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">initSystemClassLoader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//若sclSet为真，则代表系统类加载已经被加载</span></span><br><span class="line">     <span class="keyword">if</span> (!sclSet) &#123;</span><br><span class="line">         <span class="keyword">if</span> (scl != <span class="keyword">null</span>)</span><br><span class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"recursive invocation"</span>);</span><br><span class="line">         <span class="comment">//创建一个Launcher，后文会讲</span></span><br><span class="line">         sun.misc.Launcher l = sun.misc.Launcher.getLauncher();</span><br><span class="line">         <span class="keyword">if</span> (l != <span class="keyword">null</span>) &#123;</span><br><span class="line">             Throwable oops = <span class="keyword">null</span>;</span><br><span class="line">             <span class="comment">//通过Launcher类，获取系统类加载器</span></span><br><span class="line">             scl = l.getClassLoader();</span><br><span class="line">             <span class="keyword">try</span> &#123;</span><br><span class="line">                 <span class="comment">//判断是否有自定义类加载器</span></span><br><span class="line">                 scl = AccessController.doPrivileged(</span><br><span class="line">                     <span class="keyword">new</span> SystemClassLoaderAction(scl));</span><br><span class="line">             &#125; <span class="keyword">catch</span> (PrivilegedActionException pae) &#123;</span><br><span class="line">       </span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="comment">//设置sclSet为真</span></span><br><span class="line">         sclSet = <span class="keyword">true</span>;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>符号引用：</p>
-<p>符号引用：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。在Java中，一个java类将会编译成一个class文件。在编译时，java类并不知道所引用的类的实际地址，因此只能使用符号引用来代替。比如org.simple.People类引用了org.simple.Language类，在编译时People类并不知道Language类的实际内存地址，因此只能使用符号org.simple.Language（假设是这个，当然实际中是由类似于CONSTANT_Class_info的常量来表示的）来表示Language类的地址。各种虚拟机实现的内存布局可能有所不同，但是它们能接受的符号引用都是一致的，因为符号引用的字面量形式明确定义在Java虚拟机规范的Class文件格式中。</p>
-<p>直接引用：</p>
-<p>直接引用可以是直接指向目标的指针、相对偏移量或是一个能间接定位到目标的句柄。直接引用是和虚拟机实现的内存布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。有了直接引用，那引用的目标必定已经在内存中存在。</p>
+<p><code>initSystemClassLoader</code>主要就是初始化系统类加载器的，但是若用户自定义了类加载器，就会将<code>scl</code>初始化为用户自定义类加载器，这部分是通过<code>ClassLoader</code>的一个内部类来实现的。</p>
 </blockquote>
-<h4 id="类的初始化"><a href="#类的初始化" class="headerlink" title="类的初始化"></a>类的初始化</h4><p>到了初始化阶段，才真正开始执行类中定义的<code>Java</code>代码，在初始化阶段，就会为类变量赋予正确的初始值。</p>
-<p>后续请看我的关于类的初始化的文章。</p>
-<p><a href="/2019/03/13/类加载机制（二）：类的初始化/类加载机制（二）：类的初始化/">类加载机制（二）：类的初始化</a></p>
+<h4 id="SystemClassLoaderAction"><a href="#SystemClassLoaderAction" class="headerlink" title="SystemClassLoaderAction"></a>SystemClassLoaderAction</h4><p><code>SystemClassLoaderAction</code>是一个内部类，最后就是通过这个内部类来完成最后的类加载器初始化工作的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SystemClassLoaderAction</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">PrivilegedExceptionAction</span>&lt;<span class="title">ClassLoader</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ClassLoader parent;</span><br><span class="line"></span><br><span class="line">    SystemClassLoaderAction(ClassLoader parent) &#123;</span><br><span class="line">        <span class="keyword">this</span>.parent = parent;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClassLoader <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//从系统属性中获取key，即用户自定义类加载器的二进制名</span></span><br><span class="line">        String cls = System.getProperty(<span class="string">"java.system.class.loader"</span>);</span><br><span class="line">        <span class="comment">//若cls为空，则返回parent，即传入的系统类加载器</span></span><br><span class="line">        <span class="keyword">if</span> (cls == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> parent;</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">//通过这个自定义类加载器的二进制名，使用系统类加载器去将其加载，并将其初始化</span></span><br><span class="line">        Constructor&lt;?&gt; ctor = Class.forName(cls, <span class="keyword">true</span>, parent)</span><br><span class="line">            .getDeclaredConstructor(<span class="keyword">new</span> Class&lt;?&gt;[] &#123; ClassLoader.class &#125;);</span><br><span class="line">        <span class="comment">//通过反射创建这个自定义类加载器的实例</span></span><br><span class="line">        ClassLoader sys = (ClassLoader) ctor.newInstance(</span><br><span class="line">            <span class="keyword">new</span> Object[] &#123; parent &#125;);</span><br><span class="line">        <span class="comment">//将线程上下文类加载器设置为这个自定义类加载器</span></span><br><span class="line">        Thread.currentThread().setContextClassLoader(sys);</span><br><span class="line">        <span class="keyword">return</span> sys;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个内部类通过构造函数，传入通过<code>Launcher</code>创建的系统类加载器，然后再尝试去加载系统属性<code>java.system.class.loader</code>中保存的自定义类加载器的二进制类名。</p>
+</blockquote>
+<h2 id="Launcher"><a href="#Launcher" class="headerlink" title="Launcher"></a>Launcher</h2><p>刚刚在上文中说了<code>initSystemClassLoader</code>方法是通过创建一个<code>Launcher</code>类的实例，通过调用这个实例的<code>getClassLoader()</code>方法来获取到系统类加载器的。现在我们就来分析分析<code>Launcher</code>类，因为代码是由<code>IDEA</code>反编译出来的，所以参数名是由<code>IDEA</code>自己生成的。</p>
+<p>首先，来看看<code>Launcher</code>类内部维护的重要的字段。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String bootClassPath = System.getProperty(<span class="string">"sun.boot.class.path"</span>);</span><br><span class="line"><span class="keyword">private</span> ClassLoader loader;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>首先，第一个是启动类加载器所要加载的<code>jar</code>包的路径。</p>
+<p>第二个是一个类加载器字段，上文<code>getClassLoader()</code>所获取的一个类加载器就是这个字段。</p>
+</blockquote>
+<p>再来来看看构造方法（没有安全管理部分的代码）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Launcher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//声明一个扩展类加载器</span></span><br><span class="line">       Launcher.ExtClassLoader var1;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="comment">//创建一个扩展类加载器</span></span><br><span class="line">           var1 = Launcher.ExtClassLoader.getExtClassLoader();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException var10) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(<span class="string">"Could not create extension class loader"</span>, var10);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="comment">//将内部维护的一个ClassLoader赋值为系统类加载器</span></span><br><span class="line">           <span class="keyword">this</span>.loader = Launcher.AppClassLoader.getAppClassLoader(var1);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException var9) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(<span class="string">"Could not create application class loader"</span>, var9);</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//设置线程上下文类加载为系统类加载器</span></span><br><span class="line">       Thread.currentThread().setContextClassLoader(<span class="keyword">this</span>.loader);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里在构造方法中声明扩展类加载器，而不将其设置为全局变量的原因是，可以直接通过系统类加载器的<code>getParent()</code>来获取扩展类加载器。</p>
+</blockquote>
+<h4 id="AppClassLoader"><a href="#AppClassLoader" class="headerlink" title="AppClassLoader"></a>AppClassLoader</h4><p>在<code>Launcher</code>的构造方法中，通过<code>AppClassLoader.getAppClassLoader</code>来获取系统类加载器，其实<code>AppClassloader</code>就是我们所说的系统类加载器，它是<code>Launcher</code>的一个内部类，它的最顶层父类也是<code>ClassLoader</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ClassLoader <span class="title">getAppClassLoader</span><span class="params">(<span class="keyword">final</span> ClassLoader var0)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    	<span class="comment">//获取系统类加载器要加载的jar包路径以及当前Java程序classPath路径</span></span><br><span class="line">        <span class="keyword">final</span> String var1 = System.getProperty(<span class="string">"java.class.path"</span>);</span><br><span class="line">    	<span class="comment">//根据这些路径，创建一个文件数组</span></span><br><span class="line">        <span class="keyword">final</span> File[] var2 = var1 == <span class="keyword">null</span> ? <span class="keyword">new</span> File[<span class="number">0</span>] : Launcher.getClassPath(var1);</span><br><span class="line">    	<span class="comment">//访问控制操作和决策</span></span><br><span class="line">        <span class="keyword">return</span> (ClassLoader)AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&lt;Launcher.AppClassLoader&gt;() &#123;</span><br><span class="line">            <span class="keyword">public</span> Launcher.<span class="function">AppClassLoader <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="comment">//将文件数组转换成一个URL数组</span></span><br><span class="line">                URL[] var1x = var1 == <span class="keyword">null</span> ? <span class="keyword">new</span> URL[<span class="number">0</span>] : Launcher.pathToURLs(var2);</span><br><span class="line">                <span class="comment">//将当前的资源URL数组以及扩展类加载器传入这个内部类的构造方法</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> Launcher.AppClassLoader(var1x, var0);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最后通过<code>ClassLoader</code>的构造方法，创建出当前的这个类加载器，即系统类加载器，且扩展类加载器被设置为它的父类加载器。</p>
+</blockquote>
+<p>扩展类加载<code>ExtClassLoader</code>和系统类加载器是差不多的，也是<code>Launcher</code>类的一个内部类，它从系统属性<code>java.ext.dirs</code>中获取要加载的<code>jar</code>包的路径。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>前面分析了<code>Launcher</code>类，我们来看看它是由哪个类加载器加载的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest15</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(System.getProperty(<span class="string">"sun.boot.class.path"</span>));</span><br><span class="line">        System.out.println(System.getProperty(<span class="string">"java.ext.dirs"</span>));</span><br><span class="line">        System.out.println(System.getProperty(<span class="string">"java.class.path"</span>));</span><br><span class="line">     	System.getProperty(<span class="string">"java.system.class.loader"</span>);</span><br><span class="line">        System.out.println(ClassLoader.class.getClassLoader());</span><br><span class="line">        System.out.println(Launcher.class.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">F:\Program Files\Java\jdk\jre\lib\resources.jar;F:\Program Files\Java\jdk\jre\lib\rt.jar;F:\Program Files\Java\jdk\jre\lib\sunrsasign.jar;F:\Program Files\Java\jdk\jre\lib\jsse.jar;F:\Program Files\Java\jdk\jre\lib\jce.jar;F:\Program Files\Java\jdk\jre\lib\charsets.jar;F:\Program Files\Java\jdk\jre\lib\jfr.jar;F:\Program Files\Java\jdk\jre\classes</span><br><span class="line">-------------</span><br><span class="line">F:\Program Files\Java\jdk\jre\lib\ext;C:\windows\Sun\Java\lib\ext</span><br><span class="line">-------------</span><br><span class="line">F:\Program Files\Java\jdk\jre\lib\charsets.jar;F:\Program Files\Java\jdk\jre\lib\deploy.jar;F:\Program Files\Java\jdk\jre\lib\ext\access-bridge-<span class="number">64</span>.jar;F:\Program Files\Java\jdk\jre\lib\ext\cldrdata.jar;F:\Program Files\Java\jdk\jre\lib\ext\dnsns.jar;F:\Program Files\Java\jdk\jre\lib\ext\jaccess.jar;F:\Program Files\Java\jdk\jre\lib\ext\jfxrt.jar;F:\Program Files\Java\jdk\jre\lib\ext\localedata.jar;F:\Program Files\Java\jdk\jre\lib\ext\nashorn.jar;F:\Program Files\Java\jdk\jre\lib\ext\sunec.jar;F:\Program Files\Java\jdk\jre\lib\ext\sunjce_provider.jar;F:\Program Files\Java\jdk\jre\lib\ext\sunmscapi.jar;F:\Program Files\Java\jdk\jre\lib\ext\sunpkcs11.jar;F:\Program Files\Java\jdk\jre\lib\ext\zipfs.jar;F:\Program Files\Java\jdk\jre\lib\javaws.jar;F:\Program Files\Java\jdk\jre\lib\jce.jar;F:\Program Files\Java\jdk\jre\lib\jfr.jar;F:\Program Files\Java\jdk\jre\lib\jfxswt.jar;F:\Program Files\Java\jdk\jre\lib\jsse.jar;F:\Program Files\Java\jdk\jre\lib\management-agent.jar;F:\Program Files\Java\jdk\jre\lib\plugin.jar;F:\Program Files\Java\jdk\jre\lib\resources.jar;F:\Program Files\Java\jdk\jre\lib\rt.jar;D:\jvm\target\classes;C:\Users\Administrator\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-<span class="number">0</span>\<span class="number">183.5429</span>.30\lib\idea_rt.jar</span><br><span class="line">-------------</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">-------------</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出结果显示出了，这三个类加载器所要加载的一些<code>jar</code>包或者路径，因为我们没设置自定义类加载的加载路径，所以返回为空。<code>ClassLoader</code>和<code>Launcher</code>的类加载器，输出为<code>null</code>，其实并不是没有类加载器的意思，而是在<code>Java</code>虚拟机中，获取类加载器时，<code>null</code>就代表着启动类加载器，也就是说，<code>ClassLoader</code>和<code>Launcher</code>类都是由启动类加载器加载到内存中的。我们也可以验证一下，<code>Launcher</code>类属于<code>sun.misc</code>包，这个包属于<code>charsets.jar</code>包下，从上面的输出结果中，可以看到这个包是由启动类加载器加载的；而<code>ClassLoader</code>类是位于<code>java.lang</code>包下，位于<code>resources.jar</code>包下，同样也是由启动类加载器加载的。</p>
+</blockquote>
+<p>在前面的文章中，我们说过，当加载一个内部有引用其他类的类时，就会使用当前类的类加载器去尝试加载这些引用的类，我们也可以测试下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest0</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Launcher launcher = <span class="keyword">new</span> Launcher();</span><br><span class="line">        <span class="comment">//获得系统类加载</span></span><br><span class="line">        ClassLoader classLoader = launcher.getClassLoader();</span><br><span class="line">        System.out.println(classLoader);</span><br><span class="line">        System.out.println(classLoader.getClass().getClassLoader());</span><br><span class="line">        <span class="comment">//获得扩展类加载器</span></span><br><span class="line">        System.out.println(classLoader.getParent());</span><br><span class="line">        System.out.println(classLoader.getParent().getClass().getClassLoader());</span><br><span class="line">        System.out.println(classLoader.getParent().getParent());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sun.misc.Launcher$AppClassLoader@<span class="number">4554617</span>c</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">sun.misc.Launcher$ExtClassLoader@<span class="number">74</span>a14482</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出结果验证了我们的说法，系统类加载器和扩展类加载器都是由启动类加载器加载的，当加载这两个加载器时，也就是对这两个类的主动使用，会首先加载它们的父类，也就导致了<code>ClassLoader</code>的加载。</p>
+</blockquote>
 
       
     </div>
@@ -548,7 +541,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://wuyuzhao666.github.io/2019/03/13/类加载机制（一）：简述类加载过程/类加载机制（一）：简述类加载过程/" title="类加载机制（一）：简述类加载过程">http://wuyuzhao666.github.io/2019/03/13/类加载机制（一）：简述类加载过程/类加载机制（一）：简述类加载过程/</a>
+    <a href="http://wuyuzhao666.github.io/2019/03/19/类加载机制（六）：解析Launcher类/类加载机制（六）：解析Launcher类/" title="类加载机制（六）：getSystemClassLoader与Launcher">http://wuyuzhao666.github.io/2019/03/19/类加载机制（六）：解析Launcher类/类加载机制（六）：解析Launcher类/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -565,6 +558,10 @@
           
             <a href="/tags/类加载机制/" rel="tag"><i class="fa fa-tag"></i>类加载机制</a>
           
+            <a href="/tags/Launcher类/" rel="tag"><i class="fa fa-tag"></i>Launcher类</a>
+          
+            <a href="/tags/getSystemClassLoader/" rel="tag"><i class="fa fa-tag"></i>getSystemClassLoader</a>
+          
         </div>
       
 
@@ -576,8 +573,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/09/HashSet解析/HashSet解析/" rel="next" title="HashSet解析">
-                <i class="fa fa-chevron-left"></i> HashSet解析
+              <a href="/2019/03/17/类加载机制（五）：自定义类加载器与深入双亲委托机制/类加载机制（五）：自定义类加载器与深入双亲委托机制/" rel="next" title="类加载机制（五）：自定义类加载器与深入双亲委托机制">
+                <i class="fa fa-chevron-left"></i> 类加载机制（五）：自定义类加载器与深入双亲委托机制
               </a>
             
           </div>
@@ -585,10 +582,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/13/类加载机制（二）：类的初始化/类加载机制（二）：类的初始化/" rel="prev" title="类加载机制（二）：类的初始化">
-                类加载机制（二）：类的初始化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -748,7 +741,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载机制（一）：简述类加载过程"><span class="nav-number">1.</span> <span class="nav-text">类加载机制（一）：简述类加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类加载过程"><span class="nav-number">1.2.</span> <span class="nav-text">类加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类的加载"><span class="nav-number">1.2.1.</span> <span class="nav-text">类的加载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#类的加载方式"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">类的加载方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类加载器"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">类加载器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的连接"><span class="nav-number">1.2.2.</span> <span class="nav-text">类的连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#类的验证"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">类的验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类的准备"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">类的准备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类的解析"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">类的解析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的初始化"><span class="nav-number">1.2.3.</span> <span class="nav-text">类的初始化</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#getSystemClassLoader"><span class="nav-number">1.</span> <span class="nav-text">getSystemClassLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内部维护的字段"><span class="nav-number">1.0.1.</span> <span class="nav-text">内部维护的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getSystemClassLoader-1"><span class="nav-number">1.0.2.</span> <span class="nav-text">getSystemClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#initSystemClassLoader"><span class="nav-number">1.0.3.</span> <span class="nav-text">initSystemClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SystemClassLoaderAction"><span class="nav-number">1.0.4.</span> <span class="nav-text">SystemClassLoaderAction</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Launcher"><span class="nav-number">2.</span> <span class="nav-text">Launcher</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AppClassLoader"><span class="nav-number">2.0.1.</span> <span class="nav-text">AppClassLoader</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li></div>
             
 
           </div>
