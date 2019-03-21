@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://res.cloudinary.com/cafebabe/image/upload/v1552565156/sqwt-1.png">
 <meta property="og:image" content="https://res.cloudinary.com/cafebabe/image/upload/v1552568214/swqt-2.png">
-<meta property="og:updated_time" content="2019-03-15T00:12:28.687Z">
+<meta property="og:updated_time" content="2019-03-21T09:32:22.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="类加载机制（三）：类的加载与类加载器">
 <meta name="twitter:description" content="类的加载引言类的加载属于Java虚拟机类加载机制的第一个阶段，它的作用就是将二进制形式的Java类型加载到内存中去，最终形成的就是内存中的Class对象，这个对象封装了类的数据结构。而这个加载过程，就是由一个叫类加载器的程序所完成的，也就是说，一个Java类是由类加载器所加载到内存中的。 类的预先加载在类的加载中，类加载器并不需要等到某个类被首次主动使用时再加载它。JVM规范允许类加载器在预料到某">
@@ -473,7 +473,7 @@
 </blockquote>
 <center><img src="https://res.cloudinary.com/cafebabe/image/upload/v1552568214/swqt-2.png"></center>
 
-<p>需要指出的是，加载器之间的父子关系实际上指的是加载器对象之间的包装关系，而不是类之间的继承关系。一对父子加载器可能是同一个类加载器类的两个不同实例，也可能不是。在子加载器对象中还包装了一个父加载器对象（<a href="https://res.cloudinary.com/cafebabe/image/upload/v1552568214/swqt-2.png" target="_blank" rel="noopener">请看后续博客:类加载机制（四）：解析ClassLoader</a>）。</p>
+<p>需要指出的是，加载器之间的父子关系实际上指的是加载器对象之间的包装关系，而不是类之间的继承关系。一对父子加载器可能是同一个类加载器类的两个不同实例，也可能不是。在子加载器对象中还包装了一个父加载器对象（<a href="/2019/03/15/类加载机制（四）：解析ClassLoader/类加载机制（四）：解析ClassLoader/">请看后续博客:类加载机制（四）：解析ClassLoader</a>）。</p>
 <h4 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h4><h5 id="NO-1"><a href="#NO-1" class="headerlink" title="NO.1"></a>NO.1</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//获取到系统类加载</span></span><br><span class="line">     ClassLoader classLoader = ClassLoader.getSystemClassLoader();</span><br><span class="line">    <span class="comment">//打印出各类加载器</span></span><br><span class="line">    System.out.println(classLoader);</span><br><span class="line">     <span class="keyword">while</span> (<span class="keyword">null</span> != classLoader)&#123;</span><br><span class="line">         <span class="comment">//获取此类加载器的父加载器</span></span><br><span class="line">         classLoader = classLoader.getParent();</span><br><span class="line">         System.out.println(classLoader);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sun.misc.Launcher$AppClassLoader@<span class="number">18</span>b4aac2</span><br><span class="line">sun.misc.Launcher$ExtClassLoader@<span class="number">4554617</span>c</span><br><span class="line"><span class="keyword">null</span></span><br></pre></td></tr></table></figure>
