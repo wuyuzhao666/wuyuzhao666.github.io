@@ -498,8 +498,8 @@ code {
 code {
   padding: 2px 4px;
   word-wrap: break-word;
-  color: #555;
-  background: #eee;
+  color: #fc6423;
+  background: #fff;
   border-radius: 3px;
   font-size: 13px;
 }
@@ -1950,7 +1950,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ebee11;
+  background: #417ec7;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3143,9 +3143,11 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 50% 50%;
+  background-size: cover;
+  width: 100%;
 }
 .main-inner,
 .header-inner {
   background: #fff;
-  opacity: 0.8;
+  opacity: 0.9;
 }
