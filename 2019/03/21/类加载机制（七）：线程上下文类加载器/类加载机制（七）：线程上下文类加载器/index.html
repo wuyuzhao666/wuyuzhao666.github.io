@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "wm7twcurfarxbyvifybmu5jo7doz9buo3jw6v4hm"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-small.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="类加载机制,线程上下文类加载器,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="0xCAFEBABE的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="双亲委托机制的破坏我们知道，class文件的加载是按照双亲委托机制完成的，这个机制解决了各个类加载器的基础类的统一问题，因为上层类加载器加载的类对下层加载的类是可见的，所以这些基础类可以被Java程序所调用，但是如果这些基础类需要调用用户所写的类呢，可下层类加载器加载的类不是对上层类加载器加载的类是透明的吗？这种情况不是不可能的，比如JDBC，它位于rt.jar包下，是由启动类加载器加载，而它却需">
+<meta name="keywords" content="类加载机制,线程上下文类加载器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类加载机制（七）：线程上下文类加载器">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/03/21/类加载机制（七）：线程上下文类加载器/类加载机制（七）：线程上下文类加载器/index.html">
+<meta property="og:site_name" content="0xCAFEBABE的博客">
+<meta property="og:description" content="双亲委托机制的破坏我们知道，class文件的加载是按照双亲委托机制完成的，这个机制解决了各个类加载器的基础类的统一问题，因为上层类加载器加载的类对下层加载的类是可见的，所以这些基础类可以被Java程序所调用，但是如果这些基础类需要调用用户所写的类呢，可下层类加载器加载的类不是对上层类加载器加载的类是透明的吗？这种情况不是不可能的，比如JDBC，它位于rt.jar包下，是由启动类加载器加载，而它却需">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/JDBC.png">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/mysql-1.png">
+<meta property="og:updated_time" content="2019-03-22T02:59:08.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="类加载机制（七）：线程上下文类加载器">
+<meta name="twitter:description" content="双亲委托机制的破坏我们知道，class文件的加载是按照双亲委托机制完成的，这个机制解决了各个类加载器的基础类的统一问题，因为上层类加载器加载的类对下层加载的类是可见的，所以这些基础类可以被Java程序所调用，但是如果这些基础类需要调用用户所写的类呢，可下层类加载器加载的类不是对上层类加载器加载的类是透明的吗？这种情况不是不可能的，比如JDBC，它位于rt.jar包下，是由启动类加载器加载，而它却需">
+<meta name="twitter:image" content="http://res.cloudinary.com/cafebabe/JDBC.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/03/21/类加载机制（七）：线程上下文类加载器/类加载机制（七）：线程上下文类加载器/">
+
+
+
+
+
+  <title>类加载机制（七）：线程上下文类加载器 | 0xCAFEBABE的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">0xCAFEBABE的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/21/类加载机制（七）：线程上下文类加载器/类加载机制（七）：线程上下文类加载器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu yuzhao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0xCAFEBABE的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">类加载机制（七）：线程上下文类加载器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-21T20:14:06+08:00">
+                2019-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java虚拟机/" itemprop="url" rel="index">
+                    <span itemprop="name">Java虚拟机</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="双亲委托机制的破坏"><a href="#双亲委托机制的破坏" class="headerlink" title="双亲委托机制的破坏"></a>双亲委托机制的破坏</h2><p>我们知道，<code>class</code>文件的加载是按照双亲委托机制完成的，这个机制解决了各个类加载器的基础类的统一问题，因为上层类加载器加载的类对下层加载的类是可见的，所以这些基础类可以被<code>Java</code>程序所调用，但是如果这些基础类需要调用用户所写的类呢，可下层类加载器加载的类不是对上层类加载器加载的类是透明的吗？这种情况不是不可能的，比如<code>JDBC</code>，它位于<code>rt.jar</code>包下，是由启动类加载器加载，而它却需要<code>classPath</code>下的接口提供者（Service Provider Interface）的代码，但是启动类不可能去加载这些代码，那怎么办呢？</p>
+<blockquote>
+<p><code>SPI(Service Provider Interface)</code>：<br>只提供了接口的声明，具体实现由厂商完成。某些<code>SPI</code>需要调用由厂商实现并部署在<code>classPath</code>下的接口实现代码。这些接口由启动类加载器去加载，但启动类加载器不认识<code>classPath</code>下的代码。</p>
+</blockquote>
+<p>这时候就需要对双亲委托机制进行“破坏”了，<code>Java</code>设计者设计了一种叫做“线程上下文类加载器”的机制，当这些接口需要实现的代码时，就去使用这个线程上下文类加载器完成这些接口实现代码的加载。</p>
+<h2 id="线程上下文类加载器"><a href="#线程上下文类加载器" class="headerlink" title="线程上下文类加载器"></a>线程上下文类加载器</h2><p>线程上下文类加载器<code>contextClassLoader</code>，其实，我们在分析<code>Launcher</code>类的源码时，已经遇到过了:</p>
+<blockquote>
+<p><code>Thread.currentThread().setContextClassLoader(this.loader);</code></p>
+</blockquote>
+<p>在<code>Launcher</code>类的构造方法中，执行了这条语句，并将系统类加载器传进去，我们跟着去看看<code>Thread</code>的源码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ClassLoader contextClassLoader;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>内部维护了一个类加载器，也就是线程上下文类加载器。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (security == <span class="keyword">null</span> || isCCLOverridden(parent.getClass()))</span><br><span class="line">           <span class="keyword">this</span>.contextClassLoader = parent.getContextClassLoader();</span><br><span class="line">       <span class="keyword">else</span></span><br><span class="line">           <span class="keyword">this</span>.contextClassLoader = parent.contextClassLoader;</span><br></pre></td></tr></table></figure>
+<p>在<code>Thread</code>的<code>init</code>方法中，线程继承其父线程的上下文类加载器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContextClassLoader</span><span class="params">(ClassLoader cl)</span> </span>&#123;</span><br><span class="line">        SecurityManager sm = System.getSecurityManager();</span><br><span class="line">        <span class="keyword">if</span> (sm != <span class="keyword">null</span>) &#123;</span><br><span class="line">            sm.checkPermission(<span class="keyword">new</span> RuntimePermission(<span class="string">"setContextClassLoader"</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        contextClassLoader = cl;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>Thread</code>中，可以设置线程类加载器，也就是说，若如果没有通过<code>setContextClassLoader</code>进行设置的话，线程将继承其父线程的上下文类加载器。前面说过，在<code>Launcher</code>类中设置了线程上下文类加载为系统类加载器，即在<code>Java</code>程序中未设置线程上下文类加载器的话，线程上下文类加载器就为系统类加载器。</p>
+<h2 id="深入理解线程上下文类加载器"><a href="#深入理解线程上下文类加载器" class="headerlink" title="深入理解线程上下文类加载器"></a>深入理解线程上下文类加载器</h2><h4 id="线程上下文类加载器的一般使用模式"><a href="#线程上下文类加载器的一般使用模式" class="headerlink" title="线程上下文类加载器的一般使用模式"></a>线程上下文类加载器的一般使用模式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ClassLoader classLoader = Thread.currentThread().getContextClassLoader();</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	Thread.currentThread().setContextClassLoader(targetccl);</span><br><span class="line">	doMethod();</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">	Thread.currentThread().setContextClassLoader(classLoader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>线程上下文类加载器的一般使用模式（获取-使用-还原）</p>
+<p>在<code>doMethod()</code>里面调用了<code>Thread.currentThread().setContextClassLoader()</code>来获取当前线程的上下文类加载器做某些事情。</p>
+</blockquote>
+<h4 id="ServiceLoader类"><a href="#ServiceLoader类" class="headerlink" title="ServiceLoader类"></a>ServiceLoader类</h4><p>在双亲委托模型下，类加载是由下至上的，即下层的类加载器会委托上层进行加载。但是对于<code>SPI</code>来说。有些接口是<code>Java</code>核心库所提供的，而<code>Java</code>核心库是由启动类加载器来加载的，而这些接口的实现却是来自于不同的<code>jar</code>包（由各独立厂商实现），<code>Java</code>的启动类加载器是不会加载其他来源的<code>jar</code>包，这样就导致一些接口由启动类加载加载，实现由其他加载器加载，传统的双亲委托机制就会无法满足<code>SPI</code>的要求。而通过给当前线程设置上下文类加载器，就可以由设置的上下文类加载器来实现对于接口实现类的加载 。就比如<code>JDBC</code>驱动，如下图所示。</p>
+<center><img src="http://res.cloudinary.com/cafebabe/JDBC.png"></center>
+
+<p>首先，在<code>pom</code>文件中添加了关于<code>MySql</code>的依赖，我们通过代码找到项目中的驱动。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest17</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//通过ServiceLoader去加载驱动</span></span><br><span class="line">        ServiceLoader&lt;Driver&gt; drivers = ServiceLoader.load(Driver.class);</span><br><span class="line">        Iterator&lt;Driver&gt; iterator = drivers.iterator();</span><br><span class="line">        <span class="comment">//打印出每个驱动以及驱动的类加载器</span></span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            Driver next = iterator.next();</span><br><span class="line">            System.out.println(<span class="string">"driver:"</span> + next.getClass());</span><br><span class="line">            System.out.println(<span class="string">"loader:"</span> + next.getClass().getClassLoader());</span><br><span class="line">            System.out.println(<span class="string">"-------------"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//打印出当前线程上下文类加载器</span></span><br><span class="line">        System.out.println(<span class="string">"当前线程上下文类加载器:"</span> + 				Thread.currentThread().getContextClassLoader());</span><br><span class="line">        <span class="comment">//打印出ServiceLoader的类加载器</span></span><br><span class="line">        System.out.println(<span class="string">"ServiceLoader的类加载器:"</span> + ServiceLoader.class.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">driver:<span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">mysql</span>.<span class="title">jdbc</span>.<span class="title">Driver</span></span></span><br><span class="line">loader:sun.misc.Launcher$AppClassLoader@18b4aac2</span><br><span class="line">-------------</span><br><span class="line">driver:<span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">mysql</span>.<span class="title">fabric</span>.<span class="title">jdbc</span>.<span class="title">FabricMySQLDriver</span></span></span><br><span class="line">loader:sun.misc.Launcher$AppClassLoader@18b4aac2</span><br><span class="line">-------------</span><br><span class="line">当前线程上下文类加载器:sun.misc.Launcher$AppClassLoader@<span class="number">18</span>b4aac2</span><br><span class="line">ServiceLoader的类加载器:<span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从输出结果，我们可以看到，<code>MySql</code>的两个驱动都是由系统类加载器所加载的，按常理来说，这些驱动位于<code>classPath</code>下，也该由系统类记载器去加载；前面也说了，当前线程上下文类加载器默认是被设置为系统类加载器；而<code>ServiceLoader</code>位于<code>java.util</code>下，属于核心类库，是由启动类加载器加载的。</p>
+</blockquote>
+<p><code>ServceLoader</code>是对加载驱动很重要的一个类，那它是如何找到这些驱动的呢？</p>
+<h5 id="详解ServiceLoader"><a href="#详解ServiceLoader" class="headerlink" title="详解ServiceLoader"></a>详解ServiceLoader</h5><p><code>ServiceLoader</code>是从<code>JDK1.6</code>才开始出现的，它的作用就是定位加载这些服务的具体实现。从<code>JavaDoc</code>中，我们可以看出<code>ServiceLoader</code>是从服务实现的<code>jar</code>包中的资源目录<code>META-INF/services</code>下去读取驱动名的，并且要求包含这些驱动的文件名必须是服务类型的完全限定的二进制名字，且文件中包含的也是服务实现类的完全限定二进制名，如下图所示。</p>
+<center><img src="http://res.cloudinary.com/cafebabe/mysql-1.png"></center>
+
+<p><code>META-INF/services</code>下的<code>java.sql.Driver</code>文件里的内容。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">com.mysql.jdbc.Driver</span><br><span class="line">com.mysql.fabric.jdbc.FabricMySQLDriver</span><br></pre></td></tr></table></figure>
+<h5 id="ServiceLoader源码"><a href="#ServiceLoader源码" class="headerlink" title="ServiceLoader源码"></a>ServiceLoader源码</h5><h6 id="NO-1"><a href="#NO-1" class="headerlink" title="NO.1"></a>NO.1</h6><p>首先，看看<code>ServiceLoader</code>类内部维护的重要字段。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PREFIX = <span class="string">"META-INF/services/"</span>;</span><br><span class="line"><span class="keyword">private</span> LinkedHashMap&lt;String,S&gt; providers = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>直接将资源目录<code>META-INF/services/</code>写死在类中，因为这个资源目录是定好了的，写死也无所谓的。</p>
+<p>第二个字段是用做缓存的，<code>ServiceLoader</code>维护到目前为止加载的服务<code>SPI</code>的缓存</p>
+</blockquote>
+<h6 id="NO-2"><a href="#NO-2" class="headerlink" title="NO.2"></a>NO.2</h6><p>然后，从<code>load</code>方法说起。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;S&gt; <span class="function">ServiceLoader&lt;S&gt; <span class="title">load</span><span class="params">(Class&lt;S&gt; service)</span> </span>&#123;</span><br><span class="line">       ClassLoader cl = Thread.currentThread().getContextClassLoader();</span><br><span class="line">       <span class="keyword">return</span> ServiceLoader.load(service, cl);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>将服务类型与当前系统类加载器传给另一个<code>load</code>方法。</p>
+</blockquote>
+<p>这里为什么要获取线程上下文类加载器呢？分析一下：<code>ServiceLoader</code>是在普通的<code>Java</code>程序中被引用到的，我们知道，在一个类<code>X</code>中引用另一个类<code>Y</code>，是使用<code>X</code>的类加载器去尝试加载类<code>Y</code>。</p>
+<ul>
+<li><p>系统类加载器会去尝试加载<code>ServiceLoader</code></p>
+</li>
+<li><p>最终启动类加载器将其加载</p>
+</li>
+<li>在<code>ServiceLoader</code>中引用到的类，会由启动类加载器去加载</li>
+<li>但启动类加载器是无法加载到<code>classPath</code>下的类的，所以就通过线程上下文类加载器去加载</li>
+</ul>
+<h6 id="NO-3"><a href="#NO-3" class="headerlink" title="NO.3"></a>NO.3</h6><p>接着，调用私有的构造方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">ServiceLoader</span><span class="params">(Class&lt;S&gt; svc, ClassLoader cl)</span> </span>&#123;</span><br><span class="line">       service = Objects.requireNonNull(svc, <span class="string">"Service interface cannot be null"</span>);</span><br><span class="line">       <span class="comment">//要是传进来的线程类加载器为空，就将cl设置为系统类加载器</span></span><br><span class="line">       loader = (cl == <span class="keyword">null</span>) ? ClassLoader.getSystemClassLoader() : cl;</span><br><span class="line">       acc = (System.getSecurityManager() != <span class="keyword">null</span>) ? AccessController.getContext() : <span class="keyword">null</span>;</span><br><span class="line">       <span class="comment">//调用reload</span></span><br><span class="line">       reload();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reload</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//将上文提到的缓存清空</span></span><br><span class="line">       providers.clear();</span><br><span class="line">    	<span class="comment">//使用一个内部类进行懒加载</span></span><br><span class="line">       lookupIterator = <span class="keyword">new</span> LazyIterator(service, loader);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>ServiceLoader</code>内部加载这些服务实现类，是通过按需加载的方式。</p>
+</blockquote>
+<h6 id="NO-4"><a href="#NO-4" class="headerlink" title="NO.4"></a>NO.4</h6><p>只贴出这个内部类<code>LazyIterator</code>的主要代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">hasNextService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (nextName != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (configs == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    String fullName = PREFIX + service.getName();</span><br><span class="line">                    <span class="keyword">if</span> (loader == <span class="keyword">null</span>)</span><br><span class="line">                        configs = ClassLoader.getSystemResources(fullName);</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        configs = loader.getResources(fullName);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException x) &#123;</span><br><span class="line">                    fail(service, <span class="string">"Error locating configuration files"</span>, x);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> ((pending == <span class="keyword">null</span>) || !pending.hasNext()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!configs.hasMoreElements()) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                pending = parse(service, configs.nextElement());</span><br><span class="line">            &#125;</span><br><span class="line">            nextName = pending.next();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> S <span class="title">nextService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!hasNextService())</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">            String cn = nextName;</span><br><span class="line">            nextName = <span class="keyword">null</span>;</span><br><span class="line">            Class&lt;?&gt; c = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                c = Class.forName(cn, <span class="keyword">false</span>, loader);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException x) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     <span class="string">"Provider "</span> + cn + <span class="string">" not found"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!service.isAssignableFrom(c)) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     <span class="string">"Provider "</span> + cn  + <span class="string">" not a subtype"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                S p = service.cast(c.newInstance());</span><br><span class="line">                providers.put(cn, p);</span><br><span class="line">                <span class="keyword">return</span> p;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Throwable x) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     <span class="string">"Provider "</span> + cn + <span class="string">" could not be instantiated"</span>,</span><br><span class="line">                     x);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Error();          <span class="comment">// This cannot happen</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这个内部类内部最重要的两个方法，<code>hasNextService</code>判断是否还有下一个服务实现类，<code>nextService</code>去加载服务实现类。</p>
+</blockquote>
+<h5 id="改变线程类加载器"><a href="#改变线程类加载器" class="headerlink" title="改变线程类加载器"></a>改变线程类加载器</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest17</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;   Thread.currentThread().setContextClassLoader(MyTest17.class.getClassLoader().getParent());</span><br><span class="line">        ServiceLoader&lt;Driver&gt; drivers = ServiceLoader.load(Driver.class);</span><br><span class="line">        Iterator&lt;Driver&gt; iterator = drivers.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            Driver next = iterator.next();</span><br><span class="line">            System.out.println(<span class="string">"driver:"</span> + next.getClass());</span><br><span class="line">            System.out.println(<span class="string">"loader:"</span> + next.getClass().getClassLoader());</span><br><span class="line">            System.out.println(<span class="string">"-------------"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"当前线程上下文类加载器:"</span> + Thread.currentThread().getContextClassLoader());</span><br><span class="line">        System.out.println(<span class="string">"ServiceLoader的类加载器:"</span> + ServiceLoader.class.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当前线程上下文类加载器:sun.misc.Launcher$ExtClassLoader@<span class="number">1540e19</span>d</span><br><span class="line">ServiceLoader的类加载器:<span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到，我们将线程类加载器设置为扩展类加载器后，确实是无法将<code>classPath</code>下的服务实现类加载成功的。</p>
+</blockquote>
+<p>我们将线程类加载器设置为我们的自定义类加载器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Thread.currentThread().setContextClassLoader(<span class="keyword">new</span> MyClassLoader(<span class="string">"loader"</span>));</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">driver:<span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">mysql</span>.<span class="title">jdbc</span>.<span class="title">Driver</span></span></span><br><span class="line">loader:sun.misc.Launcher$AppClassLoader@18b4aac2</span><br><span class="line">-------------</span><br><span class="line">driver:<span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">mysql</span>.<span class="title">fabric</span>.<span class="title">jdbc</span>.<span class="title">FabricMySQLDriver</span></span></span><br><span class="line">loader:sun.misc.Launcher$AppClassLoader@18b4aac2</span><br><span class="line">-------------</span><br><span class="line">当前线程上下文类加载器:classLoader.MyClassLoader@<span class="number">6</span>d6f6e28</span><br><span class="line">ServiceLoader的类加载器:<span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+      
+    </div>
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Wu yuzhao WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Wu yuzhao
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://wuyuzhao666.github.io/2019/03/21/类加载机制（七）：线程上下文类加载器/类加载机制（七）：线程上下文类加载器/" title="类加载机制（七）：线程上下文类加载器">http://wuyuzhao666.github.io/2019/03/21/类加载机制（七）：线程上下文类加载器/类加载机制（七）：线程上下文类加载器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/类加载机制/" rel="tag"><i class="fa fa-tag"></i>类加载机制</a>
+          
+            <a href="/tags/线程上下文类加载器/" rel="tag"><i class="fa fa-tag"></i>线程上下文类加载器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/19/类加载机制（六）：解析Launcher类/类加载机制（六）：解析Launcher类/" rel="next" title="类加载机制（六）：getSystemClassLoader与Launcher">
+                <i class="fa fa-chevron-left"></i> 类加载机制（六）：getSystemClassLoader与Launcher
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+            <a href="/">
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="Wu yuzhao">
+            </a>
+            
+              <p class="site-author-name" itemprop="name">Wu yuzhao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuyuzhao666" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/playlist?id=736566104" target="_blank" title="网易云音乐">
+                      
+                        <i class="fa fa-fw fa-网易云音乐"></i>网易云音乐</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1293886117&auto=1&height=66"></iframe>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#双亲委托机制的破坏"><span class="nav-number">1.</span> <span class="nav-text">双亲委托机制的破坏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程上下文类加载器"><span class="nav-number">2.</span> <span class="nav-text">线程上下文类加载器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深入理解线程上下文类加载器"><span class="nav-number">3.</span> <span class="nav-text">深入理解线程上下文类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程上下文类加载器的一般使用模式"><span class="nav-number">3.0.1.</span> <span class="nav-text">线程上下文类加载器的一般使用模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServiceLoader类"><span class="nav-number">3.0.2.</span> <span class="nav-text">ServiceLoader类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#详解ServiceLoader"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">详解ServiceLoader</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ServiceLoader源码"><span class="nav-number">3.0.2.2.</span> <span class="nav-text">ServiceLoader源码</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#NO-1"><span class="nav-number">3.0.2.2.1.</span> <span class="nav-text">NO.1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NO-2"><span class="nav-number">3.0.2.2.2.</span> <span class="nav-text">NO.2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NO-3"><span class="nav-number">3.0.2.2.3.</span> <span class="nav-text">NO.3</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NO-4"><span class="nav-number">3.0.2.2.4.</span> <span class="nav-text">NO.4</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#改变线程类加载器"><span class="nav-number">3.0.2.3.</span> <span class="nav-text">改变线程类加载器</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-alicorn"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu yuzhao</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">21.2k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+<div id="days"></div>
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("04/17/2018 15:13:14");//修改为自己的blog建站时间
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="本站已安全运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+    if (i<10)
+    {i="0" + i};
+    return i;
+}
+show_date_time();
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<!--   
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+ -->
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":200,"height":250},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
