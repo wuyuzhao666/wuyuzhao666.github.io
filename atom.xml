@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wuyuzhao666.github.io/"/>
-  <updated>2019-04-07T13:20:42.102Z</updated>
+  <updated>2019-04-08T01:19:13.974Z</updated>
   <id>http://wuyuzhao666.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>常用JVM配置参数</title>
+    <link href="http://wuyuzhao666.github.io/2019/04/08/%E5%B8%B8%E7%94%A8JVM%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/%E5%B8%B8%E7%94%A8JVM%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/"/>
+    <id>http://wuyuzhao666.github.io/2019/04/08/常用JVM配置参数/常用JVM配置参数/</id>
+    <published>2019-04-08T00:42:03.000Z</published>
+    <updated>2019-04-08T01:19:13.974Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Trace跟踪参数"><a href="#Trace跟踪参数" class="headerlink" title="Trace跟踪参数"></a>Trace跟踪参数</h2><ul><li><p>-verbose:gc</p><p>-XX:+printGC</p></li></ul><blockquote><p>可以打印GC的简要信息</p></blockquote><ul><li>-XX:+PrintGCDetails</li></ul><blockquote><p>打印GC详细信息</p></blockquote><ul><li>-XX:+PrintGCTimeStamps</li></ul><blockquote><p>打印CG发生的时间戳</p></blockquote><ul><li>-Xloggc:log/gc.log</li></ul><blockquote><p>指定GC log的位置，以文件输出</p><p>帮助开发人员分析问题</p></blockquote><ul><li>-XX:+PrintHeapAtGC</li></ul><blockquote><p>每次一次GC后，都打印堆信息</p></blockquote><ul><li>-XX:+TraceClassLoading</li></ul><blockquote><p>监控类的加载</p></blockquote><h2 id="堆的分配参数"><a href="#堆的分配参数" class="headerlink" title="堆的分配参数"></a>堆的分配参数</h2><ul><li>-Xmx –Xms</li></ul><blockquote><p>指定最大堆和最小堆</p></blockquote><ul><li>-Xmn</li></ul><blockquote><p>设置新生代大小</p></blockquote><ul><li>-XX:NewRatio</li></ul><blockquote><p>新生代（eden+2*s）和老年代（不包含永久区）的比值</p><p>=4 表示 新生代:老年代=1:4，即年轻代占堆的1/5</p></blockquote><ul><li>-XX:SurvivorRatio</li></ul><blockquote><p>设置两个Survivor区和eden的比</p><p>=8表示 两个Survivor :eden=2:8，即一个Survivor占年轻代的1/10</p><p>在HotSpot虚拟机中，默认Eden区与一个Survivor区比例为8：1</p></blockquote><ul><li>-XX:+HeapDumpOnOutOfMemoryError</li></ul><blockquote><p>OOM时导出堆到文件</p></blockquote><ul><li>-XX:+HeapDumpPath</li></ul><blockquote><p>导出OOM的路径</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xmx20m -Xms5m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=d:/a.dump</span><br></pre></td></tr></table></figure><ul><li>-XX:OnOutOfMemoryError</li></ul><blockquote><p>在OOM时，执行一个脚本</p><p>“-XX:OnOutOfMemoryError=D:/tools/jdk1.7_40/bin/printstack.bat %p“</p><p>当程序OOM时，在D:/a.txt中将会生成线程的dump</p><p>可以在OOM时，发送邮件，甚至是重启程序</p></blockquote><h2 id="永久区分配参数"><a href="#永久区分配参数" class="headerlink" title="永久区分配参数"></a>永久区分配参数</h2><ul><li>-XX:PermSize  -XX:MaxPermSize</li></ul><blockquote><p>设置永久区的初始空间和最大空间</p></blockquote><h2 id="栈大小分配"><a href="#栈大小分配" class="headerlink" title="栈大小分配"></a>栈大小分配</h2><ul><li>-Xss</li></ul><blockquote><p>-Xss256k</p><p>通常只有几百K</p><p>决定了函数调用的深度</p><p>每个线程都有独立的栈空间</p><p>局部变量、参数 分配在栈上</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Trace跟踪参数&quot;&gt;&lt;a href=&quot;#Trace跟踪参数&quot; class=&quot;headerlink&quot; title=&quot;Trace跟踪参数&quot;&gt;&lt;/a&gt;Trace跟踪参数&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;-verbose:gc&lt;/p&gt;
+&lt;p&gt;-XX:+printGC&lt;/
+      
+    
+    </summary>
+    
+      <category term="Java虚拟机" scheme="http://wuyuzhao666.github.io/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+    
+      <category term="JVM参数" scheme="http://wuyuzhao666.github.io/tags/JVM%E5%8F%82%E6%95%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux下Apache服务器的安装与配置</title>
@@ -329,9 +356,9 @@
       <category term="Java基础" scheme="http://wuyuzhao666.github.io/categories/Java%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="容器类" scheme="http://wuyuzhao666.github.io/tags/%E5%AE%B9%E5%99%A8%E7%B1%BB/"/>
-    
       <category term="HashMap" scheme="http://wuyuzhao666.github.io/tags/HashMap/"/>
+    
+      <category term="容器类" scheme="http://wuyuzhao666.github.io/tags/%E5%AE%B9%E5%99%A8%E7%B1%BB/"/>
     
   </entry>
   
