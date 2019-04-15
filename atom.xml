@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wuyuzhao666.github.io/"/>
-  <updated>2019-04-08T01:19:13.974Z</updated>
+  <updated>2019-04-15T02:40:17.467Z</updated>
   <id>http://wuyuzhao666.github.io/</id>
   
   <author>
@@ -15,6 +15,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>部署Web应用到Tomcat根目录</title>
+    <link href="http://wuyuzhao666.github.io/2019/04/15/%E9%83%A8%E7%BD%B2Web%E5%BA%94%E7%94%A8%E5%88%B0Tomcat%E6%A0%B9%E7%9B%AE%E5%BD%95/%E9%83%A8%E7%BD%B2Web%E5%BA%94%E7%94%A8%E5%88%B0Tomcat%E6%A0%B9%E7%9B%AE%E5%BD%95/"/>
+    <id>http://wuyuzhao666.github.io/2019/04/15/部署Web应用到Tomcat根目录/部署Web应用到Tomcat根目录/</id>
+    <published>2019-04-15T02:17:50.000Z</published>
+    <updated>2019-04-15T02:40:17.467Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><code>Tomcat</code>安装后，默认目录是<code>/webapps/ROOT</code>，我们自己的<code>Web</code>应用就需要以<code>localhost:8080/test</code>这种方式来访问，有时需要将Web应用部署到<code>Tomcat</code>根目录下，就可以<code>localhost:8080</code>这种方式访问。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul><li><p>首先，进入<code>Tomcat</code>的<code>conf</code>文件夹</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 conf]# cd /home/apache-tomcat-8.5.35/conf</span><br></pre></td></tr></table></figure></li><li><p>然后，打开<code>server.xml</code>配置文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 conf]# vi server.xml</span><br></pre></td></tr></table></figure></li><li><p>在<code>&lt;Host&gt;&lt;/Host&gt;</code>区域的末尾添加</p><blockquote><context path docbase="/home/apache-tomcat-8.5.35/webapps/test" debug="0" reloadable="true"></context></blockquote><p><code>docBase</code>中为在<code>webapps</code>中的<code>Web</code>应用的地址。</p><blockquote><p>使用/pattern：从光标开始处向文件尾搜索pattern</p><p>/&lt;Host</p></blockquote><center><img src="http://res.cloudinary.com/cafebabe/tomcat-0"></center></li></ul><p>在浏览器键入<code>Tomcat</code>地址加端口，即可访问。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Tomcat&lt;/code&gt;安装后，默认目录是&lt;code&gt;/webapps/ROOT&lt;/code&gt;，我们自己的&lt;code&gt;Web&lt;
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://wuyuzhao666.github.io/categories/Linux/"/>
+    
+    
+      <category term="Tomcat#" scheme="http://wuyuzhao666.github.io/tags/Tomcat/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>idea配置jvm参数</title>
+    <link href="http://wuyuzhao666.github.io/2019/04/12/idea%E9%85%8D%E7%BD%AEjvm%E5%8F%82%E6%95%B0/idea%E9%85%8D%E7%BD%AEjvm%E5%8F%82%E6%95%B0/"/>
+    <id>http://wuyuzhao666.github.io/2019/04/12/idea配置jvm参数/idea配置jvm参数/</id>
+    <published>2019-04-12T01:41:02.000Z</published>
+    <updated>2019-04-12T01:41:02.341Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>常用JVM配置参数</title>
@@ -356,9 +395,9 @@
       <category term="Java基础" scheme="http://wuyuzhao666.github.io/categories/Java%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="HashMap" scheme="http://wuyuzhao666.github.io/tags/HashMap/"/>
-    
       <category term="容器类" scheme="http://wuyuzhao666.github.io/tags/%E5%AE%B9%E5%99%A8%E7%B1%BB/"/>
+    
+      <category term="HashMap" scheme="http://wuyuzhao666.github.io/tags/HashMap/"/>
     
   </entry>
   

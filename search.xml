@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[部署Web应用到Tomcat根目录]]></title>
+    <url>%2F2019%2F04%2F15%2F%E9%83%A8%E7%BD%B2Web%E5%BA%94%E7%94%A8%E5%88%B0Tomcat%E6%A0%B9%E7%9B%AE%E5%BD%95%2F%E9%83%A8%E7%BD%B2Web%E5%BA%94%E7%94%A8%E5%88%B0Tomcat%E6%A0%B9%E7%9B%AE%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[引言Tomcat安装后，默认目录是/webapps/ROOT，我们自己的Web应用就需要以localhost:8080/test这种方式来访问，有时需要将Web应用部署到Tomcat根目录下，就可以localhost:8080这种方式访问。 配置 首先，进入Tomcat的conf文件夹 1[root@node1 conf]# cd /home/apache-tomcat-8.5.35/conf 然后，打开server.xml配置文件 1[root@node1 conf]# vi server.xml 在&lt;Host&gt;&lt;/Host&gt;区域的末尾添加 docBase中为在webapps中的Web应用的地址。 使用/pattern：从光标开始处向文件尾搜索pattern /&lt;Host 在浏览器键入Tomcat地址加端口，即可访问。]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Tomcat#</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[idea配置jvm参数]]></title>
+    <url>%2F2019%2F04%2F12%2Fidea%E9%85%8D%E7%BD%AEjvm%E5%8F%82%E6%95%B0%2Fidea%E9%85%8D%E7%BD%AEjvm%E5%8F%82%E6%95%B0%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[常用JVM配置参数]]></title>
     <url>%2F2019%2F04%2F08%2F%E5%B8%B8%E7%94%A8JVM%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%2F%E5%B8%B8%E7%94%A8JVM%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%2F</url>
     <content type="text"><![CDATA[Trace跟踪参数 -verbose:gc -XX:+printGC 可以打印GC的简要信息 -XX:+PrintGCDetails 打印GC详细信息 -XX:+PrintGCTimeStamps 打印CG发生的时间戳 -Xloggc:log/gc.log 指定GC log的位置，以文件输出 帮助开发人员分析问题 -XX:+PrintHeapAtGC 每次一次GC后，都打印堆信息 -XX:+TraceClassLoading 监控类的加载 堆的分配参数 -Xmx –Xms 指定最大堆和最小堆 -Xmn 设置新生代大小 -XX:NewRatio 新生代（eden+2*s）和老年代（不包含永久区）的比值 =4 表示 新生代:老年代=1:4，即年轻代占堆的1/5 -XX:SurvivorRatio 设置两个Survivor区和eden的比 =8表示 两个Survivor :eden=2:8，即一个Survivor占年轻代的1/10 在HotSpot虚拟机中，默认Eden区与一个Survivor区比例为8：1 -XX:+HeapDumpOnOutOfMemoryError OOM时导出堆到文件 -XX:+HeapDumpPath 导出OOM的路径 1-Xmx20m -Xms5m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=d:/a.dump -XX:OnOutOfMemoryError 在OOM时，执行一个脚本 “-XX:OnOutOfMemoryError=D:/tools/jdk1.7_40/bin/printstack.bat %p“ 当程序OOM时，在D:/a.txt中将会生成线程的dump 可以在OOM时，发送邮件，甚至是重启程序 永久区分配参数 -XX:PermSize -XX:MaxPermSize 设置永久区的初始空间和最大空间 栈大小分配 -Xss -Xss256k 通常只有几百K 决定了函数调用的深度 每个线程都有独立的栈空间 局部变量、参数 分配在栈上]]></content>
@@ -146,8 +162,8 @@
         <category>Java基础</category>
       </categories>
       <tags>
-        <tag>HashMap</tag>
         <tag>容器类</tag>
+        <tag>HashMap</tag>
       </tags>
   </entry>
   <entry>
