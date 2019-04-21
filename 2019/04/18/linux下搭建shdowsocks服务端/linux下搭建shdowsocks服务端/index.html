@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="shdowsocks,">
 
 
 
@@ -96,13 +96,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="0xCAFEBABE的博客">
-<meta property="og:url" content="http://wuyuzhao666.github.io/tags/getSystemClassLoader/index.html">
+<meta name="description" content="作为中国的IT从业人员，有时需要翻越长城，浏览一下国外的网站，这时就可以购买一台位于国外节点的云服务器搭建shdowsocks服务端，然后自己的多终端设备都可以连接这个服务端，跨过长城。 连接云服务器 首先，购买一台云服务器，任意平台的云服务器都可以，AWS、阿里云、腾讯云皆可，不过国内的相对便宜些，有些会有学生优惠，这里以阿里云为例。  按需购买好云服务器后，会有一个密钥对文件，阿里云可以创建实">
+<meta name="keywords" content="shdowsocks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux下搭建shdowsocks服务端">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/04/18/linux下搭建shdowsocks服务端/linux下搭建shdowsocks服务端/index.html">
 <meta property="og:site_name" content="0xCAFEBABE的博客">
+<meta property="og:description" content="作为中国的IT从业人员，有时需要翻越长城，浏览一下国外的网站，这时就可以购买一台位于国外节点的云服务器搭建shdowsocks服务端，然后自己的多终端设备都可以连接这个服务端，跨过长城。 连接云服务器 首先，购买一台云服务器，任意平台的云服务器都可以，AWS、阿里云、腾讯云皆可，不过国内的相对便宜些，有些会有学生优惠，这里以阿里云为例。  按需购买好云服务器后，会有一个密钥对文件，阿里云可以创建实">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/ss-1">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/ss-2">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/ss-3">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/ss-5">
+<meta property="og:image" content="http://res.cloudinary.com/cafebabe/ss-6">
+<meta property="og:updated_time" content="2019-04-21T13:33:59.467Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="0xCAFEBABE的博客">
+<meta name="twitter:title" content="linux下搭建shdowsocks服务端">
+<meta name="twitter:description" content="作为中国的IT从业人员，有时需要翻越长城，浏览一下国外的网站，这时就可以购买一台位于国外节点的云服务器搭建shdowsocks服务端，然后自己的多终端设备都可以连接这个服务端，跨过长城。 连接云服务器 首先，购买一台云服务器，任意平台的云服务器都可以，AWS、阿里云、腾讯云皆可，不过国内的相对便宜些，有些会有学生优惠，这里以阿里云为例。  按需购买好云服务器后，会有一个密钥对文件，阿里云可以创建实">
+<meta name="twitter:image" content="http://res.cloudinary.com/cafebabe/ss-1">
 
 
 
@@ -132,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/tags/getSystemClassLoader/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/04/18/linux下搭建shdowsocks服务端/linux下搭建shdowsocks服务端/">
 
 
 
 
 
-  <title>Tag: getSystemClassLoader | 0xCAFEBABE的博客</title>
+  <title>linux下搭建shdowsocks服务端 | 0xCAFEBABE的博客</title>
   
 
 
@@ -156,7 +167,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -292,52 +303,315 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>getSystemClassLoader<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/04/18/linux下搭建shdowsocks服务端/linux下搭建shdowsocks服务端/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu yuzhao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0xCAFEBABE的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/03/19/类加载机制（六）：解析Launcher类/类加载机制（六）：解析Launcher类/" itemprop="url">
-              
-                <span itemprop="name">类加载机制（六）：getSystemClassLoader与Launcher</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">linux下搭建shdowsocks服务端</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:09:38+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-18T13:48:38+08:00">
+                2019-04-18
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  917
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>作为中国的IT从业人员，有时需要翻越长城，浏览一下国外的网站，这时就可以购买一台位于国外节点的云服务器搭建<code>shdowsocks</code>服务端，然后自己的多终端设备都可以连接这个服务端，跨过长城。</p>
+<h3 id="连接云服务器"><a href="#连接云服务器" class="headerlink" title="连接云服务器"></a>连接云服务器</h3><ul>
+<li><p>首先，购买一台云服务器，任意平台的云服务器都可以，AWS、阿里云、腾讯云皆可，不过国内的相对便宜些，有些会有学生优惠，这里以阿里云为例。</p>
+<blockquote>
+<p>按需购买好云服务器后，会有一个密钥对文件，阿里云可以创建实例时绑定密钥，也可以创建好后再绑定。</p>
+<center><img src="http://res.cloudinary.com/cafebabe/ss-1"></center>
+</blockquote>
+</li>
+<li><p>然后，使用这个<code>.pem</code>文件连接云服务器，此处以<code>Xshell</code>连接为例。</p>
+<blockquote>
+<p>用户名默认为<code>root</code>，密码选择<code>Public Key</code>导入你的密钥文件，即可连接。</p>
+<center><img src="http://res.cloudinary.com/cafebabe/ss-2"></center>
+</blockquote>
+</li>
+</ul>
+<h3 id="安装Shadowsocks服务端"><a href="#安装Shadowsocks服务端" class="headerlink" title="安装Shadowsocks服务端"></a>安装Shadowsocks服务端</h3><h4 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h4><p>使用包管理工具<code>pip</code>安装<code>python</code>版本的<code>Shadowsocks</code>，先安装<code>pip</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"</span></span><br><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># python get-pip.py</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装配置Shadowsocks服务端"><a href="#安装配置Shadowsocks服务端" class="headerlink" title="安装配置Shadowsocks服务端"></a>安装配置Shadowsocks服务端</h4><p>安装<code>Shadowsocks</code>，此版本的 <code>shadowsocks</code> 已发布到<code>pip</code>上，直接使用<code>pip</code>安装。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># pip install --upgrade pip</span></span><br><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># pip install shadowsocks</span></span><br></pre></td></tr></table></figure>
+<p>安装完成后，再创建一个<code>shadowsocks.json</code>文件，通过读取这个文件的配置来启动，就不用每次启动都输入所有的配置信息。</p>
+<ul>
+<li><p>多端口配置</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># vim /etc/shadowsocks.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"server"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">  <span class="string">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">  <span class="string">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">  <span class="string">"port_password"</span>: &#123;</span><br><span class="line">    <span class="string">"123456"</span>: <span class="string">"填写密码"</span>,</span><br><span class="line">    <span class="string">"123457"</span>: <span class="string">"填写密码"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"timeout"</span>: <span class="number">600</span>,</span><br><span class="line">  <span class="string">"method"</span>: <span class="string">"rc4-md5"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>其中<code>server</code>为你的云服务器的<code>私有地址</code>、<code>私有地址</code>、<code>私有地址</code>(说三遍)</li>
+<li><code>method</code>为加密方法，有多种选择，推荐使用<code>rc4-md5</code>，这种方式，加密开销小些。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>单端口配置</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"server"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">    <span class="string">"server_port"</span>: <span class="number">12345</span>,</span><br><span class="line">    <span class="string">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="string">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">    <span class="string">"password"</span>: <span class="string">"cowbeer"</span>,</span><br><span class="line">    <span class="string">"timeout"</span>: <span class="number">300</span>,</span><br><span class="line">    <span class="string">"method"</span>: <span class="string">"rc4-md5"</span>,</span><br><span class="line">    <span class="string">"fast_open"</span>: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置自启动"><a href="#配置自启动" class="headerlink" title="配置自启动"></a>配置自启动</h3><p>编辑<code>shadowsocks</code>服务的启动脚本文件，内容如下：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># vim /etc/systemd/system/shadowsocks.service</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=Shadowsocks</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">TimeoutStartSec=<span class="number">0</span></span><br><span class="line">ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>执行以下命令启动 <code>shadowsocks</code>服务：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># systemctl enable shadowsocks</span></span><br><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># systemctl start shadowsocks</span></span><br></pre></td></tr></table></figure>
+<p>检查 <code>shadowsocks</code> 服务是否已成功启动，可以执行以下命令查看服务的状态：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># systemctl status shadowsocks -l</span></span><br></pre></td></tr></table></figure>
+<center><img src="http://res.cloudinary.com/cafebabe/ss-3"></center><br>### 检查防火墙<br><br>安装无误后，若开启了防火墙，配置防火墙规则，开放你配置的端口：<br><br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># firewall-cmd --zone=public --add-port=123456/tcp --permanent</span></span><br><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># firewall-cmd --zone=public --add-port=123457/tcp --permanent</span></span><br><span class="line">[root@iZt4n2suiu81ljhwj0y8ppZ ~]<span class="comment"># firewall-cmd --reload</span></span><br></pre></td></tr></table></figure><br><br>以下为未开启防火墙的输出结果：<br><br><center><img src="http://res.cloudinary.com/cafebabe/ss-5"></center>
+
+</li>
+</ul>
+<h3 id="云服务器配置安全组"><a href="#云服务器配置安全组" class="headerlink" title="云服务器配置安全组"></a>云服务器配置安全组</h3><p><code>shdowsocks</code>安装配置完后，还需要配置安全组。</p>
+<blockquote>
+<p>安全组是一种虚拟防火墙，具备状态检测和数据包过滤功能，用于在云端划分安全域。可以通过配置安全组规则，允许或禁止安全组内的ECS实例对公网或私网的访问。</p>
+</blockquote>
+<p>点开相应实例的左侧的网络与安全的安全组，配置安全组规则：</p>
+<center><img src="http://res.cloudinary.com/cafebabe/ss-6"></center>
+
+<blockquote>
+<ul>
+<li>安全组出方向默认允许所有访问，即从安全组内ECS访问外部都是放行的。</li>
+<li>端口范围：刚刚配置的<code>shdowsocks</code>的端口，1/12345表示1到12345.</li>
+<li>授权对象：0.0.0.0/0，本机就行。</li>
+</ul>
+</blockquote>
+<h3 id="配置客户端"><a href="#配置客户端" class="headerlink" title="配置客户端"></a>配置客户端</h3><p>安装配置完后，就可以用<code>shdowsocks</code>客户端进行连接了。</p>
+<p>Windows版本的客户端下载地址：</p>
+<p><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-windows/releases</a></p>
+<p>无需安装，点开后，添加一个你刚刚配置的服务端的信息，就可以使用了。</p>
 
       
     </div>
+    
+    
+    
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+      
+    </div>
+    
+    
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Wu yuzhao WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Wu yuzhao
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://wuyuzhao666.github.io/2019/04/18/linux下搭建shdowsocks服务端/linux下搭建shdowsocks服务端/" title="linux下搭建shdowsocks服务端">http://wuyuzhao666.github.io/2019/04/18/linux下搭建shdowsocks服务端/linux下搭建shdowsocks服务端/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shdowsocks/" rel="tag"><i class="fa fa-tag"></i>shdowsocks</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/15/部署Web应用到Tomcat根目录/部署Web应用到Tomcat根目录/" rel="next" title="部署Web应用到Tomcat根目录">
+                <i class="fa fa-chevron-left"></i> 部署Web应用到Tomcat根目录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -345,6 +619,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -365,8 +643,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -454,6 +741,22 @@
       </section>
       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1293886117&auto=1&height=66"></iframe>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接云服务器"><span class="nav-number">1.</span> <span class="nav-text">连接云服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Shadowsocks服务端"><span class="nav-number">2.</span> <span class="nav-text">安装Shadowsocks服务端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装pip"><span class="nav-number">2.1.</span> <span class="nav-text">安装pip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装配置Shadowsocks服务端"><span class="nav-number">2.2.</span> <span class="nav-text">安装配置Shadowsocks服务端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置自启动"><span class="nav-number">3.</span> <span class="nav-text">配置自启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#云服务器配置安全组"><span class="nav-number">4.</span> <span class="nav-text">云服务器配置安全组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置客户端"><span class="nav-number">5.</span> <span class="nav-text">配置客户端</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -651,6 +954,10 @@ show_date_time();
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
