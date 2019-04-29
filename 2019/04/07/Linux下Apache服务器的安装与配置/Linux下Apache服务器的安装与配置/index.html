@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://res.cloudinary.com/cafebabe/linux-3">
 <meta property="og:image" content="http://res.cloudinary.com/cafebabe/linux-4">
 <meta property="og:image" content="http://res.cloudinary.com/cafebabe/linux-5">
-<meta property="og:updated_time" content="2019-04-29T09:45:14.941Z">
+<meta property="og:updated_time" content="2019-04-29T09:51:42.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下Apache服务器的安装与配置">
 <meta name="twitter:description" content="安装在linux中，Apache服务器叫做httpd。 准备首先下载httpd与httpd的依赖软件。  Apache HTTP Server http://httpd.apache.org/download.cgi#apache24  APR和APR-Util http://apr.apache.org/download.cgi  PCRE https://sourceforge.net/pro">
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  390
+                  443
                 </span>
               
 
@@ -421,7 +421,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  2
                 </span>
               
             </div>
@@ -519,6 +519,17 @@
 </ul>
 <p>出现此页面，则安装成功。</p>
 <center><img src="http://res.cloudinary.com/cafebabe/linux-5"></center>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>遇到的问题：</p>
+<ul>
+<li><p>启动时遇到的问题</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">httpd: Could not open configuration file /xxx/conf/httpd.conf: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>解决办法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./apachectl -f /xxx/httpd/conf/httpd.conf -k start</span><br></pre></td></tr></table></figure>
+<p>以<code>httpd.conf</code>配置文件启动。</p>
+</li>
+</ul>
+
       
     </div>
     
@@ -771,7 +782,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">1.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解压"><span class="nav-number">1.2.1.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-2"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查"><span class="nav-number">1.2.3.</span> <span class="nav-text">检查</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">1.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解压"><span class="nav-number">1.2.1.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-2"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查"><span class="nav-number">1.2.3.</span> <span class="nav-text">检查</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a></li></ol></div>
             
 
           </div>
