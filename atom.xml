@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wuyuzhao666.github.io/"/>
-  <updated>2019-04-24T02:18:55.244Z</updated>
+  <updated>2019-05-12T09:43:11.054Z</updated>
   <id>http://wuyuzhao666.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jenkins自动化构建部署到多个服务器</title>
+    <link href="http://wuyuzhao666.github.io/2019/05/12/jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA%E9%83%A8%E7%BD%B2%E5%88%B0%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8/jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA%E9%83%A8%E7%BD%B2%E5%88%B0%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://wuyuzhao666.github.io/2019/05/12/jenkins自动化构建部署到多个服务器/jenkins自动化构建部署到多个服务器/</id>
+    <published>2019-05-12T07:12:42.000Z</published>
+    <updated>2019-05-12T09:43:11.054Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="jenkins下载与安装"><a href="#jenkins下载与安装" class="headerlink" title="jenkins下载与安装"></a>jenkins下载与安装</h2><p><code>jenkins</code>是一款持续集成的软件，最开始想用这个软件进行项目的自动化构建部署，是由实验室的项目有三个版本，本地需要一套，测试要一套，交付维护需要一套，每次修改了代码后，都需要打成<code>war</code>包，然后通过一些<code>ftp</code>工具传过去，这样一次还好，次数多了就受不了了，所以就花了一天，学习了下<code>jenkins</code>，以后就方便多了。</p><h5 id="引言与建议"><a href="#引言与建议" class="headerlink" title="引言与建议"></a>引言与建议</h5><p>如果要先集群服务器部署，不免每台有些配置信息不一样，比如数据库连接、<code>rest</code>接口、检索地址、文件服务器地址等，此时最好，将配置文件从<code>jar</code>包里抽取出来，放置在一个固定的目录下，且命名都相同，比如，我是使用<code>/usr/test.properties</code>等。然后写代码读取、或者直接<code>Spring</code>读取就行。</p><p><code>Spring</code>读取外部文件的配置。</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"ConfigurerProperty"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"</span>&gt;</span><br><span class="line">&lt;property name=<span class="string">"order"</span> value=<span class="string">"1"</span>/&gt;</span><br><span class="line">&lt;property name=<span class="string">"ignoreResourceNotFound"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;property name=<span class="string">"ignoreUnresolvablePlaceholders"</span> value=<span class="string">"true"</span> /&gt;</span><br><span class="line">&lt;property name=<span class="string">"location"</span> value=<span class="string">"file:/usr/resources.properties"</span>/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure><h5 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h5><p><a href="https://jenkins.io/" target="_blank" rel="noopener">https://jenkins.io/</a></p><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>下载安装好后，找到<code>jenkins</code>的<code>war</code>包<code>jenkins.war</code>，因为它是自带<code>Jetty</code>服务器的，所以直接命令运行就行。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jenkins.war</span><br></pre></td></tr></table></figure><blockquote><p>windows下在jenkins目录下打开命令窗口执行就好了。</p></blockquote><p>也可以，把这个<code>war</code>包放置在一个<code>Web</code>容器中。</p><p>然后，就可以通过<code>http://localhost:8080</code>访问。</p><p>按提示，注册账号，按提示登陆，默认安装插件就<code>OK</code>。</p><h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><ul><li><p>点击左侧的系统管理</p><center><img src="http://res.cloudinary.com/cafebabe/jks-1"></center></li><li><p>主要对系统设置、全局工具配置、插件管理来进行配置</p><center><img src="http://res.cloudinary.com/cafebabe/jks-2"></center><ul><li><p>插件管理</p><center><img src="http://res.cloudinary.com/cafebabe/jks-3"></center><p>点击可选插件，搜索安装：</p><p><code>Publish Over SSH</code>用于连接远程服务器。</p><p><code>Deploy to container</code>插件用于把打包的应用发布到远程服务器。</p></li><li><p>全局工具设置</p><blockquote><p>不要使用自动安装</p></blockquote><p><code>JDK</code>配置，<code>JAVA_HOME</code>就是自己的<code>jdk</code>目录。</p><center><img src="http://res.cloudinary.com/cafebabe/jks-4"></center><p><code>Maven</code>配置，<code>MAVEN_HOME</code>就是自己的<code>Maven</code>目录。</p><center><img src="http://res.cloudinary.com/cafebabe/jks-5"></center><p><code>git</code>，默认就行。</p><center><img src="http://res.cloudinary.com/cafebabe/jks-7"></center></li><li><p>系统设置，设置远程服务器</p><p>可设置多个节点，点击<code>add</code>。</p><center><img src="http://res.cloudinary.com/cafebabe/jks-6"></center></li></ul></li></ul><h2 id="构建与部署"><a href="#构建与部署" class="headerlink" title="构建与部署"></a>构建与部署</h2><p>配置好后，就可以进行新建任务了。</p><ul><li><p>新建任务</p><center><img src="http://res.cloudinary.com/cafebabe/jks-8"></center></li><li><p>配置</p><ul><li><p>仓库配置</p><center><img src="http://res.cloudinary.com/cafebabe/jks-9"></center><p>若仓库地址有错，会报错。</p></li><li><p>触发器构建</p><p>选择了定时构建和轮询<code>SCM</code>，就可以实现我们的自动化构建了。</p><p>一、定时构建：不管<code>SVN</code>或<code>Git</code>中数据有无变化，均执行定时化的构建任务 ；</p><p>二、轮询<code>SCM</code>：只要<code>SVN</code>或<code>Git</code>中数据有更新，则执行构建任务；</p><p>三、构建语法说明：</p><ul><li>首先格式为：<em> </em> <em> </em> *（五个星）；</li><li>第一个<em>表示分钟，取值0~59 第二个</em>表示小时，取值0~23<br> 第三个<em>表示一个月的第几天，取值1~31 第四个</em>表示第几月，取值1~12<br> 第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</li><li>使用举例：<br> 每隔10分钟构建一次：H/5 <em> </em> <em> </em><br> 每隔1小时构建一次：  H H/1 <em> </em> <em><br> 每月30号构建一次：    H H 30 </em> <em><br> 每两小时一次，每个工作日上午9点到下午5点(也许是上午10:38，下午12:38，下午2:38，下午4:38)<br> H H(9-16)/2 </em> * 1-5</li></ul><p>四、定时构建和轮询<code>SCM</code>使用互不冲突，具体如何组合，需要根据项目情况合理配置；</p><center><img src="http://res.cloudinary.com/cafebabe/jks-10"></center></li><li><p>部署</p><center><img src="http://res.cloudinary.com/cafebabe/jks-11"></center><p>在构建后操作处添加要部署的远程服务器，我这里添加了两个节点。</p><blockquote><p>Name : 在系统设置里配置的服务器，直接选择就行。</p><p>Source files：项目构建后的目录</p><p>Remove prefix ： 去前缀</p><p>Remote directoty ： 发布的目录，这个目录是接着你在远程服务器中配置的目录</p><p>Exec command ： 发布完执行的命令，一般会写个重启Tomcat的脚本，这里是直接执行这个脚本</p></blockquote></li><li><p>构建部署</p><center><img src="http://res.cloudinary.com/cafebabe/jks-12"></center><p>点击立即构建测试，点击控制台输出，可以查看日志输出。</p><center><img src="http://res.cloudinary.com/cafebabe/jks-13"></center><p>以下为三台服务器都部署成功，且成功执行脚本。</p><center><img src="http://res.cloudinary.com/cafebabe/jks-14"></center><p>restart.sh脚本：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>! /bin/bash</span><br><span class="line">export JAVA_HOME=/usr/jdk1.8.0_191 </span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH </span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line"></span><br><span class="line">tomcat_home=/home/admin/apache-tomcat-8.5.35</span><br><span class="line">SHUTDOWN=$tomcat_home/bin/shutdown.sh</span><br><span class="line">STARTTOMCAT=$tomcat_home/bin/startup.sh</span><br><span class="line">echo "关闭$tomcat_home"</span><br><span class="line"><span class="meta">$</span>SHUTDOWN</span><br><span class="line"><span class="meta">#</span>杀死tomcat进程</span><br><span class="line">ps -ef|grep tomcat|grep -v grep|awk '&#123;print $2&#125;'|xargs kill -9</span><br><span class="line"><span class="meta">#</span>删除日志文件，如果你不先删除可以不要下面一行</span><br><span class="line">rm  $tomcat_home/logs/* -rf</span><br><span class="line"><span class="meta">#</span>删除tomcat的临时目录</span><br><span class="line">rm  $tomcat_home/work/* -rf</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">echo "启动$tomcat_home"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>STARTTOMCAT</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>看启动日志</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>tail -f $tomcat_home/logs/catalina.out</span><br></pre></td></tr></table></figure></li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;jenkins下载与安装&quot;&gt;&lt;a href=&quot;#jenkins下载与安装&quot; class=&quot;headerlink&quot; title=&quot;jenkins下载与安装&quot;&gt;&lt;/a&gt;jenkins下载与安装&lt;/h2&gt;&lt;p&gt;&lt;code&gt;jenkins&lt;/code&gt;是一款持续集成的软件
+      
+    
+    </summary>
+    
+      <category term="工具" scheme="http://wuyuzhao666.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="jenkins" scheme="http://wuyuzhao666.github.io/tags/jenkins/"/>
+    
+  </entry>
   
   <entry>
     <title>深度分析ConcurrentLinkedQueue原理</title>
@@ -419,9 +444,9 @@
     </summary>
     
     
-      <category term="容器类" scheme="http://wuyuzhao666.github.io/tags/%E5%AE%B9%E5%99%A8%E7%B1%BB/"/>
-    
       <category term="HashSet" scheme="http://wuyuzhao666.github.io/tags/HashSet/"/>
+    
+      <category term="容器类" scheme="http://wuyuzhao666.github.io/tags/%E5%AE%B9%E5%99%A8%E7%B1%BB/"/>
     
   </entry>
   
@@ -505,33 +530,6 @@
       <category term="容器类" scheme="http://wuyuzhao666.github.io/tags/%E5%AE%B9%E5%99%A8%E7%B1%BB/"/>
     
       <category term="ArrayList" scheme="http://wuyuzhao666.github.io/tags/ArrayList/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>包装类的缓存机制</title>
-    <link href="http://wuyuzhao666.github.io/2019/02/28/%E5%8C%85%E8%A3%85%E7%B1%BB%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/%E5%8C%85%E8%A3%85%E7%B1%BB%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/"/>
-    <id>http://wuyuzhao666.github.io/2019/02/28/包装类的缓存机制/包装类的缓存机制/</id>
-    <published>2019-02-28T13:50:12.000Z</published>
-    <updated>2019-03-07T14:07:36.772Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="包装类的缓存机制与valueOf"><a href="#包装类的缓存机制与valueOf" class="headerlink" title="包装类的缓存机制与valueOf()"></a>包装类的缓存机制与valueOf()</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>Java有8种基本类型，每种都有一个包装类型，有很多静态方法、变量等，方便对数据进行操作。包装类可以由<code>valueOf()</code>静态方法去创建，也可以用new关键字去创建实例对象，但为什么推荐使用<code>valueOf()</code>来创建呢。</p><hr><p>首先，我们来看一个例子:</p><pre><code>public class Test {public static void main(String[] args) {    Integer a = 1;    Integer b = 1;    Integer c = 128;    Integer d = 128;    if(a == b){        System.out.println(&quot;a与b相同&quot;);    }    if(c == d){        System.out.println(&quot;c与d相同&quot;);    }}}</code></pre><p><em>运行结果</em>   </p><p>​                                                                                                             </p><p><code>a与b相同                                                                                                      c与d不相同</code></p><p>​                                                                                                         </p><p><em>分析</em></p><blockquote><p> 这段代码创建了4个<code>Integer</code>类型的对象实例a、b、c、d，照常理来说，4个对象，其引用地址不同，此例子的输出应该都为不相同，但结果确是a与b相同，c与d不同，这是为什么？</p></blockquote><p>此处我们是采用自动装箱的方式来创建的<code>Integer</code>对象，而这相当于调用了<code>valueOf()</code>的方法，所以就得从<code>valueOf()</code>这个静态方法说起。</p><p>###valueof的分析</p><p>首先，看看<code>Integer</code>的<code>valueOf()</code>方法的源码</p><pre><code>public static Integer valueOf(int i) {            if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)                return IntegerCache.cache[i + (-IntegerCache.low)];            return new Integer(i);        }</code></pre><p><em>分析</em></p><blockquote><p>此段代码中如果不满足<code>i&gt;=IntegerCache.low &amp;&amp; i&lt;= IntegerCache.high</code>这个表达式，就通过new来得到对象，如果满足呢？</p></blockquote><p>再来看看IntegerCache类，IntegCache类是Integer类的一个内部静态类，其源码如下。</p><pre><code>  /** * Cache to support the object identity semantics of autoboxing for values between * -128 and 127 (inclusive) as required by JLS. * * The cache is initialized on first usage.  The size of the cache * may be controlled by the {@code -XX:AutoBoxCacheMax=&lt;size&gt;} option. * During VM initialization, java.lang.Integer.IntegerCache.high property * may be set and saved in the private system properties in the * sun.misc.VM class. */ private static class IntegerCache {                static final int low = -128;                static final int high;                static final Integer cache[];            static {                // high value may be configured by property                int h = 127;                String integerCacheHighPropValue =                    sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);                if (integerCacheHighPropValue != null) {                    try {                        int i = parseInt(integerCacheHighPropValue);                        i = Math.max(i, 127);                        // Maximum array size is Integer.MAX_VALUE                        h = Math.min(i, Integer.MAX_VALUE - (-low) -1);                    } catch( NumberFormatException nfe) {                        // If the property cannot be parsed into an int, ignore it.                    }                }                high = h;                cache = new Integer[(high - low) + 1];                int j = low;                for(int k = 0; k &lt; cache.length; k++)                    cache[k] = new Integer(j++);                // range [-128, 127] must be interned (JLS7 5.1.7)                assert IntegerCache.high &gt;= 127;            }            private IntegerCache() {}        }</code></pre><p><em>分析</em></p><blockquote><p>首先，从Javadoc中看出这个类是用来实现缓存的。它定义了三个静态参数，缓存数组<code>cache</code>,数组最小值<code>low</code>，赋值为-128以及数组最大值<code>high</code>，最大值映射到了<code>“java.lang.Integer.IntegerCache.high”</code>上。</p></blockquote><blockquote><p>，并支持 -128 到 127 之间的自动装箱过程。最大值 127 可以通过 JVM 的启动参数 -XX:AutoBoxCacheMax=size 修改。                                                                                                              </p></blockquote><blockquote><p>修改jvm参数后                                                                                                                                                                            </p></blockquote><p>  <img src="/2019/02/28/包装类的缓存机制/包装类的缓存机制/2.png" alt="添加jvm参数">                                                                                                                                 </p><p>​      </p><p><em>运行结果</em></p><p>​                                                                                                       </p><p><code>a与b相同                                                                                                      c与d不相同</code></p><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p><code>IntegerCache</code>这个<code>Integer</code>私有静态类代表<code>Integer</code>缓存，它在被首次主动使用时，会被初始化，static代码块中的会被执行，通过一个 <code>for</code> 循环创建出一个值为-128~127的一个缓存数组<code>cache</code>，以后，如果创建的值在<code>low</code>和<code>high</code>之间，就可以使用缓存中包含的实例对象，而不是创建一个新的实例(在自动装箱的情况下)。这种机制使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个 -128 到 127 这个范围呢？因为这个范围的整数值是使用最广泛的，通过使用共享对象，就可以节省内存空间了。在程序中第一次使用 <code>Integer</code> 的时候也需要一定的额外时间来初始化这个缓存。这种机制在其他包装类中也有类似的实现。这种缓存策略也是一种设计模式，叫做享元模式。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;包装类的缓存机制与valueOf&quot;&gt;&lt;a href=&quot;#包装类的缓存机制与valueOf&quot; class=&quot;headerlink&quot; title=&quot;包装类的缓存机制与valueOf()&quot;&gt;&lt;/a&gt;包装类的缓存机制与valueOf()&lt;/h2&gt;&lt;h3 id=&quot;引言&quot;&gt;&lt;
-      
-    
-    </summary>
-    
-      <category term="Java基础" scheme="http://wuyuzhao666.github.io/categories/Java%E5%9F%BA%E7%A1%80/"/>
-    
-    
-      <category term="容器类" scheme="http://wuyuzhao666.github.io/tags/%E5%AE%B9%E5%99%A8%E7%B1%BB/"/>
-    
-      <category term="缓存机制" scheme="http://wuyuzhao666.github.io/tags/%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/"/>
     
   </entry>
   
