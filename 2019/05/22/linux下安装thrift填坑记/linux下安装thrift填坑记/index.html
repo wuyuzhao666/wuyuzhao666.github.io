@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="jenkins,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -96,33 +96,17 @@
 
 
 
-<meta name="description" content="jenkins下载与安装jenkins是一款持续集成的软件，最开始想用这个软件进行项目的自动化构建部署，是由实验室的项目有三个版本，本地需要一套，测试要一套，交付维护需要一套，每次修改了代码后，都需要打成war包，然后通过一些ftp工具传过去，这样一次还好，次数多了就受不了了，所以就花了一天，学习了下jenkins，以后就方便多了。 引言与建议如果要先集群服务器部署，不免每台有些配置信息不一样，比">
-<meta name="keywords" content="jenkins">
+<meta name="description" content="引言（基于centos6）最近想安装个thrift来玩玩，看了网上的一些安装教程，报了一大堆的错，查了无数的资料，搞了一天，终于安装好了。。。 安装123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jenkins自动化构建部署到多个服务器">
-<meta property="og:url" content="http://wuyuzhao666.github.io/2019/05/12/jenkins自动化构建部署到多个服务器/jenkins自动化构建部署到多个服务器/index.html">
+<meta property="og:title" content="linux下安装thrift填坑记">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/05/22/linux下安装thrift填坑记/linux下安装thrift填坑记/index.html">
 <meta property="og:site_name" content="0xCAFEBABE的博客">
-<meta property="og:description" content="jenkins下载与安装jenkins是一款持续集成的软件，最开始想用这个软件进行项目的自动化构建部署，是由实验室的项目有三个版本，本地需要一套，测试要一套，交付维护需要一套，每次修改了代码后，都需要打成war包，然后通过一些ftp工具传过去，这样一次还好，次数多了就受不了了，所以就花了一天，学习了下jenkins，以后就方便多了。 引言与建议如果要先集群服务器部署，不免每台有些配置信息不一样，比">
+<meta property="og:description" content="引言（基于centos6）最近想安装个thrift来玩玩，看了网上的一些安装教程，报了一大堆的错，查了无数的资料，搞了一天，终于安装好了。。。 安装123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-1">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-2">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-3">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-4">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-5">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-7">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-6">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-8">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-9">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-10">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-11">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-12">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-13">
-<meta property="og:image" content="http://res.cloudinary.com/cafebabe/jks-14">
-<meta property="og:updated_time" content="2019-05-12T09:43:11.054Z">
+<meta property="og:updated_time" content="2019-05-22T11:44:39.090Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jenkins自动化构建部署到多个服务器">
-<meta name="twitter:description" content="jenkins下载与安装jenkins是一款持续集成的软件，最开始想用这个软件进行项目的自动化构建部署，是由实验室的项目有三个版本，本地需要一套，测试要一套，交付维护需要一套，每次修改了代码后，都需要打成war包，然后通过一些ftp工具传过去，这样一次还好，次数多了就受不了了，所以就花了一天，学习了下jenkins，以后就方便多了。 引言与建议如果要先集群服务器部署，不免每台有些配置信息不一样，比">
-<meta name="twitter:image" content="http://res.cloudinary.com/cafebabe/jks-1">
+<meta name="twitter:title" content="linux下安装thrift填坑记">
+<meta name="twitter:description" content="引言（基于centos6）最近想安装个thrift来玩玩，看了网上的一些安装教程，报了一大堆的错，查了无数的资料，搞了一天，终于安装好了。。。 安装123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676">
 
 
 
@@ -152,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/05/12/jenkins自动化构建部署到多个服务器/jenkins自动化构建部署到多个服务器/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/05/22/linux下安装thrift填坑记/linux下安装thrift填坑记/">
 
 
 
 
 
-  <title>jenkins自动化构建部署到多个服务器 | 0xCAFEBABE的博客</title>
+  <title>linux下安装thrift填坑记 | 0xCAFEBABE的博客</title>
   
 
 
@@ -326,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/05/12/jenkins自动化构建部署到多个服务器/jenkins自动化构建部署到多个服务器/">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/05/22/linux下安装thrift填坑记/linux下安装thrift填坑记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wu yuzhao">
@@ -343,7 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">jenkins自动化构建部署到多个服务器</h1>
+          <h1 class="post-title" itemprop="name headline">linux下安装thrift填坑记</h1>
         
 
         <div class="post-meta">
@@ -355,8 +339,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-12T15:12:42+08:00">
-                2019-05-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-22T19:19:40+08:00">
+                2019-05-22
               </time>
             
 
@@ -378,8 +362,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/thrift/" itemprop="url" rel="index">
+                    <span itemprop="name">thrift</span>
                   </a>
                 </span>
 
@@ -414,7 +398,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.2k
+                  938
                 </span>
               
 
@@ -451,107 +435,8 @@
       
 
       
-        <h2 id="jenkins下载与安装"><a href="#jenkins下载与安装" class="headerlink" title="jenkins下载与安装"></a>jenkins下载与安装</h2><p><code>jenkins</code>是一款持续集成的软件，最开始想用这个软件进行项目的自动化构建部署，是由实验室的项目有三个版本，本地需要一套，测试要一套，交付维护需要一套，每次修改了代码后，都需要打成<code>war</code>包，然后通过一些<code>ftp</code>工具传过去，这样一次还好，次数多了就受不了了，所以就花了一天，学习了下<code>jenkins</code>，以后就方便多了。</p>
-<h5 id="引言与建议"><a href="#引言与建议" class="headerlink" title="引言与建议"></a>引言与建议</h5><p>如果要先集群服务器部署，不免每台有些配置信息不一样，比如数据库连接、<code>rest</code>接口、检索地址、文件服务器地址等，此时最好，将配置文件从<code>jar</code>包里抽取出来，放置在一个固定的目录下，且命名都相同，比如，我是使用<code>/usr/test.properties</code>等。然后写代码读取、或者直接<code>Spring</code>读取就行。</p>
-<p><code>Spring</code>读取外部文件的配置。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"ConfigurerProperty"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"order"</span> value=<span class="string">"1"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"ignoreResourceNotFound"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"ignoreUnresolvablePlaceholders"</span> value=<span class="string">"true"</span> /&gt;</span><br><span class="line">		&lt;property name=<span class="string">"location"</span> value=<span class="string">"file:/usr/resources.properties"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-<h5 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h5><p><a href="https://jenkins.io/" target="_blank" rel="noopener">https://jenkins.io/</a></p>
-<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>下载安装好后，找到<code>jenkins</code>的<code>war</code>包<code>jenkins.war</code>，因为它是自带<code>Jetty</code>服务器的，所以直接命令运行就行。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jenkins.war</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>windows下在jenkins目录下打开命令窗口执行就好了。</p>
-</blockquote>
-<p>也可以，把这个<code>war</code>包放置在一个<code>Web</code>容器中。</p>
-<p>然后，就可以通过<code>http://localhost:8080</code>访问。</p>
-<p>按提示，注册账号，按提示登陆，默认安装插件就<code>OK</code>。</p>
-<h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><ul>
-<li><p>点击左侧的系统管理</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-1"></center>
-</li>
-<li><p>主要对系统设置、全局工具配置、插件管理来进行配置</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-2"></center>
-
-<ul>
-<li><p>插件管理</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-3"></center>
-
-<p>点击可选插件，搜索安装：</p>
-<p><code>Publish Over SSH</code>用于连接远程服务器。</p>
-<p><code>Deploy to container</code>插件用于把打包的应用发布到远程服务器。</p>
-</li>
-<li><p>全局工具设置</p>
-<blockquote>
-<p>不要使用自动安装</p>
-</blockquote>
-<p><code>JDK</code>配置，<code>JAVA_HOME</code>就是自己的<code>jdk</code>目录。</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-4"></center>
-
-<p><code>Maven</code>配置，<code>MAVEN_HOME</code>就是自己的<code>Maven</code>目录。</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-5"></center>
-
-<p><code>git</code>，默认就行。</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-7"></center>
-</li>
-<li><p>系统设置，设置远程服务器</p>
-<p>可设置多个节点，点击<code>add</code>。</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-6"></center>
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="构建与部署"><a href="#构建与部署" class="headerlink" title="构建与部署"></a>构建与部署</h2><p>配置好后，就可以进行新建任务了。</p>
-<ul>
-<li><p>新建任务</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-8"></center>
-</li>
-<li><p>配置</p>
-<ul>
-<li><p>仓库配置</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-9"></center>
-
-<p>若仓库地址有错，会报错。</p>
-</li>
-<li><p>触发器构建</p>
-<p>选择了定时构建和轮询<code>SCM</code>，就可以实现我们的自动化构建了。</p>
-<p>一、定时构建：不管<code>SVN</code>或<code>Git</code>中数据有无变化，均执行定时化的构建任务 ；</p>
-<p>二、轮询<code>SCM</code>：只要<code>SVN</code>或<code>Git</code>中数据有更新，则执行构建任务；</p>
-<p>三、构建语法说明：</p>
-<ul>
-<li>首先格式为：<em> </em> <em> </em> *（五个星）；</li>
-<li>第一个<em>表示分钟，取值0~59 第二个</em>表示小时，取值0~23<br> 第三个<em>表示一个月的第几天，取值1~31 第四个</em>表示第几月，取值1~12<br> 第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</li>
-<li>使用举例：<br> 每隔10分钟构建一次：H/5 <em> </em> <em> </em><br> 每隔1小时构建一次：  H H/1 <em> </em> <em><br> 每月30号构建一次：    H H 30 </em> <em><br> 每两小时一次，每个工作日上午9点到下午5点(也许是上午10:38，下午12:38，下午2:38，下午4:38)<br> H H(9-16)/2 </em> * 1-5</li>
-</ul>
-<p>四、定时构建和轮询<code>SCM</code>使用互不冲突，具体如何组合，需要根据项目情况合理配置；</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-10"></center>
-</li>
-<li><p>部署</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-11"></center>
-
-<p>在构建后操作处添加要部署的远程服务器，我这里添加了两个节点。</p>
-<blockquote>
-<p>Name : 在系统设置里配置的服务器，直接选择就行。</p>
-<p>Source files：项目构建后的目录</p>
-<p>Remove prefix ： 去前缀</p>
-<p>Remote directoty ： 发布的目录，这个目录是接着你在远程服务器中配置的目录</p>
-<p>Exec command ： 发布完执行的命令，一般会写个重启Tomcat的脚本，这里是直接执行这个脚本</p>
-</blockquote>
-</li>
-<li><p>构建部署</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-12"></center>
-
-<p>点击立即构建测试，点击控制台输出，可以查看日志输出。</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-13"></center>
-
-<p>以下为三台服务器都部署成功，且成功执行脚本。</p>
-<center><img src="http://res.cloudinary.com/cafebabe/jks-14"></center>
-
-<p>restart.sh脚本：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>! /bin/bash</span><br><span class="line">export JAVA_HOME=/usr/jdk1.8.0_191 </span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH </span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line"></span><br><span class="line">tomcat_home=/home/admin/apache-tomcat-8.5.35</span><br><span class="line">SHUTDOWN=$tomcat_home/bin/shutdown.sh</span><br><span class="line">STARTTOMCAT=$tomcat_home/bin/startup.sh</span><br><span class="line">echo "关闭$tomcat_home"</span><br><span class="line"><span class="meta">$</span>SHUTDOWN</span><br><span class="line"><span class="meta">#</span>杀死tomcat进程</span><br><span class="line">ps -ef|grep tomcat|grep -v grep|awk '&#123;print $2&#125;'|xargs kill -9</span><br><span class="line"><span class="meta">#</span>删除日志文件，如果你不先删除可以不要下面一行</span><br><span class="line">rm  $tomcat_home/logs/* -rf</span><br><span class="line"><span class="meta">#</span>删除tomcat的临时目录</span><br><span class="line">rm  $tomcat_home/work/* -rf</span><br><span class="line">sleep 5</span><br><span class="line"></span><br><span class="line">echo "启动$tomcat_home"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>STARTTOMCAT</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>看启动日志</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>tail -f $tomcat_home/logs/catalina.out</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
+        <h5 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h5><p>（基于centos6）最近想安装个<code>thrift</code>来玩玩，看了网上的一些安装教程，报了一大堆的错，查了无数的资料，搞了一天，终于安装好了。。。</p>
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>依赖安装</span><br><span class="line">yum -y update</span><br><span class="line">yum install wget</span><br><span class="line">yum install git</span><br><span class="line">yum install gcc gcc-c++</span><br><span class="line">yum install libevent-devel zlib-devel openssl-devel</span><br><span class="line">yum install m4</span><br><span class="line">yum install glibc-devel glibc glib2 glib2-devel</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>autoconf</span><br><span class="line">yum install autoconf-2.69</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>libtool</span><br><span class="line">wget http://mirrors.ustc.edu.cn/gnu/libtool/libtool-2.4.6.tar.gz</span><br><span class="line">tar -xvf libtool-2.4.6.tar.gz</span><br><span class="line">cd libtool-2.4.6</span><br><span class="line">./bootstrap</span><br><span class="line">./configure</span><br><span class="line">make &amp;make install</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>bison</span><br><span class="line">wget http://ftp.gnu.org/gnu/bison/bison-3.0.4.tar.gz</span><br><span class="line">tar -xvf bison-3.0.4.tar.gz</span><br><span class="line">cd bison-3.0.4</span><br><span class="line">./configure --prefix=/usr/soft/bison</span><br><span class="line">make &amp;make install</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>bootstrap</span><br><span class="line">wget http://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.gz</span><br><span class="line">tar -xvf boost_1_64_0.tar.gz</span><br><span class="line">cd boost_1_64_0</span><br><span class="line">./bootstrap.sh</span><br><span class="line">./b2 install</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>thrift，若时间很久，直接去官网下载吧 </span><br><span class="line"><span class="meta">#</span>http://www.apache.org/dyn/closer.cgi?path=/thrift/0.12.0/thrift-0.12.0.tar.gz</span><br><span class="line">git clone https://github.com/apache/thrift.git</span><br><span class="line">cd thrift</span><br><span class="line">./bootstrap.sh</span><br><span class="line">./configure --prefix=/usr/soft/thrift --with-boost=/usr/soft/bootstrap/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>若出现如下错误，NO.1--------------------------------------------------------------------1</span><br><span class="line">./configure: line 3802: PKG_PROG_PKG_CONFIG: command not found</span><br><span class="line">./configure: line 18272: syntax error near unexpected token `QT,'</span><br><span class="line">./configure: line 18272: `    PKG_CHECK_MODULES(QT, QtCore &gt;= 4.3, QtNetwork &gt;= 4.3, have_qt=yes, have_qt=no)'</span><br><span class="line"><span class="meta">#</span>运行如下命令</span><br><span class="line">find /usr -name "pkg.m4"   返回  /usr/share/aclocal/pkg.m4</span><br><span class="line">aclocal --print-ac-dir     返回  /usr/local/share/aclocal</span><br><span class="line"><span class="meta">#</span>这两个地址不一样，再加上 bootstrap.sh 里面定义了  aclocal -I ./aclocal</span><br><span class="line"><span class="meta">#</span>这导致定义在 pkg.m4里全局变量 PKG_PROG_PKG_CONFIG  与 PKG_CHECK_MODULES 找不到，所以报错</span><br><span class="line"><span class="meta">#</span>做如下修改解决这个问题, 在bootstrap.sh 里面修改 </span><br><span class="line">aclocal -I ./aclocal -I /usr/share/aclocal/</span><br><span class="line"><span class="meta">#</span>保存 重新从 ./bootstrap.sh 就可以了！</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>然后继续</span><br><span class="line">make &amp;make install</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>若出现如下错误，NO.2-------------------------------------------------------------------2</span><br><span class="line"><span class="meta">#</span>搞忘了，反正错误就是你的gcc版本太低了，需要升级</span><br><span class="line"><span class="meta">#</span>下载gcc-4.8</span><br><span class="line">wget http://ftp.gnu.org/gnu/gcc/gcc-4.8.0/gcc-4.8.0.tar.bz2</span><br><span class="line">tar jxvf gcc-4.8.0.tar.bz2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>下载编译所需依赖库</span><br><span class="line">cd gcc-4.8.0</span><br><span class="line">./contrib/download_prerequisites</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>编译安装</span><br><span class="line">mkdir gcc-build-4.8.0</span><br><span class="line">cd  gcc-build-4.8.0</span><br><span class="line">../gcc-4.8.0/configure --enable-checking=release --enable-languages=c,c++ --disable-multilib</span><br><span class="line">make -j 8</span><br><span class="line">make install</span><br><span class="line">gcc -v</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>若出现如下错误，NO.3-------------------------------------------------------------------3</span><br><span class="line">./src/thrift/server/TNonblockingServer.h:41:33: error: event2/event_compat.h: No such file or directory</span><br><span class="line"><span class="meta">#</span>找不到event2的头文件</span><br><span class="line"><span class="meta">#</span>直接去官网下载</span><br><span class="line"><span class="meta">#</span>https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz</span><br><span class="line"><span class="meta">#</span>安装编译</span><br><span class="line">./configure --prefix=/usr/local</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>若出现如下错误，NO.4-------------------------------------------------------------------4</span><br><span class="line">/usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.18' not found </span><br><span class="line"><span class="meta">#</span>这是因为升级gcc时，生成的动态库没有替换老版本gcc的动态库，将gcc最新版本的动态库替换掉老版本的动态库即可</span><br><span class="line"><span class="meta">#</span>查看GLBCXX版本</span><br><span class="line">strings /usr/lib/libstdc++.so.6 | grep GLIBCXX</span><br><span class="line"><span class="meta">#</span>输出</span><br><span class="line">GLIBCXX_3.4</span><br><span class="line">GLIBCXX_3.4.1</span><br><span class="line">...</span><br><span class="line">GLIBCXX_3.4.11</span><br><span class="line">GLIBCXX_3.4.12</span><br><span class="line">GLIBCXX_3.4.13</span><br><span class="line">GLIBCXX_FORCE_NEW</span><br><span class="line">GLIBCXX_DEBUG_MESSAGE_LENGTH</span><br><span class="line"><span class="meta">#</span>可以看到，最高版本为3.4.13，没有对应的3.4.18</span><br><span class="line"><span class="meta">#</span>查看libstdc++.so.6链接的库</span><br><span class="line">ll /usr/lib/libstdc++.so.6</span><br><span class="line"><span class="meta">#</span>输出，这是libstdc++.so.6现在链接的库</span><br><span class="line">/usr/lib/libstdc++.so.6 -&gt; libstdc++.so.6.0.13 </span><br><span class="line"><span class="meta">#</span>查看系统更高版本的lib库</span><br><span class="line">find / -name libstdc++.so.6*</span><br><span class="line"><span class="meta">#</span>输出，这里有一个6.0.18版本，比libstdc++.so.6.0.13版本更高  </span><br><span class="line">/usr/lib64/libstdc++.so.6.bak</span><br><span class="line">/usr/lib64/libstdc++.so.6.0.13</span><br><span class="line">/usr/lib64/libstdc++.so.6</span><br><span class="line">/usr/lib64/libstdc++.so.6.0.20</span><br><span class="line">/usr/local/lib64/libstdc++.so.6</span><br><span class="line">/usr/local/lib64/libstdc++.so.6.0.18-gdb.py</span><br><span class="line">/usr/local/lib64/libstdc++.so.6.0.18  </span><br><span class="line"><span class="meta">#</span>查看lib库的信息</span><br><span class="line">strings /usr/local/lib/libstdc++.so.6.0.18 | grep GLIBCXX</span><br><span class="line"><span class="meta">#</span>输出，18这个版本满足我们的需求</span><br><span class="line">GLIBCXX_3.4</span><br><span class="line">GLIBCXX_3.4.1</span><br><span class="line">GLIBCXX_3.4.2</span><br><span class="line">...</span><br><span class="line">GLIBCXX_3.4.17</span><br><span class="line">GLIBCXX_3.4.18 </span><br><span class="line">GLIBCXX_FORCE_NEW</span><br><span class="line">GLIBCXX_DEBUG_MESSAGE_LENGTH</span><br><span class="line"><span class="meta">#</span>重新链接</span><br><span class="line">cp /usr/local/lib/libstdc++.so.6.0.20 /usr/lib64/libstdc++.so.6.0.18</span><br><span class="line">rm -f /usr/lib/libstdc++.so.6</span><br><span class="line">ln -s /usr/lib/libstdc++.so.6.0.20 /usr/lib64/libstdc++.so.6</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>若出现如下错误，NO.5-------------------------------------------------------------------5</span><br><span class="line">g++: error: /usr/lib/libboost_unit_test_framework.a: No such file or directory</span><br><span class="line"><span class="meta">#</span>查找文件</span><br><span class="line">find / -name libboost_unit_test_framework.a</span><br><span class="line"><span class="meta">#</span>输出</span><br><span class="line">/usr/local/lib/libboost_unit_test_framework.a</span><br><span class="line"><span class="meta">#</span>解决</span><br><span class="line">sudo ln -s /usr/local/lib/libboost_unit_test_framework.a /usr/lib/libboost_unit_test_framework.a</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>编译</span><br><span class="line">make &amp;make install</span><br><span class="line">成功</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -605,7 +490,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://wuyuzhao666.github.io/2019/05/12/jenkins自动化构建部署到多个服务器/jenkins自动化构建部署到多个服务器/" title="jenkins自动化构建部署到多个服务器">http://wuyuzhao666.github.io/2019/05/12/jenkins自动化构建部署到多个服务器/jenkins自动化构建部署到多个服务器/</a>
+    <a href="http://wuyuzhao666.github.io/2019/05/22/linux下安装thrift填坑记/linux下安装thrift填坑记/" title="linux下安装thrift填坑记">http://wuyuzhao666.github.io/2019/05/22/linux下安装thrift填坑记/linux下安装thrift填坑记/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -618,12 +503,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/jenkins/" rel="tag"><i class="fa fa-tag"></i>jenkins</a>
-          
-        </div>
-      
 
       
       
@@ -633,8 +512,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/23/深度分析ConcurrentLinkedQueue原理/深度分析ConcurrentLinkedQueue原理/" rel="next" title="深度分析ConcurrentLinkedQueue原理">
-                <i class="fa fa-chevron-left"></i> 深度分析ConcurrentLinkedQueue原理
+              <a href="/2019/05/21/protobuf集成netty实现多协议消息传递/protobuf集成netty实现多协议消息传递/" rel="next" title="protobuf集成netty实现多协议消息传递">
+                <i class="fa fa-chevron-left"></i> protobuf集成netty实现多协议消息传递
               </a>
             
           </div>
@@ -642,10 +521,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/21/protobuf集成netty实现多协议消息传递/protobuf集成netty实现多协议消息传递/" rel="prev" title="protobuf集成netty实现多协议消息传递">
-                protobuf集成netty实现多协议消息传递 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -805,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jenkins下载与安装"><span class="nav-number">1.</span> <span class="nav-text">jenkins下载与安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引言与建议"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">引言与建议</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#下载地址"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">下载地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">配置</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#构建与部署"><span class="nav-number">2.</span> <span class="nav-text">构建与部署</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li></ol></div>
             
 
           </div>
