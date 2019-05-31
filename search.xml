@@ -2,19 +2,8 @@
 <search>
   <entry>
     <title><![CDATA[解决Gradle、Maven项目buildg后没有mybatis的mapper.xml文件问题]]></title>
-    <url>%2F2019%2F05%2F31%2F%E8%A7%A3%E5%86%B3gradle%E9%A1%B9%E7%9B%AEbuildg%E5%90%8E%E6%B2%A1%E6%9C%89mybatis%E7%9A%84mapper-xml%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98%2F%E8%A7%A3%E5%86%B3Gradle%E3%80%81Maven%E9%A1%B9%E7%9B%AEbuildg%E5%90%8E%E6%B2%A1%E6%9C%89mybatis%E7%9A%84mapper-xml%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98%2F</url>
+    <url>%2F2019%2F05%2F31%2F%E8%A7%A3%E5%86%B3Gradle%E5%92%8CMaven%E9%A1%B9%E7%9B%AEbuildg%E5%90%8E%E6%B2%A1%E6%9C%89mybatis%E7%9A%84mapper-xml%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98%2F%E8%A7%A3%E5%86%B3Gradle%E5%92%8CMaven%E9%A1%B9%E7%9B%AEbuildg%E5%90%8E%E6%B2%A1%E6%9C%89mybatis%E7%9A%84mapper-xml%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[Gradle、Maven都默认只把resources目录当作资源目录，所以在编译时就不会把java目录下的mapper.xml文件编译到输出目录，所以需要在相关文件中修改默认资源目录。 Maven 在pom文件中加入 1234567891011121314151617181920&lt;build&gt; &lt;resources&gt; &lt;resource&gt; &lt;directory&gt;src/main/java&lt;/directory&gt; &lt;includes&gt; &lt;include&gt;**/*.properties&lt;/include&gt; &lt;include&gt;**/*.xml&lt;/include&gt; &lt;/includes&gt; &lt;filtering&gt;false&lt;/filtering&gt; &lt;/resource&gt; &lt;resource&gt; &lt;directory&gt;src/main/resources&lt;/directory&gt; &lt;includes&gt; &lt;include&gt;**/*.properties&lt;/include&gt; &lt;include&gt;**/*.xml&lt;/include&gt; &lt;/includes&gt; &lt;filtering&gt;false&lt;/filtering&gt; &lt;/resource&gt; &lt;/resources&gt;&lt;/build&gt; Gradle 在build.gradle文件中加入 1sourceSets.main.resources.srcDirs = ["src/main/java","src/main/resources"]]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[解决Gradle、Maven项目buildg后没有mybatis的mapper.xml文件问题]]></title>
-    <url>%2F2019%2F05%2F31%2F%E8%A7%A3%E5%86%B3gradle%E9%A1%B9%E7%9B%AEbuildg%E5%90%8E%E6%B2%A1%E6%9C%89mybatis%E7%9A%84mapper-xml%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98%2F%E8%A7%A3%E5%86%B3gradle%E9%A1%B9%E7%9B%AEbuildg%E5%90%8E%E6%B2%A1%E6%9C%89mybatis%E7%9A%84mapper-xml%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[Gradle、Maven都默认只把resources目录当作资源目录，所以在编译时就不会把java目录下的mapper.xml文件编译到输出目录，所以需要在相关文件中修改默认资源目录。 Maven 在pom文件中加入 1234567891011121314151617181920&lt;build&gt; &lt;resources&gt; &lt;resource&gt; &lt;directory&gt;src/main/java&lt;/directory&gt; &lt;includes&gt; &lt;include&gt;**/*.properties&lt;/include&gt; &lt;include&gt;**/*.xml&lt;/include&gt; &lt;/includes&gt; &lt;filtering&gt;false&lt;/filtering&gt; &lt;/resource&gt; &lt;resource&gt; &lt;directory&gt;src/main/resources&lt;/directory&gt; &lt;includes&gt; &lt;include&gt;**/*.properties&lt;/include&gt; &lt;include&gt;**/*.xml&lt;/include&gt; &lt;/includes&gt; &lt;filtering&gt;false&lt;/filtering&gt; &lt;/resource&gt; &lt;/resources&gt;&lt;/build&gt; Gradle 在build.gradle文件中加入 1sourceSets.main.resources.srcDirs = ["src/main/java","src/main/resources"]]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>工具</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[nio：Selector示例解析]]></title>
