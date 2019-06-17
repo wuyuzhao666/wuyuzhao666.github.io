@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[idea常用快捷键]]></title>
+    <url>%2F2019%2F06%2F11%2Fidea%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE%2Fidea%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE%2F</url>
+    <content type="text"><![CDATA[Idea必备快捷键 查看方法的具体实现 Ctrl + Alt + 鼠标 查看类的继承实现图 Ctrl + Alt + u 生成构造方法、getter等 Alt + insert 对选中的代码弹出环绕选项弹出层 Ctrl + Alt + t]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Nio之零拷贝]]></title>
     <url>%2F2019%2F06%2F04%2FNio%E4%B9%8B%E9%9B%B6%E6%8B%B7%E8%B4%9D%2FNio%E4%B9%8B%E9%9B%B6%E6%8B%B7%E8%B4%9D%2F</url>
     <content type="text"><![CDATA[Linux中的内核态与用户态 如上图所示，Unix/Linux的体系架构分为内核空间（kernal space）与用户空间(application space)，内核控制着计算机的硬件资源，为上层应用程序提供运行环境。用户空间就是应用程序的活动空间，而内核为应用程序的执行提供着必要的cpu、存储、IO资源等。为了使应用程序访问使用到这些资源，内核就提供了资源访问的接口：系统调用。 传统IO的拷贝 数据先从硬件资源被拷贝到内核空间的缓冲区中(kernel buffer)。 然后再从内核空间的缓冲区中拷贝到用户空间的缓冲区（application buffer）中。 接着从用户空间再拷贝到内核空间中的Socket buffer/Write buffer中。 最后再从Socket buffer中拷贝到网卡缓冲区/硬件资源中。 这个过程经过了4次的数据拷贝，其中有2次（1和4）是DMA拷贝（直接内存拷贝，不需要cpu的参与），2和3是cpu拷贝。 应用程序发起了read和write系统调用，会经过4次的上下文切换。 Nio中的零拷贝sendFile零拷贝在Java的Nio中有个transferTo()方法，可以将一个channel里面的字节直接复制到另一个可以写入字节的channel中，此方法比从通道读取并写入目标通道的简单循环更有效。操作系统可以直接从文件系统缓存向目标通道传输字节，而无需实际复制它们。transferTo()最后内部封装的是sendFile这个系统调用。 基本代码如下： 12345678910111213public class NewClient &#123; public static void main(String[] args) throws Exception&#123; SocketChannel socketChannel = SocketChannel.open(); socketChannel.connect(new InetSocketAddress("localhost",8898)); String fileName = "/home/Desktop/pycharm-professional-2019.1.2.tar.gz"; FileInputStream fileInputStream = new FileInputStream(fileName); FileChannel channel = fileInputStream.getChannel(); long transfer = channel.transferTo(0, channel.size(), socketChannel); &#125;&#125; 它的流程如下： 应用程序调用transferTo方法，即JVM发起sendFile系统调用，从用户态切换到内核态（第一次上下文切换）。 内核将数据从硬件资源里DMA拷贝到内核空间的缓冲区中。 然后经过CPU拷贝到Socket buffer中。 接着sendFile系统调用返回，将数据DMA拷贝到网卡缓冲区/硬件资源中（第二次上下文切换）。 虽然在内核态时，经过了一次cpu拷贝，但并没有从内核态切换到用户态，对于操作系统来说，这已经是零拷贝了（DMA拷贝需要连续的内存空间，所以需要缓冲区）。如果底层操作系统支持分散与收集（scatter and gather）的话，就可以实现真正意义上的零拷贝。 收集拷贝功能的零拷贝 应用程序调用transferTo方法，即JVM发起sendFile系统调用，从用户态切换到内核态（第一次上下文切换）。 内核将数据从硬件资源里DMA拷贝到内核空间的缓冲区中。 现在并没有数据会拷贝到Socket buffer，而是Read buffer中数据的相关描述信息（Read buffer缓冲区的内存地址以及偏移量，即长度）会被拷贝到Socket buffer中（即图中的Descriptor）。 接着sendFile系统调用返回，DMA gather copy根据Socket buffer中的描述信息（第二次上下文切换）直接将数据从内核空间拷贝网卡缓冲区/硬件资源中。 直接内存零拷贝提升了文件读写的速度，但是因为没有经过用户态，用户程序无法对文件进行操作，所以零拷贝应应用于不需要对文件进行操作的读写场景，但又想提高速度，但又需要对数据进行操作怎么办？那就应该使用NIO的直接内存。它的具体实现是通过mmap内存映射系统调用完成的，它是一个优于传统IO但比sendFile昂贵的IO方法。 应用程序调发起mmap系统调用，从用户态切换到内核态（第一次上下文切换）。 通过DMA引擎将数据从硬件拷贝到内核空间缓冲区。 mmap系统调用返回，内核态切换为用户态（第二次上下文切换）。用户空间和内核空间就共享这一片缓冲区，而不需要将数据从内核空间拷贝到用户空间。因为用户空间和内核空间共享了这个缓冲区数据，所以用户空间就可以像在操作自己缓冲区中数据一般操作这个由内核空间共享的缓冲区数据。 应用程序发起write系统调用，用户态切换到内核态（第三次上下文切换）。 数据经过CPU拷贝到Socket buffer中。 write系统调用返回，内核态切换为用户态（第四次上下文切换）。 数据通过DMA引擎拷贝到网卡缓冲区/硬件资源中。 NIO中的直接内存123456789FileChannel channel = new FileInputStream("").getChannel();//map方法接受3个参数//FileChannel.MapMode mode： //Read-only:只读 //Read_write:对结果缓冲区所做的更改最终会传播到文件中;它们可能会或可能不会被映射到同一文件的其他程序 看到。 //privarte:对结果缓冲区所做的更改不会传播到文件，并且对于映射了同一文件的其他程序不可见;相反，它将导 致被修改部分缓冲区独自拷贝一份到用户空间。//position:映射区域的起始位置。//size:要映射区域的大小。MappedByteBuffer map = channel.map(FileChanne.MapMode.READ_ONLY, 0, 2); NIO的直接内存是由MappedByteBuffer实现的。核心即是map()方法，该方法把文件映射到内存中，获得内存地址addr，然后通过这个addr构造MappedByteBuffer类，以暴露各种文件操作API。 由于MappedByteBuffer申请的是堆外内存，因此不受Minor GC控制，只能在发生Full GC时才能被回收。而DirectByteBuffer改善了这一情况，它是MappedByteBuffer类的子类，同时它实现了DirectBuffer接口，维护一个Cleaner对象来完成内存回收。因此它既可以通过Full GC来回收内存，也可以调用clean()方法来进行回收。]]></content>
@@ -197,8 +208,8 @@
         <category>Java虚拟机</category>
       </categories>
       <tags>
-        <tag>类加载机制</tag>
         <tag>类加载器</tag>
+        <tag>类加载机制</tag>
       </tags>
   </entry>
   <entry>
