@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[修改大数据表以及优化分页查询]]></title>
+    <url>%2F2019%2F07%2F01%2F%E4%BF%AE%E6%94%B9%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%8C%96%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%2F%E4%BF%AE%E6%94%B9%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%8C%96%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%2F</url>
+    <content type="text"><![CDATA[引言最近在对一张百万级行的数据表进行分页操作时，查询时间太长（建表，以及sql语句太过粗糙。。。），首次查询50000条以后的数据，查询时间达到了1min40秒，这个时间对用户来说是无法忍受的，所以需要进行优化下。在查询了一些资料后，决定给这张表建立索引，以及优化sql。 创建索引mysql的最佳索引攻略 考虑到我的sql中最经常出现的是publish_time和keyword两个字段，所以我创建了个组合索引，并且对keyword使用前缀索引。 1alter table my_table add index keyword_time (keyword(10),publish_time); 大数据表的修改给一张百万级行的数据表添加索引，最开始我的想法是： 建立新表，给临时表建立索引。 将旧表数据插入到新表中。 删除旧表，修改新表名。 这样的方法虽然可行，但也出现了一些问题，在进行；插入新表这个操作是需要大量时间的，这个时间段如果有新数据插入，就会导致两个表的数据差距，当然也可以选择在低峰期间进行，比如半夜，但这样未免过于复杂。这时可以使用一些Online-DDL工具帮助我们完成操作。 使用pt-online-schema-changept-online-schema-change的安装 pt-osc的操作原理也基本和我们上文所说一样：创建一个新的空表new，然后从原始表格 tbosc 中拷贝数据到新的表格new，copy data结束后，使用new替换old，同时，删除旧表。需要注意的是： 表必须带有主键或者唯一索引！！ 详细过程如下 相关环境参数检查 检查该表格是否存在 show create table old create table new alter table new 创建删除触发器 pt_osc_dbddl_old_del (如果数据修改的时候，还没有拷贝过来，修改后再拷贝则是覆盖，正确；如果是已经拷贝过来，再修改，也是正确，这里同时会检查是否具有主键或者唯一索引，如果都没有，这一步会报错，提示The new table old.new does not have a PRIMARY KEY or a unique index which is required for the DELETE trigger.） 创建更新触发器 pt_osc_dbddl_old_upd 创建插入触发器 pt_osc_dbddl_old_ins 按块拷贝数据到新表，拷贝过程对数据行持有S锁 analyze 新表 rename 表名 删除旧表，删除新表上的删除、更新、插入 触发器 1[root@Master percona-toolkit-3.0.13]# pt-online-schema-change --user=root --password=root --host=localhost --port=3306 --alter="add index time(publish_time,update_time)" D=数据库,t=数据表 --nocheck-replication-filters --nocheck-unique-key-change --max-lag=5 --check-interval=2 --alter-foreign-keys-method=auto --execute --print 只需要修改--alter=&quot;add index time(publish_time,update_time)&quot;内容。 可以看出pt-ost这个工具帮我们把所有工作都完成了，并且给旧表创建了（删除，更新，插入触发器），确保了新旧表没有数据差异。 sql的优化原始sql： 12select *from my_table where keyword = xx publish_time &gt;= 1500000000000 limit 50000,5; 这种写法，是将前50000条数据进行排序后，仅仅返回50001到50005条数据，其他的都抛弃到，查询和排序的代价极高。 优化sql： 在索引上完成排序分页的操作，然后通过主键关联回原表查询所需要的其他列的内容。这样就不用权标扫描。 1234567explain select a.id, a.keyword,a.publish_time, from my_table a inner join (select id from my_table where keyword = xxx and publish_time &gt;= 1500000000000 limit 50000,5)b on a.id = b. id;]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[pt-online-schema-change的安装]]></title>
     <url>%2F2019%2F07%2F01%2Fpt-online-schema-change%E7%9A%84%E5%AE%89%E8%A3%85%2Fpt-online-schema-change%E7%9A%84%E5%AE%89%E8%A3%85%2F</url>
     <content type="text"><![CDATA[12345678910111213# 下载[root@localhost admin]# wget percona.com/get/percona-toolkit.tar.gz# 解压[root@localhost admin]# tar -zvxf percona-toolkit.tar.gz[root@localhost admin]# cd percona-toolkit-3.0.13/# 安装perl依赖[root@localhost percona-toolkit-3.0.13]# yum install perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker[root@localhost percona-toolkit-3.0.13]# perl Makefile.PL# 编译安装[root@localhost percona-toolkit-3.0.13]# make[root@localhost percona-toolkit-3.0.13]# make install# 验证[root@localhost percona-toolkit-3.0.13]# pt-online-schema-change 若报错 缺少perl-Digest-MD5包， 安装perl-Digest-MD5即可解决 1[root@localhost percona-toolkit-3.0.13]# yum -y install perl-Digest-MD5 其他情况，同理。 出现如下结果，成功。]]></content>
