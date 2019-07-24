@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[优化mysql查找最新一条数据]]></title>
+    <url>%2F2019%2F07%2F24%2F%E4%BC%98%E5%8C%96mysql%E6%9F%A5%E6%89%BE%E6%9C%80%E6%96%B0%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE%2F%E4%BC%98%E5%8C%96mysql%E6%9F%A5%E6%89%BE%E6%9C%80%E6%96%B0%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[今天写Web时，发现有个请求一直没有响应，用谷歌F12看了一下，请求出现了一个问题。 我第一反应是网络延迟，又试了几次，还是这个问题，便看了一下后台控制台也没报错，便想是不是sql查询时间太长了，便把sql手动运行了下，果然花了48s。 1select max(publish_time) from flight_track_data where ship_id = 212036 in (select distinct update_time from vessel_track_data where ship_id = 212036); 我想要查询的是，条件查询下，最新的一条数据，结果花了这么久，后来查询了些资料，先按时间排好序，再使用group by分组查询，返回分组后的第一条数据。 1select * from (SELECT * FROM flight_track_data WHERE ship_id = 212036 ORDER BY publish_time DESC) AS a GROUP BY a.ship_id;]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MySql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用tk.mybatis查询，某些字段返回0的问题]]></title>
     <url>%2F2019%2F07%2F10%2F%E4%BD%BF%E7%94%A8tk-mybatis%E6%9F%A5%E8%AF%A2%EF%BC%8C%E6%9F%90%E4%BA%9B%E5%AD%97%E6%AE%B5%E8%BF%94%E5%9B%9E0%E7%9A%84%E9%97%AE%E9%A2%98%2F%E4%BD%BF%E7%94%A8tk-mybatis%E6%9F%A5%E8%AF%A2%EF%BC%8C%E6%9F%90%E4%BA%9B%E5%AD%97%E6%AE%B5%E8%BF%94%E5%9B%9E0%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[今天使用mapper4出现了个问题，记录一下。 查询代码： 12345678910example = new Example(VesselTrackData.class); if (dateType != 0)&#123; date = determineDate(dateType); System.out.println("date:" + date); example.createCriteria().andGreaterThanOrEqualTo("updateTime" , date).andEqualTo("shipId" , id); &#125;else &#123; example.createCriteria().andEqualTo("shipId" , id).andBetween("updateTime" ,beginDate , endDate); &#125; List&lt;VesselTrackData&gt; vesselTrackData = vesselTrackDataMapper.selectByExample(example); 本来想要查询某张表的所有字段，但是其中某些字段为0。 打印sql： 12345slow sql 25 millis. SELECT ship_id,publish_time,update_time FROM `vessel_track_data` WHERE ( ( ship_id = ? and update_time between ? and ? ) )["1037032","2019-02-27 00:00:00","2019-07-10 00:00:00"] 发现只查询了其中几个String字段，后去查看实体类，发现非String字段为写成包装类型，我将double类型改为Double就ok了。]]></content>
