@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="容器类,LinkedList,">
+  <meta name="keywords" content="docker,">
 
 
 
@@ -96,18 +96,18 @@
 
 
 
-<meta name="description" content="LinkedList原理解析 在前面我们对ArrayList(See my ArrayList原理解析 page for details.)已做了解析，ArrayList操作维护的是内部数组，元素在内存中是连续存放的，可以通过索引直接访问，访问效率高，但是对于删除和移动来说，性能就较低了。而LinkedList呢，顾名思义，它是一个链表，更确切的说，它是一个双向链表，因为LinkedList的元素">
-<meta name="keywords" content="容器类,LinkedList">
+<meta name="description" content="docker-compose介绍docker-compose较为官方的定义[定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）]，在我看来，就是通过一个docker-compose来加载一个配置文件，用过这个配置文件中的配置的镜像信息，快速方便的启动docker容器，更简单的说，就是不用打一长">
+<meta name="keywords" content="docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LinkedList原理解析">
-<meta property="og:url" content="http://wuyuzhao666.github.io/2019/03/04/LinkedList原理解析/LinkedList原理解析/index.html">
+<meta property="og:title" content="docker-compose的使用姿势">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2019/08/12/docker-compase的使用姿势/docker-compase的使用姿势/index.html">
 <meta property="og:site_name" content="0xCAFEBABE的博客">
-<meta property="og:description" content="LinkedList原理解析 在前面我们对ArrayList(See my ArrayList原理解析 page for details.)已做了解析，ArrayList操作维护的是内部数组，元素在内存中是连续存放的，可以通过索引直接访问，访问效率高，但是对于删除和移动来说，性能就较低了。而LinkedList呢，顾名思义，它是一个链表，更确切的说，它是一个双向链表，因为LinkedList的元素">
+<meta property="og:description" content="docker-compose介绍docker-compose较为官方的定义[定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）]，在我看来，就是通过一个docker-compose来加载一个配置文件，用过这个配置文件中的配置的镜像信息，快速方便的启动docker容器，更简单的说，就是不用打一长">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-07T14:07:27.396Z">
+<meta property="og:updated_time" content="2019-08-12T03:16:28.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LinkedList原理解析">
-<meta name="twitter:description" content="LinkedList原理解析 在前面我们对ArrayList(See my ArrayList原理解析 page for details.)已做了解析，ArrayList操作维护的是内部数组，元素在内存中是连续存放的，可以通过索引直接访问，访问效率高，但是对于删除和移动来说，性能就较低了。而LinkedList呢，顾名思义，它是一个链表，更确切的说，它是一个双向链表，因为LinkedList的元素">
+<meta name="twitter:title" content="docker-compose的使用姿势">
+<meta name="twitter:description" content="docker-compose介绍docker-compose较为官方的定义[定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）]，在我看来，就是通过一个docker-compose来加载一个配置文件，用过这个配置文件中的配置的镜像信息，快速方便的启动docker容器，更简单的说，就是不用打一长">
 
 
 
@@ -137,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/03/04/LinkedList原理解析/LinkedList原理解析/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2019/08/12/docker-compase的使用姿势/docker-compase的使用姿势/">
 
 
 
 
 
-  <title>LinkedList原理解析 | 0xCAFEBABE的博客</title>
+  <title>docker-compose的使用姿势 | 0xCAFEBABE的博客</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/03/04/LinkedList原理解析/LinkedList原理解析/">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2019/08/12/docker-compase的使用姿势/docker-compase的使用姿势/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wu yuzhao">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">LinkedList原理解析</h1>
+          <h1 class="post-title" itemprop="name headline">docker-compose的使用姿势</h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-04T15:13:49+08:00">
-                2019-03-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-12T10:37:26+08:00">
+                2019-08-12
               </time>
             
 
@@ -363,8 +363,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">Java基础</span>
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
                   </a>
                 </span>
 
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.5k
+                  445
                 </span>
               
 
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  6
+                  1
                 </span>
               
             </div>
@@ -436,68 +436,17 @@
       
 
       
-        <h2 id="LinkedList原理解析"><a href="#LinkedList原理解析" class="headerlink" title="LinkedList原理解析"></a>LinkedList原理解析</h2><blockquote>
-<p>在前面我们对<code>ArrayList</code>(See my <a href="/2019/03/02/ArrayList原理解析/ArrayList原理解析/">ArrayList原理解析</a> page for details.)已做了解析，<code>ArrayList</code>操作维护的是内部数组，元素在内存中是连续存放的，可以通过索引直接访问，访问效率高，但是对于删除和移动来说，性能就较低了。而<code>LinkedList</code>呢，顾名思义，它是一个链表，更确切的说，它是一个双向链表，因为<code>LinkedList</code>的元素都是单独存放的，元素之间在逻辑上通过链接连在一起，下面，我们就解析下<code>LinkedList</code>的原理。</p>
-</blockquote>
-<p>在<code>LinkedList</code>中元素以节点（<code>Node</code>）的方式进行存储：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//代表本节点元素</span></span><br><span class="line"></span><br><span class="line">    E item;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//代表后继元素</span></span><br><span class="line"></span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//代表前驱元素</span></span><br><span class="line"></span><br><span class="line">    Node&lt;E&gt; prev;</span><br><span class="line"></span><br><span class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.item = element;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.prev = prev;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在<code>LinkedList</code>中有个内部类<code>Node<e></e></code>,它来表示<code>LinkedList</code>中的元素。而在其内部也保存着当前节点的前驱和后继两个节点。</p>
-</blockquote>
-<p>在<code>LinkedList</code>中维护着三个变量：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;</span><br><span class="line"></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>LinkedList</code>的长度，头节点以及尾节点。<code>LinkedList</code>里的操作大都是围绕着这三个变量来进行的。我们先从<code>add</code>方法看起。</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    linkLast(e);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>Ladd(E e)</code>方法，将调用<code>linkLast(E e)</code>方法，插入新节点。</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">linkLast</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Node&lt;E&gt; l = last;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(l, e, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    last = newNode;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (l == <span class="keyword">null</span>)</span><br><span class="line"></span><br><span class="line">        first = newNode;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">        l.next = newNode;</span><br><span class="line"></span><br><span class="line">    size++;</span><br><span class="line"></span><br><span class="line">    modCount++;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>第一步：创建新节点，前驱节点指向尾节点，后继节点为空。</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(l, e, <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>第二步：令尾节点为这个新建的节点；若原来链表为空，则头节点指向新节点；非空，则尾节点的后继节点指向新节点；链表长度加1；modCount加1，用于迭代时判断链表的结构变化。</p>
-</blockquote>
-<p>这是在链表末尾进行插入，若要指定位置插入呢？再看看另外一个<code>add(int index,E element)</code>方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//检查索引值是否满足index &gt;= 0 &amp;&amp; index &lt;= size</span></span><br><span class="line"></span><br><span class="line">    checkPositionIndex(index);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//若index值与链表长度相同，则插入到链表末尾。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index == size)</span><br><span class="line"></span><br><span class="line">        linkLast(element);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">        linkBefore(element, node(index));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>检查完毕，并且想要插入的位置与链表长度包不同，这调用<code>linkBefore</code>方法进行插入。</p>
-<p><em>因为链表无法向数组那样可以直接查找索引，进行插入，所以要根据索引值查找到对应的节点，在这里调用了node方法来查找节点值</em></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function">Node&lt;E&gt; <span class="title">node</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// assert isElementIndex(index);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index &lt; (size &gt;&gt; <span class="number">1</span>)) &#123;</span><br><span class="line"></span><br><span class="line">        Node&lt;E&gt; x = first;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; index; i++)</span><br><span class="line"></span><br><span class="line">            x = x.next;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">        Node&lt;E&gt; x = last;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = size - <span class="number">1</span>; i &gt; index; i--)</span><br><span class="line"></span><br><span class="line">            x = x.prev;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>与链表长度的一半来进行比较，若index小于链表长度的一半，则从头开始；反之，则从尾节点开始。最后返回找到对应索引值的节点。</p>
-</blockquote>
-<p>找到index对应的节点后，就可以插入了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">linkBefore</span><span class="params">(E e, Node&lt;E&gt; succ)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// assert succ != null;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Node&lt;E&gt; pred = succ.prev;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(pred, e, succ);</span><br><span class="line"></span><br><span class="line">    succ.prev = newNode;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果index节点为头节点，则新节点为头节点；不然则插入到index节点之前</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pred == <span class="keyword">null</span>)</span><br><span class="line"></span><br><span class="line">        first = newNode;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">        pred.next = newNode;</span><br><span class="line"></span><br><span class="line">    size++;</span><br><span class="line"></span><br><span class="line">    modCount++;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在中间插入，<code>LinkedList</code>只需要分配内存就行，而<code>ArrayList</code>则需要其他空间，还要移动后续的元素。</p>
-</blockquote>
-<p>我们再来看看<code>remove(int index)</code>方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    checkElementIndex(index);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> unlink(node(index));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>remove(int index)</code>方法同样也需要检查index值，然后找到index值对应的节点，最后调用<code>unlink</code>删除节点后，返回删除的节点。</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">unlink</span><span class="params">(Node&lt;E&gt; x)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// assert x != null;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> E element = x.item;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> Node&lt;E&gt; next = x.next;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> Node&lt;E&gt; prev = x.prev;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (prev == <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">    first = next;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">    prev.next = next;</span><br><span class="line"></span><br><span class="line">    x.prev = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (next == <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">    last = prev;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;j</span><br><span class="line"></span><br><span class="line">    next.prev = prev;</span><br><span class="line"></span><br><span class="line">    x.next = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    x.item = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    size--;</span><br><span class="line"></span><br><span class="line">    modCount++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> element;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>remove(int index)</code>方法的基本思路也很简单：将删除节点<code>x</code>的前驱节点指向<code>x</code>的后继节点，将<code>x</code>的候后继节点的前驱节点指向<code>x</code>的前驱节点。 </p>
-<p>首先，若<code>x</code>的前驱节点为空，即<code>x</code>为头节点，则<code>x</code>的后继自然就是头节点了。</p>
-</blockquote>
-<blockquote>
-<p>然后，若<code>x</code>的后继节点为空，即<code>x</code>为尾节点，则<code>x</code>的前驱自然就是头节点了。</p>
-</blockquote>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>以上，我们介绍了<code>LinkedList</code>的几个方法，其余方法也都类似，就是链表的一些基本操作。<code>LinkedList</code>内部是以node节点的方式来进行维护的，每个节点内部又有前驱和后继节点，这就相当于一个双向链表，并且在内部还维护着头节点、尾节点以及长度。通过这些，可以得出一些关于<code>LinkedList</code>的一些特点：</p>
-<p>(1)<code>LinkedList</code>不需要预先分配空间，按需进行分配;</p>
-<p>(2)进行头、尾的插入很方便;</p>
-<p>(3)按索引插入，时间复杂度较低，为<em>O(N/2)</em>,但插入效率较高，为<em>O(1)</em>;</p>
-<p>(4)查找的话，效率也较低，时间复杂度为<em>O（N）</em>，不管是否已排序；</p>
-<p>(5)在两端进行查找、删除，时间复杂度为<em>O(1)</em>;</p>
-<p>(6)在中间进行查找、删除，需要逐个比对，时间复杂度为<em>O(N)</em>,但修改效率就只有<em>O(1)</em>。</p>
-<p>综上，若进行的操作涉及大量的插入、删除，尤其是在两端的插入、删除，并且查找中间元素的操作较少的话，使用<code>LinkedList</code>是比较好的选择。</p>
+        <h4 id="docker-compose介绍"><a href="#docker-compose介绍" class="headerlink" title="docker-compose介绍"></a>docker-compose介绍</h4><p><code>docker-compose</code>较为官方的定义[定义和运行多个 Docker 容器的应用（<code>Defining and running multi-container Docker applications</code>）]，在我看来，就是通过一个<code>docker-compose</code>来加载一个配置文件，用过这个配置文件中的配置的镜像信息，快速方便的启动<code>docker</code>容器，更简单的说，就是不用打一长串的启动命令了，直接<code>docker-compose up -d</code>就<code>ok</code>dockers，关闭容器后，直接执行这个配置文件就启动了。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>其代码已在<code>github</code>上<a href="https://github.com/docker/compose" target="_blank" rel="noopener"> https://github.com/docker/compose</a>，可以去选择一个<code>latest</code>版本，两行命令就ok，。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 下载到/usr/local/bin目录下</span><br><span class="line">curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta">#</span> 赋予可执行权限</span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<h4 id="模板文件"><a href="#模板文件" class="headerlink" title="模板文件"></a>模板文件</h4><h5 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h5><p>直接命令启动，可能是这样的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redis-server -p 6379:6379 -v /usr/redis/redis.conf:/etc/redis/redis.conf -v /usr/redis/data/:/data redis:latest /etc/redis/redis.conf --appendonly yes --requirepass "redis123"</span><br></pre></td></tr></table></figure>
+<p>使用<code>docker-compose</code>：</p>
+<p>新建一个<code>docker-compose.yml</code>文件:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可不填</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="comment"># 在services下写容器启动信息</span></span><br><span class="line"><span class="string">services：</span></span><br><span class="line"><span class="comment"># 随便写，起个名字</span></span><br><span class="line"><span class="attr">    redis:</span></span><br><span class="line">      <span class="comment"># 开机启动</span></span><br><span class="line"><span class="attr">      restart:</span> <span class="string">always</span></span><br><span class="line">      <span class="comment"># 镜像名</span></span><br><span class="line"><span class="attr">      image:</span> <span class="string">redis</span></span><br><span class="line">      <span class="comment"># 容器名</span></span><br><span class="line"><span class="attr">      container_name:</span> <span class="string">my_redis</span></span><br><span class="line">      <span class="comment"># 覆盖容器启动后默认执行的命令，这里我们想以redis的配置文件启动。</span></span><br><span class="line"><span class="attr">      command:</span> <span class="string">redis-server</span> <span class="string">/usr/local/etc/redis/redis.conf</span></span><br><span class="line">      <span class="comment"># 端口映射，将此容器的端口映射到宿主机的端口上</span></span><br><span class="line"><span class="attr">      ports:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="number">6379</span><span class="string">:6379</span></span><br><span class="line">      <span class="comment"># 挂载目录，将容器的</span></span><br><span class="line"><span class="attr">      volumes:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">./data:/data</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">./redis.conf:/usr/local/etc/redis/redis.conf</span></span><br></pre></td></tr></table></figure>
+<p>共享目录或文件时，如果宿主机或容器内不存在 <code>docker</code>会自动帮你创建。</p>
+<h4 id="启动命令"><a href="#启动命令" class="headerlink" title="启动命令"></a>启动命令</h4><p>在<code>docker-compose.yml</code>文件的当前目录下执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 后台启动</span><br><span class="line">docker-compose up -d</span><br><span class="line"><span class="meta">#</span> 关闭</span><br><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -551,7 +500,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://wuyuzhao666.github.io/2019/03/04/LinkedList原理解析/LinkedList原理解析/" title="LinkedList原理解析">http://wuyuzhao666.github.io/2019/03/04/LinkedList原理解析/LinkedList原理解析/</a>
+    <a href="http://wuyuzhao666.github.io/2019/08/12/docker-compase的使用姿势/docker-compase的使用姿势/" title="docker-compose的使用姿势">http://wuyuzhao666.github.io/2019/08/12/docker-compase的使用姿势/docker-compase的使用姿势/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -566,9 +515,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/容器类/" rel="tag"><i class="fa fa-tag"></i>容器类</a>
-          
-            <a href="/tags/LinkedList/" rel="tag"><i class="fa fa-tag"></i>LinkedList</a>
+            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i>docker</a>
           
         </div>
       
@@ -581,8 +528,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/02/ArrayList原理解析/ArrayList原理解析/" rel="next" title="ArrayList原理解析">
-                <i class="fa fa-chevron-left"></i> ArrayList原理解析
+              <a href="/2019/07/24/优化mysql查找最新一条数据/优化mysql查找最新一条数据/" rel="next" title="优化mysql查找最新一条数据">
+                <i class="fa fa-chevron-left"></i> 优化mysql查找最新一条数据
               </a>
             
           </div>
@@ -590,10 +537,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/07/HashMap解析之hash(key)/HashMap解析之hash(key)/" rel="prev" title="HashMap解析之hash(key)">
-                HashMap解析之hash(key) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -753,7 +696,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedList原理解析"><span class="nav-number">1.</span> <span class="nav-text">LinkedList原理解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.1.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-compose介绍"><span class="nav-number">1.</span> <span class="nav-text">docker-compose介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板文件"><span class="nav-number">3.</span> <span class="nav-text">模板文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#redis"><span class="nav-number">3.1.</span> <span class="nav-text">redis</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动命令"><span class="nav-number">4.</span> <span class="nav-text">启动命令</span></a></li></ol></div>
             
 
           </div>

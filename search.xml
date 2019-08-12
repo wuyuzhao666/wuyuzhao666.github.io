@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[docker-compose的使用姿势]]></title>
+    <url>%2F2019%2F08%2F12%2Fdocker-compase%E7%9A%84%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF%2Fdocker-compase%E7%9A%84%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF%2F</url>
+    <content type="text"><![CDATA[docker-compose介绍docker-compose较为官方的定义[定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）]，在我看来，就是通过一个docker-compose来加载一个配置文件，用过这个配置文件中的配置的镜像信息，快速方便的启动docker容器，更简单的说，就是不用打一长串的启动命令了，直接docker-compose up -d就okdockers，关闭容器后，直接执行这个配置文件就启动了。 安装其代码已在github上 https://github.com/docker/compose，可以去选择一个latest版本，两行命令就ok，。 1234# 下载到/usr/local/bin目录下curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose# 赋予可执行权限chmod +x /usr/local/bin/docker-compose 模板文件redis直接命令启动，可能是这样的： 1docker run -d --name redis-server -p 6379:6379 -v /usr/redis/redis.conf:/etc/redis/redis.conf -v /usr/redis/data/:/data redis:latest /etc/redis/redis.conf --appendonly yes --requirepass "redis123" 使用docker-compose： 新建一个docker-compose.yml文件: 123456789101112131415161718192021# 可不填version: '3'# 在services下写容器启动信息services：# 随便写，起个名字 redis: # 开机启动 restart: always # 镜像名 image: redis # 容器名 container_name: my_redis # 覆盖容器启动后默认执行的命令，这里我们想以redis的配置文件启动。 command: redis-server /usr/local/etc/redis/redis.conf # 端口映射，将此容器的端口映射到宿主机的端口上 ports: - 6379:6379 # 挂载目录，将容器的 volumes: - ./data:/data - ./redis.conf:/usr/local/etc/redis/redis.conf 共享目录或文件时，如果宿主机或容器内不存在 docker会自动帮你创建。 启动命令在docker-compose.yml文件的当前目录下执行 1234# 后台启动docker-compose up -d# 关闭docker-compose down]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[优化mysql查找最新一条数据]]></title>
     <url>%2F2019%2F07%2F24%2F%E4%BC%98%E5%8C%96mysql%E6%9F%A5%E6%89%BE%E6%9C%80%E6%96%B0%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE%2F%E4%BC%98%E5%8C%96mysql%E6%9F%A5%E6%89%BE%E6%9C%80%E6%96%B0%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE%2F</url>
     <content type="text"><![CDATA[今天写Web时，发现有个请求一直没有响应，用谷歌F12看了一下，请求出现了一个问题。 我第一反应是网络延迟，又试了几次，还是这个问题，便看了一下后台控制台也没报错，便想是不是sql查询时间太长了，便把sql手动运行了下，果然花了48s。 1select max(publish_time) from flight_track_data where ship_id = 212036 in (select distinct update_time from vessel_track_data where ship_id = 212036); 我想要查询的是，条件查询下，最新的一条数据，结果花了这么久，后来查询了些资料，先按时间排好序，再使用group by分组查询，返回分组后的第一条数据。 1select * from (SELECT * FROM flight_track_data WHERE ship_id = 212036 ORDER BY publish_time DESC) AS a GROUP BY a.ship_id;]]></content>
@@ -293,8 +304,8 @@
         <category>Java虚拟机</category>
       </categories>
       <tags>
-        <tag>类加载机制</tag>
         <tag>类加载器</tag>
+        <tag>类加载机制</tag>
       </tags>
   </entry>
   <entry>

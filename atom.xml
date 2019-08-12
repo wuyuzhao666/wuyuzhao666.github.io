@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wuyuzhao666.github.io/"/>
-  <updated>2019-07-24T07:22:48.646Z</updated>
+  <updated>2019-08-12T03:16:28.278Z</updated>
   <id>http://wuyuzhao666.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker-compose的使用姿势</title>
+    <link href="http://wuyuzhao666.github.io/2019/08/12/docker-compase%E7%9A%84%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/docker-compase%E7%9A%84%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/"/>
+    <id>http://wuyuzhao666.github.io/2019/08/12/docker-compase的使用姿势/docker-compase的使用姿势/</id>
+    <published>2019-08-12T02:37:26.000Z</published>
+    <updated>2019-08-12T03:16:28.278Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="docker-compose介绍"><a href="#docker-compose介绍" class="headerlink" title="docker-compose介绍"></a>docker-compose介绍</h4><p><code>docker-compose</code>较为官方的定义[定义和运行多个 Docker 容器的应用（<code>Defining and running multi-container Docker applications</code>）]，在我看来，就是通过一个<code>docker-compose</code>来加载一个配置文件，用过这个配置文件中的配置的镜像信息，快速方便的启动<code>docker</code>容器，更简单的说，就是不用打一长串的启动命令了，直接<code>docker-compose up -d</code>就<code>ok</code>dockers，关闭容器后，直接执行这个配置文件就启动了。</p><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>其代码已在<code>github</code>上<a href="https://github.com/docker/compose" target="_blank" rel="noopener"> https://github.com/docker/compose</a>，可以去选择一个<code>latest</code>版本，两行命令就ok，。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 下载到/usr/local/bin目录下</span><br><span class="line">curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta">#</span> 赋予可执行权限</span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure><h4 id="模板文件"><a href="#模板文件" class="headerlink" title="模板文件"></a>模板文件</h4><h5 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h5><p>直接命令启动，可能是这样的：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redis-server -p 6379:6379 -v /usr/redis/redis.conf:/etc/redis/redis.conf -v /usr/redis/data/:/data redis:latest /etc/redis/redis.conf --appendonly yes --requirepass "redis123"</span><br></pre></td></tr></table></figure><p>使用<code>docker-compose</code>：</p><p>新建一个<code>docker-compose.yml</code>文件:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可不填</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="comment"># 在services下写容器启动信息</span></span><br><span class="line"><span class="string">services：</span></span><br><span class="line"><span class="comment"># 随便写，起个名字</span></span><br><span class="line"><span class="attr">    redis:</span></span><br><span class="line">      <span class="comment"># 开机启动</span></span><br><span class="line"><span class="attr">      restart:</span> <span class="string">always</span></span><br><span class="line">      <span class="comment"># 镜像名</span></span><br><span class="line"><span class="attr">      image:</span> <span class="string">redis</span></span><br><span class="line">      <span class="comment"># 容器名</span></span><br><span class="line"><span class="attr">      container_name:</span> <span class="string">my_redis</span></span><br><span class="line">      <span class="comment"># 覆盖容器启动后默认执行的命令，这里我们想以redis的配置文件启动。</span></span><br><span class="line"><span class="attr">      command:</span> <span class="string">redis-server</span> <span class="string">/usr/local/etc/redis/redis.conf</span></span><br><span class="line">      <span class="comment"># 端口映射，将此容器的端口映射到宿主机的端口上</span></span><br><span class="line"><span class="attr">      ports:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="number">6379</span><span class="string">:6379</span></span><br><span class="line">      <span class="comment"># 挂载目录，将容器的</span></span><br><span class="line"><span class="attr">      volumes:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">./data:/data</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">./redis.conf:/usr/local/etc/redis/redis.conf</span></span><br></pre></td></tr></table></figure><p>共享目录或文件时，如果宿主机或容器内不存在 <code>docker</code>会自动帮你创建。</p><h4 id="启动命令"><a href="#启动命令" class="headerlink" title="启动命令"></a>启动命令</h4><p>在<code>docker-compose.yml</code>文件的当前目录下执行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 后台启动</span><br><span class="line">docker-compose up -d</span><br><span class="line"><span class="meta">#</span> 关闭</span><br><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;docker-compose介绍&quot;&gt;&lt;a href=&quot;#docker-compose介绍&quot; class=&quot;headerlink&quot; title=&quot;docker-compose介绍&quot;&gt;&lt;/a&gt;docker-compose介绍&lt;/h4&gt;&lt;p&gt;&lt;code&gt;docker-c
+      
+    
+    </summary>
+    
+      <category term="工具" scheme="http://wuyuzhao666.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="docker" scheme="http://wuyuzhao666.github.io/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>优化mysql查找最新一条数据</title>
@@ -479,33 +504,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>常用JVM配置参数</title>
-    <link href="http://wuyuzhao666.github.io/2019/04/08/%E5%B8%B8%E7%94%A8JVM%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/%E5%B8%B8%E7%94%A8JVM%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/"/>
-    <id>http://wuyuzhao666.github.io/2019/04/08/常用JVM配置参数/常用JVM配置参数/</id>
-    <published>2019-04-08T00:42:03.000Z</published>
-    <updated>2019-04-08T01:19:13.974Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Trace跟踪参数"><a href="#Trace跟踪参数" class="headerlink" title="Trace跟踪参数"></a>Trace跟踪参数</h2><ul><li><p>-verbose:gc</p><p>-XX:+printGC</p></li></ul><blockquote><p>可以打印GC的简要信息</p></blockquote><ul><li>-XX:+PrintGCDetails</li></ul><blockquote><p>打印GC详细信息</p></blockquote><ul><li>-XX:+PrintGCTimeStamps</li></ul><blockquote><p>打印CG发生的时间戳</p></blockquote><ul><li>-Xloggc:log/gc.log</li></ul><blockquote><p>指定GC log的位置，以文件输出</p><p>帮助开发人员分析问题</p></blockquote><ul><li>-XX:+PrintHeapAtGC</li></ul><blockquote><p>每次一次GC后，都打印堆信息</p></blockquote><ul><li>-XX:+TraceClassLoading</li></ul><blockquote><p>监控类的加载</p></blockquote><h2 id="堆的分配参数"><a href="#堆的分配参数" class="headerlink" title="堆的分配参数"></a>堆的分配参数</h2><ul><li>-Xmx –Xms</li></ul><blockquote><p>指定最大堆和最小堆</p></blockquote><ul><li>-Xmn</li></ul><blockquote><p>设置新生代大小</p></blockquote><ul><li>-XX:NewRatio</li></ul><blockquote><p>新生代（eden+2*s）和老年代（不包含永久区）的比值</p><p>=4 表示 新生代:老年代=1:4，即年轻代占堆的1/5</p></blockquote><ul><li>-XX:SurvivorRatio</li></ul><blockquote><p>设置两个Survivor区和eden的比</p><p>=8表示 两个Survivor :eden=2:8，即一个Survivor占年轻代的1/10</p><p>在HotSpot虚拟机中，默认Eden区与一个Survivor区比例为8：1</p></blockquote><ul><li>-XX:+HeapDumpOnOutOfMemoryError</li></ul><blockquote><p>OOM时导出堆到文件</p></blockquote><ul><li>-XX:+HeapDumpPath</li></ul><blockquote><p>导出OOM的路径</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xmx20m -Xms5m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=d:/a.dump</span><br></pre></td></tr></table></figure><ul><li>-XX:OnOutOfMemoryError</li></ul><blockquote><p>在OOM时，执行一个脚本</p><p>“-XX:OnOutOfMemoryError=D:/tools/jdk1.7_40/bin/printstack.bat %p“</p><p>当程序OOM时，在D:/a.txt中将会生成线程的dump</p><p>可以在OOM时，发送邮件，甚至是重启程序</p></blockquote><h2 id="永久区分配参数"><a href="#永久区分配参数" class="headerlink" title="永久区分配参数"></a>永久区分配参数</h2><ul><li>-XX:PermSize  -XX:MaxPermSize</li></ul><blockquote><p>设置永久区的初始空间和最大空间</p></blockquote><h2 id="栈大小分配"><a href="#栈大小分配" class="headerlink" title="栈大小分配"></a>栈大小分配</h2><ul><li>-Xss</li></ul><blockquote><p>-Xss256k</p><p>通常只有几百K</p><p>决定了函数调用的深度</p><p>每个线程都有独立的栈空间</p><p>局部变量、参数 分配在栈上</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;Trace跟踪参数&quot;&gt;&lt;a href=&quot;#Trace跟踪参数&quot; class=&quot;headerlink&quot; title=&quot;Trace跟踪参数&quot;&gt;&lt;/a&gt;Trace跟踪参数&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;-verbose:gc&lt;/p&gt;
-&lt;p&gt;-XX:+printGC&lt;/
-      
-    
-    </summary>
-    
-      <category term="Java虚拟机" scheme="http://wuyuzhao666.github.io/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-    
-      <category term="JVM参数" scheme="http://wuyuzhao666.github.io/tags/JVM%E5%8F%82%E6%95%B0/"/>
     
   </entry>
   
