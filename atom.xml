@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wuyuzhao666.github.io/"/>
-  <updated>2019-08-12T03:16:28.278Z</updated>
+  <updated>2019-09-03T11:54:26.887Z</updated>
   <id>http://wuyuzhao666.github.io/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker-compose构建微服务系统</title>
+    <link href="http://wuyuzhao666.github.io/2019/09/03/docker-compose%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F/docker-compose%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F/"/>
+    <id>http://wuyuzhao666.github.io/2019/09/03/docker-compose构建微服务系统/docker-compose构建微服务系统/</id>
+    <published>2019-09-03T08:37:55.000Z</published>
+    <updated>2019-09-03T11:54:26.887Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="1-简单介绍"><a href="#1-简单介绍" class="headerlink" title="1.简单介绍"></a>1.简单介绍</h4><p>共有3个应用。</p><ul><li><code>nacos</code>注册中心</li><li><code>alibaba-dubbo-consumer</code>消费者服务</li><li><code>alibaba-dubbo-provider</code>生产者服务</li></ul><h4 id="2-制作docker镜像"><a href="#2-制作docker镜像" class="headerlink" title="2.制作docker镜像"></a>2.制作docker镜像</h4><h5 id="Dockerfile：一样"><a href="#Dockerfile：一样" class="headerlink" title="Dockerfile：一样"></a>Dockerfile：一样</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">FROM java:8</span><br><span class="line"><span class="meta">#</span> 将运行脚本加入到容器中</span><br><span class="line">COPY startup.sh /shell/startup.sh</span><br><span class="line"><span class="meta">#</span> 赋予运行权限</span><br><span class="line">RUN chmod +x /shell/startup.sh</span><br><span class="line"><span class="meta">#</span> 指定容器时区:东八区</span><br><span class="line">ENV TZ=Asia/Shanghai </span><br><span class="line">RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime &amp;&amp; echo $TZ &gt; /etc/timezone</span><br><span class="line"><span class="meta">#</span> 创建jar包目录</span><br><span class="line">RUN mkdir jar</span><br><span class="line"><span class="meta">#</span> 挂载 jar目录</span><br><span class="line">VOLUME ["/jar"]</span><br><span class="line"><span class="meta">#</span> 进行运行脚本</span><br><span class="line">CMD [ "sh","/shell/startup.sh" ]</span><br></pre></td></tr></table></figure><h5 id="startup-sh：修改server-name名即可"><a href="#startup-sh：修改server-name名即可" class="headerlink" title="startup.sh：修改server_name名即可"></a>startup.sh：修改server_name名即可</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash </span><br><span class="line"><span class="meta">#</span> 三个服务镜像时，只需改这个值gateway-&gt;api/user</span><br><span class="line">server_name="consumer"</span><br><span class="line">kill -s 9 `ps -aux | grep $server_name | awk '&#123;print $2&#125;'`</span><br><span class="line"><span class="meta">#</span> 切换到jar目录启动，目的配置外置</span><br><span class="line">cd /jar</span><br><span class="line"><span class="meta">#</span> 启动</span><br><span class="line">java -jar -Duser.timezone=GMT+08 -XX:+HeapDumpOnOutOfMemoryError -Xms512m -Xmx512m $server_name.jar</span><br></pre></td></tr></table></figure><h5 id="目录结构为："><a href="#目录结构为：" class="headerlink" title="目录结构为："></a>目录结构为：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── builds</span><br><span class="line">│   ├── consumer</span><br><span class="line">│   │   ├── Dockerfile</span><br><span class="line">│   │   └── startup.sh</span><br><span class="line">│   └── provider</span><br><span class="line">│       ├── Dockerfile</span><br><span class="line">│       └── startup.sh</span><br></pre></td></tr></table></figure><h5 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> alibaba-dubbo-consumer为构建的镜像名，./表示当前目录</span><br><span class="line">docker build -t alibaba-dubbo-consumer ./</span><br><span class="line">docker build -t alibaba-dubbo-provider ./</span><br></pre></td></tr></table></figure><h5 id="构建成功"><a href="#构建成功" class="headerlink" title="构建成功"></a>构建成功</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@host1 consumer]# docker images</span><br><span class="line">REPOSITORY                             TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">alibaba-dubbo-consumer                 latest              10f2fbdeccbf        2 days ago          643MB</span><br><span class="line">alibaba-dubbo-provider                 latest              370a2efdc316        2 days ago          643MB</span><br></pre></td></tr></table></figure><h4 id="3-编写docker-compose-yml文件"><a href="#3-编写docker-compose-yml文件" class="headerlink" title="3.编写docker-compose.yml文件"></a>3.编写docker-compose.yml文件</h4><p>安装：<a href="https://blog.csdn.net/weixin_38950807/article/details/99292461" target="_blank" rel="noopener"><strong>docker-compose的使用姿势</strong></a></p><p>各个服务的<code>docker-compose.yml</code>文件可以分开，也可以写在一起。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">version: "3.5"</span><br><span class="line">services:</span><br><span class="line">  alibaba-dubbo-consumer:</span><br><span class="line">    image: alibaba-dubbo-consumer</span><br><span class="line">    container_name: alibaba-dubbo-consumer</span><br><span class="line">    volumes:</span><br><span class="line">      - /usr/local/docker/dubbo-test/services/consumer:/jar</span><br><span class="line">    ports:</span><br><span class="line">      - "10001:10001"  </span><br><span class="line">  alibaba-dubbo-provider:</span><br><span class="line">    image: alibaba-dubbo-provider</span><br><span class="line">    container_name: alibaba-dubbo-provider</span><br><span class="line">    volumes:</span><br><span class="line">      - /usr/local/docker/dubbo-test/services/provider:/jar</span><br><span class="line">    ports:</span><br><span class="line">      - "10002:10002"</span><br></pre></td></tr></table></figure><h4 id="4-上传jar包"><a href="#4-上传jar包" class="headerlink" title="4.上传jar包"></a>4.上传jar包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">├── builds</span><br><span class="line">│   ├── consumer</span><br><span class="line">│   │   ├── Dockerfile</span><br><span class="line">│   │   └── startup.sh</span><br><span class="line">│   └── provider</span><br><span class="line">│       ├── Dockerfile</span><br><span class="line">│       └── startup.sh</span><br><span class="line">├── services</span><br><span class="line">│   ├── consumer</span><br><span class="line">│   │   └── alibaba-dubbo-consumer.jar</span><br><span class="line">│   └── provider</span><br><span class="line">│       └── alibaba-dubbo-provider-service.jar</span><br><span class="line">└── yml</span><br><span class="line">    └── docker-compose.yml</span><br></pre></td></tr></table></figure><h5 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>docker-compose文件名默认为docker-compose.yml</span><br><span class="line">docker-compose up -d</span><br><span class="line"><span class="meta">#</span>指定文件名启动</span><br><span class="line">docker-compose -f test.yml up -d</span><br><span class="line"><span class="meta">#</span>关闭服务，同理</span><br><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;1-简单介绍&quot;&gt;&lt;a href=&quot;#1-简单介绍&quot; class=&quot;headerlink&quot; title=&quot;1.简单介绍&quot;&gt;&lt;/a&gt;1.简单介绍&lt;/h4&gt;&lt;p&gt;共有3个应用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;nacos&lt;/code&gt;注册中心&lt;/li&gt;
+&lt;li&gt;&lt;
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://wuyuzhao666.github.io/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="docker-compose" scheme="http://wuyuzhao666.github.io/tags/docker-compose/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git过滤文件</title>
+    <link href="http://wuyuzhao666.github.io/2019/08/15/git%E8%BF%87%E6%BB%A4%E6%96%87%E4%BB%B6/git%E8%BF%87%E6%BB%A4%E6%96%87%E4%BB%B6/"/>
+    <id>http://wuyuzhao666.github.io/2019/08/15/git过滤文件/git过滤文件/</id>
+    <published>2019-08-15T06:59:34.000Z</published>
+    <updated>2019-08-15T06:59:34.809Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>docker-compose的使用姿势</title>
@@ -465,45 +507,6 @@
     
     
       <category term="shdowsocks" scheme="http://wuyuzhao666.github.io/tags/shdowsocks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>部署Web应用到Tomcat根目录</title>
-    <link href="http://wuyuzhao666.github.io/2019/04/15/%E9%83%A8%E7%BD%B2Web%E5%BA%94%E7%94%A8%E5%88%B0Tomcat%E6%A0%B9%E7%9B%AE%E5%BD%95/%E9%83%A8%E7%BD%B2Web%E5%BA%94%E7%94%A8%E5%88%B0Tomcat%E6%A0%B9%E7%9B%AE%E5%BD%95/"/>
-    <id>http://wuyuzhao666.github.io/2019/04/15/部署Web应用到Tomcat根目录/部署Web应用到Tomcat根目录/</id>
-    <published>2019-04-15T02:17:50.000Z</published>
-    <updated>2019-04-15T02:40:17.467Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><code>Tomcat</code>安装后，默认目录是<code>/webapps/ROOT</code>，我们自己的<code>Web</code>应用就需要以<code>localhost:8080/test</code>这种方式来访问，有时需要将Web应用部署到<code>Tomcat</code>根目录下，就可以<code>localhost:8080</code>这种方式访问。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul><li><p>首先，进入<code>Tomcat</code>的<code>conf</code>文件夹</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 conf]# cd /home/apache-tomcat-8.5.35/conf</span><br></pre></td></tr></table></figure></li><li><p>然后，打开<code>server.xml</code>配置文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 conf]# vi server.xml</span><br></pre></td></tr></table></figure></li><li><p>在<code>&lt;Host&gt;&lt;/Host&gt;</code>区域的末尾添加</p><blockquote><context path docbase="/home/apache-tomcat-8.5.35/webapps/test" debug="0" reloadable="true"></context></blockquote><p><code>docBase</code>中为在<code>webapps</code>中的<code>Web</code>应用的地址。</p><blockquote><p>使用/pattern：从光标开始处向文件尾搜索pattern</p><p>/&lt;Host</p></blockquote><center><img src="http://res.cloudinary.com/cafebabe/tomcat-0"></center></li></ul><p>在浏览器键入<code>Tomcat</code>地址加端口，即可访问。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Tomcat&lt;/code&gt;安装后，默认目录是&lt;code&gt;/webapps/ROOT&lt;/code&gt;，我们自己的&lt;code&gt;Web&lt;
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://wuyuzhao666.github.io/categories/Linux/"/>
-    
-    
-      <category term="Tomcat#" scheme="http://wuyuzhao666.github.io/tags/Tomcat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>idea配置jvm参数</title>
-    <link href="http://wuyuzhao666.github.io/2019/04/12/idea%E9%85%8D%E7%BD%AEjvm%E5%8F%82%E6%95%B0/idea%E9%85%8D%E7%BD%AEjvm%E5%8F%82%E6%95%B0/"/>
-    <id>http://wuyuzhao666.github.io/2019/04/12/idea配置jvm参数/idea配置jvm参数/</id>
-    <published>2019-04-12T01:41:02.000Z</published>
-    <updated>2019-04-12T01:41:02.341Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
     
   </entry>
   
