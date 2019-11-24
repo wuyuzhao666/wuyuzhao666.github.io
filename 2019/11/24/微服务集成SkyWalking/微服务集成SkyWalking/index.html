@@ -96,18 +96,18 @@
 
 
 
-<meta name="description" content="####最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。 架构SkyWalking的架构图就不偷了，它主要分成4大模块，这些">
+<meta name="description" content="最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。 架构SkyWalking的架构图就不偷了，它主要分成4大模块，这些模块也是">
 <meta name="keywords" content="SkyWalking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务集成SkyWalking">
 <meta property="og:url" content="http://wuyuzhao666.github.io/2019/11/24/微服务集成SkyWalking/微服务集成SkyWalking/index.html">
 <meta property="og:site_name" content="0xCAFEBABE的博客">
-<meta property="og:description" content="####最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。 架构SkyWalking的架构图就不偷了，它主要分成4大模块，这些">
+<meta property="og:description" content="最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。 架构SkyWalking的架构图就不偷了，它主要分成4大模块，这些模块也是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-24T04:08:21.714Z">
+<meta property="og:updated_time" content="2019-11-24T04:18:18.225Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务集成SkyWalking">
-<meta name="twitter:description" content="####最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。 架构SkyWalking的架构图就不偷了，它主要分成4大模块，这些">
+<meta name="twitter:description" content="最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。 架构SkyWalking的架构图就不偷了，它主要分成4大模块，这些模块也是">
 
 
 
@@ -436,7 +436,7 @@
       
 
       
-        <p>####<br>最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。</p>
+        <p>最近做的一个项目使用了Spring Cloud Alibaba，随着服务系统的增多，调用连也越来越复杂，好几天不碰，就有点忘了，所以想集成一个APM系统进来，没想到遇到很多坑，边学习边记录，最开始学习netflix那一套的时候，玩过zipkin，觉得界面有点丑。。。想到SkyWalking是国人写的，文档多点，就尝试了下。</p>
 <h4 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h4><p>SkyWalking的架构图就不偷了，它主要分成4大模块，这些模块也是我们需要安装的。</p>
 <ul>
 <li><code>Agent</code>（客户端收集器）：使用 JavaAgent 做字节码植入，无侵入式的收集，并通过 HTTP 或者 gRPC 方式发送数据到 SkyWalking Collector。</li>
