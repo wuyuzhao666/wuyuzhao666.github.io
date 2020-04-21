@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="排序,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -96,21 +96,17 @@
 
 
 
-<meta name="description" content="分治|递归思想分治，即分而治之，将大的问题分割成小的问题，一一解决，有的问题需要汇总，有的并不需要。 归并：要排序一个数组，就是将这个数组，均分成两部分，然后继续对两部分进行均分至不能分割，最后将分割的各个部分排好序，组合起来。  递推公式：mergeSort(array , begin , end) = merge(mergeSort(array , begin , mid) + mergeSo">
-<meta name="keywords" content="排序">
+<meta name="description" content="堆的相关什么是堆：  完全二叉树 每个节点的值大于等于或者小于等于其左右子节点的值，即大顶堆和小顶堆。  完全二叉树使用数组来存储，不需要使用左右指针，仅通过数组下标就可以访问左右子节点，从0开始计算，下标为i的节点的左节点为2*i+1，右节点为2*i+2。 相关操作以大顶堆为例 将某个数组元素堆化，从这个节点出发，直到节点大于其左右子节点的值： 1234567891011121314151617">
 <meta property="og:type" content="article">
-<meta property="og:title" content="归并排序与快速排序">
-<meta property="og:url" content="http://wuyuzhao666.github.io/2020/03/04/归并排序与快速排序/归并排序与快速排序/index.html">
+<meta property="og:title" content="堆的相关以及topK问题的JAVA实现">
+<meta property="og:url" content="http://wuyuzhao666.github.io/2020/03/09/堆与优先队列/堆/index.html">
 <meta property="og:site_name" content="0xCAFEBABE的博客">
-<meta property="og:description" content="分治|递归思想分治，即分而治之，将大的问题分割成小的问题，一一解决，有的问题需要汇总，有的并不需要。 归并：要排序一个数组，就是将这个数组，均分成两部分，然后继续对两部分进行均分至不能分割，最后将分割的各个部分排好序，组合起来。  递推公式：mergeSort(array , begin , end) = merge(mergeSort(array , begin , mid) + mergeSo">
+<meta property="og:description" content="堆的相关什么是堆：  完全二叉树 每个节点的值大于等于或者小于等于其左右子节点的值，即大顶堆和小顶堆。  完全二叉树使用数组来存储，不需要使用左右指针，仅通过数组下标就可以访问左右子节点，从0开始计算，下标为i的节点的左节点为2*i+1，右节点为2*i+2。 相关操作以大顶堆为例 将某个数组元素堆化，从这个节点出发，直到节点大于其左右子节点的值： 1234567891011121314151617">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://res.cloudinary.com/cafebabe/image/upload/v1583314645/BEIG_5_X0WF_E5O0_O98J.png">
-<meta property="og:image" content="https://res.cloudinary.com/cafebabe/image/upload/v1583315229/EAS5J_L_9__5_QL_JF4OV.png">
-<meta property="og:updated_time" content="2020-03-04T12:12:54.930Z">
+<meta property="og:updated_time" content="2020-03-10T01:19:40.205Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="归并排序与快速排序">
-<meta name="twitter:description" content="分治|递归思想分治，即分而治之，将大的问题分割成小的问题，一一解决，有的问题需要汇总，有的并不需要。 归并：要排序一个数组，就是将这个数组，均分成两部分，然后继续对两部分进行均分至不能分割，最后将分割的各个部分排好序，组合起来。  递推公式：mergeSort(array , begin , end) = merge(mergeSort(array , begin , mid) + mergeSo">
-<meta name="twitter:image" content="https://res.cloudinary.com/cafebabe/image/upload/v1583314645/BEIG_5_X0WF_E5O0_O98J.png">
+<meta name="twitter:title" content="堆的相关以及topK问题的JAVA实现">
+<meta name="twitter:description" content="堆的相关什么是堆：  完全二叉树 每个节点的值大于等于或者小于等于其左右子节点的值，即大顶堆和小顶堆。  完全二叉树使用数组来存储，不需要使用左右指针，仅通过数组下标就可以访问左右子节点，从0开始计算，下标为i的节点的左节点为2*i+1，右节点为2*i+2。 相关操作以大顶堆为例 将某个数组元素堆化，从这个节点出发，直到节点大于其左右子节点的值： 1234567891011121314151617">
 
 
 
@@ -140,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://wuyuzhao666.github.io/2020/03/04/归并排序与快速排序/归并排序与快速排序/">
+  <link rel="canonical" href="http://wuyuzhao666.github.io/2020/03/09/堆与优先队列/堆/">
 
 
 
 
 
-  <title>归并排序与快速排序 | 0xCAFEBABE的博客</title>
+  <title>堆的相关以及topK问题的JAVA实现 | 0xCAFEBABE的博客</title>
   
 
 
@@ -314,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2020/03/04/归并排序与快速排序/归并排序与快速排序/">
+    <link itemprop="mainEntityOfPage" href="http://wuyuzhao666.github.io/2020/03/09/堆与优先队列/堆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wu yuzhao">
@@ -331,7 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">归并排序与快速排序</h1>
+          <h1 class="post-title" itemprop="name headline">堆的相关以及topK问题的JAVA实现</h1>
         
 
         <div class="post-meta">
@@ -343,8 +339,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-04T17:21:53+08:00">
-                2020-03-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-09T21:03:42+08:00">
+                2020-03-09
               </time>
             
 
@@ -353,28 +349,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -402,7 +376,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  833
+                  827
                 </span>
               
 
@@ -439,20 +413,28 @@
       
 
       
-        <h4 id="分治-递归思想"><a href="#分治-递归思想" class="headerlink" title="分治|递归思想"></a>分治|递归思想</h4><p>分治，即分而治之，将大的问题分割成小的问题，一一解决，有的问题需要汇总，有的并不需要。</p>
-<p><strong>归并</strong>：要排序一个数组，就是将这个数组，均分成两部分，然后继续对两部分进行均分至不能分割，最后将分割的各个部分排好序，组合起来。</p>
-<p><img src="https://res.cloudinary.com/cafebabe/image/upload/v1583314645/BEIG_5_X0WF_E5O0_O98J.png" alt="&lt;https://res.cloudinary.com/cafebabe/image/upload/v1583314645/BEIG_5_X0WF_E5O0_O98J.png&gt;"></p>
-<p>递推公式：<code>mergeSort(array , begin , end) = merge(mergeSort(array , begin , mid) + mergeSort(array , mid + 1 , end))</code></p>
-<p>代码实现：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Merge</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] a , <span class="keyword">int</span> begin , <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(begin &gt;= end)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> mid = (begin + end) / <span class="number">2</span>;</span><br><span class="line">        mergeSort(a , begin , mid);</span><br><span class="line">        mergeSort(a , mid + <span class="number">1</span> , end);</span><br><span class="line">        merge(a , begin, end , mid);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//merge函数，将前后两部分（相当于两个数组）进行组合，新开辟一个数组空间，遍历比较两个子数组，</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] a , <span class="keyword">int</span> begin , <span class="keyword">int</span> end , <span class="keyword">int</span> mid)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = begin;</span><br><span class="line">        <span class="keyword">int</span> j = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] tmp = <span class="keyword">new</span> <span class="keyword">int</span>[a.length];</span><br><span class="line">        <span class="keyword">while</span>(i &lt;= mid &amp;&amp; j &lt;= end)&#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i] &lt;= a[j])&#123;</span><br><span class="line">                tmp[k++] = a[i++];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                tmp[k++] = a[j++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(i &lt;= mid)&#123;</span><br><span class="line">            tmp[k++] = a[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(j &lt;= end)&#123;</span><br><span class="line">            tmp[k++] = a[j++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt;= end - begin; l++) &#123;</span><br><span class="line">            a[begin + l] = tmp[l];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Merge merge = <span class="keyword">new</span> Merge();</span><br><span class="line">        <span class="keyword">int</span>[] a = &#123;<span class="number">1</span> , <span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span> ,<span class="number">2</span>&#125;;</span><br><span class="line">        merge.mergeSort(a , <span class="number">0</span> , a.length - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">            System.out.println(a[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>快排</strong>：与归并排序均分不同，快排十要先找一个分区点，将比分区点小的元素排在分区点之前，大的排在分区点之后，根据分区点，将数组分割为前后两个部分，对这两部分重复进行分区操作，直至区间为1为止。</p>
-<p><img src="https://res.cloudinary.com/cafebabe/image/upload/v1583315229/EAS5J_L_9__5_QL_JF4OV.png" alt></p>
-<p>递推公式：<code>quickSort(array , begin , end) = quickSort(array , begin , partition - 1) + quickSort(array , partition + 1 , end)</code></p>
-<p>代码实现：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Quick</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">qucikSort</span><span class="params">(<span class="keyword">int</span>[] array , <span class="keyword">int</span> begin , <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(begin &gt;= end) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">int</span> p = partition(array , begin , end);</span><br><span class="line">        <span class="comment">//分成三部分，begin-&gt;（p-1）,分区点p，（p+1）-&gt;end。</span></span><br><span class="line">        qucikSort(array , begin , p - <span class="number">1</span>);</span><br><span class="line">        qucikSort(array , p + <span class="number">1</span> , end);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//区分点取末尾元素</span></span><br><span class="line">    <span class="comment">//处理操作：将小的置于分区点左边，大的置于分区点右边。</span></span><br><span class="line">    <span class="comment">//通过游标i将数组分为*已处理区间（全为小于等于区分点的元素）*和*未处理区间*，将循环元素与分区点比较，若小，就将元素通过交换加入到已处理区间末尾，即array[i]元素。</span></span><br><span class="line">    <span class="comment">//最后，将区分点与处理区间划分点a[i]交换</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span>[] array , <span class="keyword">int</span> begin , <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = begin;</span><br><span class="line">        <span class="keyword">int</span> pivot = array[end];</span><br><span class="line">        <span class="keyword">int</span> k = i;</span><br><span class="line">        <span class="keyword">for</span> (; k &lt; end ; k++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(array[k] &lt;= pivot)&#123;</span><br><span class="line">                swap(array , i , k);</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(array , i , end);</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] a , <span class="keyword">int</span> i , <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = a[j];</span><br><span class="line">        a[j] = a[i];</span><br><span class="line">        a[i] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Quick quick = <span class="keyword">new</span> Quick();</span><br><span class="line">        <span class="keyword">int</span>[] a = &#123;<span class="number">1</span> , <span class="number">4</span>, <span class="number">3</span>&#125;;</span><br><span class="line">        quick.quickSort(a ， <span class="number">0</span> ， a.length - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">            System.out.println(a[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>归并排序，可以看成是自下而上的，先处理子问题，然后将各个部分组合起来；快速排序，可以看成是自上而下的，先进行分区，再处理子问题。</p>
-<p>归并排序在merge时，需要开辟新的内存空间，不是原地排序算法。</p>
-<p>快排在分区时，需要交换元素，不是稳定的排序算法。</p>
+        <h4 id="堆的相关"><a href="#堆的相关" class="headerlink" title="堆的相关"></a>堆的相关</h4><p>什么是堆：</p>
+<ul>
+<li>完全二叉树</li>
+<li>每个节点的值大于等于或者小于等于其左右子节点的值，即大顶堆和小顶堆。</li>
+</ul>
+<p>完全二叉树使用数组来存储，不需要使用左右指针，仅通过数组下标就可以访问左右子节点，从0开始计算，下标为<code>i</code>的节点的左节点为<code>2*i+1</code>，右节点为<code>2*i+2</code>。</p>
+<h4 id="相关操作"><a href="#相关操作" class="headerlink" title="相关操作"></a>相关操作</h4><p>以大顶堆为例</p>
+<p>将某个数组元素堆化，从这个节点出发，直到节点大于其左右子节点的值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 堆化</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr 要堆化的数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> n   最后堆元素下标</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i   要堆化的元素下标</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> n, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        <span class="comment">// 最大值位置</span></span><br><span class="line">        <span class="keyword">int</span> maxPos = i;</span><br><span class="line">        <span class="comment">// 与左子节点（i * 2 + 1）比较，获取最大值位置</span></span><br><span class="line">        <span class="keyword">if</span> (i * <span class="number">2</span> + <span class="number">1</span> &lt;= n &amp;&amp; arr[i] &lt; arr[i * <span class="number">2</span> + <span class="number">1</span>]) &#123;</span><br><span class="line">            maxPos = i * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最大值与右子节点（i * 2 + 2）比较，获取最大值位置</span></span><br><span class="line">        <span class="keyword">if</span> (i * <span class="number">2</span> + <span class="number">2</span> &lt;= n &amp;&amp; arr[maxPos] &lt; arr[i * <span class="number">2</span> + <span class="number">2</span>]) &#123;</span><br><span class="line">            maxPos = i * <span class="number">2</span> + <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最大值是当前位置结束循环</span></span><br><span class="line">        <span class="keyword">if</span> (maxPos == i) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 与子节点交换位置</span></span><br><span class="line">        swap(arr, i, maxPos);</span><br><span class="line">        <span class="comment">// 以交换后子节点位置接着往下查找</span></span><br><span class="line">        i = maxPos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建堆：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 建堆</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// (arr.length - 1) / 2 为最后一个叶子节点的父节点</span></span><br><span class="line">       <span class="comment">// 也就是最后一个非叶子节点，依次堆化直到根节点</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = (arr.length - <span class="number">1</span>) / <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">           heapify(arr, arr.length - <span class="number">1</span>, i);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>堆排序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 排序</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 堆元素是从数组下标0开始</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1、建堆</span></span><br><span class="line">    buildHeap(arr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2、排序</span></span><br><span class="line">    <span class="keyword">int</span> k = arr.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 将堆顶元素（最大）与最后一个元素交换位置</span></span><br><span class="line">        swap(arr, <span class="number">0</span>, k);</span><br><span class="line">        <span class="comment">// 将剩下元素重新堆化，堆顶元素变成最大元素</span></span><br><span class="line">        heapify(arr, --k, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>删除堆顶元素，将最后一个叶子节点，置于堆顶，然后将其堆化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> n 最后堆元素下标</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delTop</span><span class="params">(<span class="keyword">int</span>[] arr , <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    arr[<span class="number">0</span>] = arr[n];</span><br><span class="line">    heapify(arr , --n , <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>牛客上有道题，求<strong>最小的K个数</strong>，我们就可以使用堆来实现。</p>
+<blockquote>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是&gt;1,2,3,4,。</p>
+</blockquote>
+<p>可以先把数组的前K个数拿出来，构建一个大顶堆，然后从第K+1个数开始循环，如果这个数小于堆顶元素，即把这个数置于堆顶，然后堆化。</p>
+<p>一次堆化的时间复杂度为O(logK)，遍历数组O(n)，假设每个元素都要入堆，则时间复杂度为O(nlongK)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> k 求top K元素，</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] topK(<span class="keyword">int</span> k , <span class="keyword">int</span>[] a)&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] re = <span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        re[i] = a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//堆化K个元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = (k - <span class="number">1</span>) / <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        heapify(re, k-<span class="number">1</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = k; j &lt; a.length; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(re[<span class="number">0</span>] &gt; a[j])&#123;</span><br><span class="line">            re[<span class="number">0</span>] = a[j];</span><br><span class="line">            heapify(re , re.length - <span class="number">1</span> , <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -506,7 +488,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://wuyuzhao666.github.io/2020/03/04/归并排序与快速排序/归并排序与快速排序/" title="归并排序与快速排序">http://wuyuzhao666.github.io/2020/03/04/归并排序与快速排序/归并排序与快速排序/</a>
+    <a href="http://wuyuzhao666.github.io/2020/03/09/堆与优先队列/堆/" title="堆的相关以及topK问题的JAVA实现">http://wuyuzhao666.github.io/2020/03/09/堆与优先队列/堆/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -519,12 +501,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/排序/" rel="tag"><i class="fa fa-tag"></i>排序</a>
-          
-        </div>
-      
 
       
       
@@ -534,8 +510,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/04/Spring源码编译报错/Can-t-find-resource-for-bundle-java-util-PropertyResourceBundle-key-kotlin-gradle-testing-enabled/" rel="next" title="Spring源码编译报错：Can't find resource for bundle java.util.PropertyResourceBundle, key kotlin.gradle.testing.enabled">
-                <i class="fa fa-chevron-left"></i> Spring源码编译报错：Can't find resource for bundle java.util.PropertyResourceBundle, key kotlin.gradle.testing.enabled
+              <a href="/2020/03/04/归并排序与快速排序/归并排序与快速排序/" rel="next" title="归并排序与快速排序">
+                <i class="fa fa-chevron-left"></i> 归并排序与快速排序
               </a>
             
           </div>
@@ -543,10 +519,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/09/堆与优先队列/堆/" rel="prev" title="堆的相关以及topK问题的JAVA实现">
-                堆的相关以及topK问题的JAVA实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -706,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#分治-递归思想"><span class="nav-number">1.</span> <span class="nav-text">分治|递归思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区别"><span class="nav-number">2.</span> <span class="nav-text">区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#堆的相关"><span class="nav-number">1.</span> <span class="nav-text">堆的相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关操作"><span class="nav-number">2.</span> <span class="nav-text">相关操作</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number"></span> <span class="nav-text">题目描述</span></a></li></div>
             
 
           </div>
